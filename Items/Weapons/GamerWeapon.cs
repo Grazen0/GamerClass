@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using GamerClass.Buffs;
 
 namespace GamerClass.Items
 {
@@ -17,7 +18,7 @@ namespace GamerClass.Items
             get;
         }
 
-        private SoundEffectInstance soundInstance = null;
+        private static SoundEffectInstance soundInstance = null;
 
         public virtual void SafeSetDefaults()
         {
@@ -52,35 +53,38 @@ namespace GamerClass.Items
 
         public override bool CanUseItem(Player player)
         {
-            bool canUseItem = player.GetModPlayer<GamerPlayer>().availableRam >= RamUsage;
+            bool canUseItem = !player.GetModPlayer<GamerPlayer>().gamerCooldown;
 
-            if (!canUseItem)
+            if (!canUseItem && (soundInstance == null || soundInstance.State != SoundState.Playing))
             {
-                if (soundInstance == null || soundInstance.State != SoundState.Playing)
-                {
-                    soundInstance = Main.PlaySound(SoundID.Item34);
-                }
+                soundInstance = Main.PlaySound(SoundID.NPCHit34);
+            }
 
+            return canUseItem;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
+            float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam;
+
+            if (!modPlayer.gamerCooldown && ramRadius > 0.6f && Main.rand.NextBool(1))
+            {
                 float spread = MathHelper.PiOver4 * 0.8f;
-                int size = 16;
+                int size = 10;
 
                 Vector2 position = player.Center;
                 position.X -= size / 2 - player.direction * 10;
                 position.Y -= size / 2 - 5;
 
-                for (int d = 0; d < 4; d++)
-                {
-                    Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
-                    bool fire = d == 0;
+                Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
 
-                    int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Wraith);
-                    Main.dust[id].noGravity = true;
-                    Main.dust[id].velocity = direction * Main.rand.NextFloat(3f, 6f);
-                    Main.dust[id].scale *= fire ? 2f : 1.2f;
-                }
+                int id = Dust.NewDust(position, size, size, DustID.Smoke);
+                Main.dust[id].noGravity = true;
+                Main.dust[id].velocity = direction * Main.rand.NextFloat(3f, 6f);
+                Main.dust[id].scale *= 1.5f;
+                Main.dust[id].fadeIn = 1.2f;
             }
-
-            return canUseItem;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -118,7 +122,7 @@ namespace GamerClass.Items
                     roundedRAM /= 1000f;
                 }
 
-                ramText = $"Requires {roundedRAM}{suffix} of available RAM";
+                ramText = $"Uses {roundedRAM}{suffix} of RAM";
             }
             else
             {
@@ -127,14 +131,45 @@ namespace GamerClass.Items
 
             TooltipLine ramTooltip = new TooltipLine(mod, "RAM Usage", ramText)
             {
-                overrideColor = Main.LocalPlayer.GetModPlayer<GamerPlayer>().availableRam >= RamUsage ? Color.LightGreen : Color.Red
+                overrideColor = Color.LightYellow
             };
             tooltips.Add(ramTooltip);
         }
 
-        public override float UseTimeMultiplier(Player player)
+        public override bool UseItem(Player player)
         {
-            return base.UseTimeMultiplier(player);
+            GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
+
+            modPlayer.ramRegenTimer = 0;
+            modPlayer.ramRegenRate = 1f;
+            modPlayer.usedRam += RamUsage;
+
+            if (modPlayer.usedRam > modPlayer.maxRam)
+            {
+                modPlayer.usedRam = modPlayer.maxRam;
+                player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
+
+                for (int d = 0; d < 20; d++)
+                {
+                    bool fire = Main.rand.NextBool(3);
+
+                    int size = 20;
+                    Vector2 position = player.Center - new Vector2(1f, 1f) * (size / 2);
+
+                    int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Smoke);
+                    Main.dust[id].noGravity = true;
+                    Main.dust[id].fadeIn = 2f;
+                    Main.dust[id].velocity *= fire ? 8f : 4f;
+                    Main.dust[id].scale = 1f;
+                }
+
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    soundInstance = Main.PlaySound(SoundID.NPCHit53);
+                }
+            }
+
+            return true;
         }
     }
 }
