@@ -140,7 +140,7 @@ namespace GamerClass.Items
         {
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
 
-            modPlayer.ramRegenTimer = 0;
+            modPlayer.ramRegenTimer = -item.useTime;
             modPlayer.ramRegenRate = 1f;
             modPlayer.usedRam += RamUsage;
 

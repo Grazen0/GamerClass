@@ -64,8 +64,6 @@ namespace GamerClass
 
         public override void PostUpdateMiscEffects()
         {
-            Main.NewText($"RAM: {usedRam}/{maxRam}");
-
             if (!gamerCooldown)
             {
                 if (usedRam > 0 && ++ramRegenTimer > 20f * ramRegenRate)
