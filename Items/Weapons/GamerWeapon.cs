@@ -131,7 +131,7 @@ namespace GamerClass.Items
 
             TooltipLine ramTooltip = new TooltipLine(mod, "RAM Usage", ramText)
             {
-                overrideColor = Color.LightYellow
+                overrideColor = Color.Yellow
             };
             tooltips.Add(ramTooltip);
         }
