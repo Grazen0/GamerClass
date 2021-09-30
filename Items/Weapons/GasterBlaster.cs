@@ -20,7 +20,7 @@ namespace GamerClass.Items.Weapons
         public override void SafeSetDefaults()
         {
             item.noMelee = true;
-            item.damage = 60;
+            item.damage = 5;
             item.rare = ItemRarityID.Cyan;
             item.value = Item.sellPrice(gold: 10);
             item.useStyle = ItemUseStyleID.SwingThrow;
@@ -40,7 +40,7 @@ namespace GamerClass.Items.Weapons
             spawnAt.Y += player.Center.Y;
 
             Vector2 toMouse = Main.MouseWorld - spawnAt;
-            Vector2 velocity = toMouse * Main.rand.NextFloat(0.03f, 0.04f);
+            Vector2 velocity = toMouse * Main.rand.NextFloat(0.05f, 0.06f);
 
             float rotation = Main.rand.NextFloat(MathHelper.TwoPi);
 

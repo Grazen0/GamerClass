@@ -22,12 +22,13 @@ namespace GamerClass.Projectiles.GasterBlaster
 
         public override void SetDefaults()
         {
-            projectile.width = 44;
-            projectile.height = 57;
+            projectile.width = projectile.height = 36;
             projectile.hostile = false;
             projectile.friendly = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 300;
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
+            projectile.timeLeft = 180;
         }
 
         public float Timer
@@ -43,14 +44,14 @@ namespace GamerClass.Projectiles.GasterBlaster
 
         public override void AI()
         {
-            float moveDuration = 30f;
-            float shootDelay = 10f;
+            float moveDuration = 20f;
+            float shootDelay = 8f;
 
             #region Visuals
             int targetCounter;
             if (projectile.frame == 0)
             {
-                targetCounter = (int)moveDuration;
+                targetCounter = (int)moveDuration - 9;
             }
             else if (projectile.frame < Main.projFrames[projectile.type] - 3)
             {
@@ -58,7 +59,7 @@ namespace GamerClass.Projectiles.GasterBlaster
             }
             else
             {
-                targetCounter = 5;
+                targetCounter = 4;
             }
 
             if (projectile.frameCounter++ > targetCounter)
@@ -111,9 +112,23 @@ namespace GamerClass.Projectiles.GasterBlaster
                 if (Main.myPlayer == projectile.owner && shoot)
                 {
                     Vector2 direction = projectile.rotation.ToRotationVector2();
-                    Projectile.NewProjectile(projectile.Center, direction * 4f, ProjectileID.IchorBullet, projectile.damage, projectile.knockBack, projectile.owner);
+                    Vector2 position = projectile.Center + direction * 38f;
+
+                    Projectile.NewProjectile(
+                        position, 
+                        Vector2.Zero, 
+                        ModContent.ProjectileType<GasterBeam>(), 
+                        projectile.damage, 
+                        projectile.knockBack, 
+                        projectile.owner, 
+                        projectile.rotation,
+                        projectile.whoAmI);
+
                     shoot = false;
                 }
+
+                Vector2 frontDirection = projectile.rotation.ToRotationVector2();
+                projectile.velocity -= frontDirection * 0.6f;
             }
 
             Timer++;
@@ -131,8 +146,8 @@ namespace GamerClass.Projectiles.GasterBlaster
                 texture,
                 projectile.Center - Main.screenPosition,
                 sourceRectangle,
-                GetAlpha(lightColor) ?? lightColor,
-                projectile.rotation + MathHelper.PiOver2,
+                Color.White * projectile.Opacity,
+                projectile.rotation - MathHelper.PiOver2,
                 origin,
                 projectile.scale,
                 SpriteEffects.None,
