@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +10,7 @@ namespace GamerClass.Projectiles.TouhouStick
     {
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 24;
+            projectile.width = projectile.height = 20;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ignoreWater = true;
@@ -24,6 +25,26 @@ namespace GamerClass.Projectiles.TouhouStick
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Dig, projectile.Center);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture = Main.projectileTexture[projectile.type];
+            Vector2 origin = texture.Size() / 2f;
+
+            Color color = GetAlpha(lightColor) ?? lightColor;
+
+            spriteBatch.Draw(
+                texture,
+                projectile.Center - Main.screenPosition,
+                null,
+                color * projectile.Opacity,
+                projectile.rotation,
+                origin,
+                projectile.scale,
+                SpriteEffects.None,
+                0f);
+            return false;
         }
     }
 }
