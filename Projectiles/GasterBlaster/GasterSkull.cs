@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using GamerClass.Buffs;
 
 namespace GamerClass.Projectiles.GasterBlaster
 {
@@ -118,9 +118,9 @@ namespace GamerClass.Projectiles.GasterBlaster
                         position, 
                         Vector2.Zero, 
                         ModContent.ProjectileType<GasterBeam>(), 
-                        projectile.damage, 
+                        projectile.damage / 4, 
                         projectile.knockBack, 
-                        projectile.owner, 
+                        projectile.owner,
                         projectile.rotation,
                         projectile.whoAmI);
 
@@ -132,6 +132,11 @@ namespace GamerClass.Projectiles.GasterBlaster
             }
 
             Timer++;
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<Karma>(), 360, true);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

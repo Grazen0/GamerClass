@@ -14,14 +14,14 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Funny Looking Skull");
-            Tooltip.SetDefault("'It wants to tell you a pun about skeletons'");
+            Tooltip.SetDefault("Ignores a huge amount of enemy defense\n'It wants to tell you a pun about skeletons'");
         }
 
         public override void SafeSetDefaults()
         {
             item.noMelee = true;
-            item.damage = 5;
-            item.rare = ItemRarityID.Cyan;
+            item.damage = 8;
+            item.rare = ItemRarityID.Green;
             item.value = Item.sellPrice(gold: 10);
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.useTime = item.useAnimation = 60;
@@ -40,13 +40,18 @@ namespace GamerClass.Items.Weapons
             spawnAt.Y += player.Center.Y;
 
             Vector2 toMouse = Main.MouseWorld - spawnAt;
-            Vector2 velocity = toMouse * Main.rand.NextFloat(0.05f, 0.06f);
+            Vector2 velocity = toMouse * Main.rand.NextFloat(0.06f, 0.065f);
 
             float rotation = Main.rand.NextFloat(MathHelper.TwoPi);
 
             Projectile.NewProjectile(spawnAt, velocity, type, damage, knockBack, player.whoAmI, 0f, rotation);
 
             return false;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            player.armorPenetration += 100;
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ModLoader;
+using GamerClass.Buffs;
 
 namespace GamerClass.Projectiles.GasterBlaster
 {
@@ -71,6 +72,10 @@ namespace GamerClass.Projectiles.GasterBlaster
                 xScale = MathHelper.Max(xScale - scaleOutSpeed, 0f);
                 projectile.alpha = (int)MathHelper.Min(projectile.alpha + fadeOutSpeed, 255);
             }
+
+            // Cast light
+            DelegateMethods.v3_1 = new Vector3(0.5f, 0.5f, 0.5f);
+            Utils.PlotTileLine(projectile.Center, projectile.Center + (Unit * Segments), projectile.width * xScale * 0.8f, DelegateMethods.CastLight);
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -132,9 +137,15 @@ namespace GamerClass.Projectiles.GasterBlaster
             return false;
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
+            target.AddBuff(ModContent.BuffType<Karma>(), 360, true);
         }
 
         public override void CutTiles()
