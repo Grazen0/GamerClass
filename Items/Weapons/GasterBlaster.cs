@@ -24,7 +24,7 @@ namespace GamerClass.Items.Weapons
             item.rare = ItemRarityID.Green;
             item.value = Item.sellPrice(gold: 10);
             item.useStyle = ItemUseStyleID.SwingThrow;
-            item.useTime = item.useAnimation = 60;
+            item.useTime = item.useAnimation = 45;
             item.UseSound = SoundID.Item78;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<GasterSkull>();
@@ -52,6 +52,13 @@ namespace GamerClass.Items.Weapons
         public override void HoldItem(Player player)
         {
             player.armorPenetration += 100;
+
+            Vector2 eyePosition = new Vector2(1.5f * player.direction, -10f);
+
+            Dust dust = Dust.NewDustPerfect(player.Center + eyePosition, DustID.Clentaminator_Cyan, null, 0, default, 0.8f);
+            dust.noGravity = true;
+            dust.noLight = false;
+            dust.velocity *= 0f;
         }
     }
 }
