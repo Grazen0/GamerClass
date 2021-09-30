@@ -17,6 +17,7 @@ namespace GamerClass.Projectiles.GasterBlaster
 
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Gaster Blaster");
             Main.projFrames[projectile.type] = 6;
         }
 
