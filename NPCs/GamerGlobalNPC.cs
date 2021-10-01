@@ -1,14 +1,11 @@
-﻿using Terraria;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ModLoader;
-using GamerClass.Buffs;
-using Microsoft.Xna.Framework;
 
 namespace GamerClass.NPCs
 {
     public class GamerGlobalNPC : GlobalNPC
     {
-        private readonly Color karmaColor = new Color(133, 29, 140);
         public override bool InstancePerEntity => true;
 
         public bool karma;
