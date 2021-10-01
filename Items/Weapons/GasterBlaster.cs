@@ -60,9 +60,5 @@ namespace GamerClass.Items.Weapons
             dust.noLight = false;
             dust.velocity *= 0f;
         }
-
-        public override void UseStyle(Player player)
-        {
-        }
     }
 }

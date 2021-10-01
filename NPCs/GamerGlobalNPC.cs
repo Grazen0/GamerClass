@@ -36,10 +36,6 @@ namespace GamerClass.NPCs
             }
         }
 
-        public override void DrawEffects(NPC npc, ref Color drawColor)
-        {
-        }
-
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
             if (karma) return new Color(133, 29, 140);
