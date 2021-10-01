@@ -8,7 +8,6 @@ namespace GamerClass.Items.Weapons
 {
     public class TouhouStick : GamerWeapon
     {
-        public override string Texture => "Terraria/Item_" + ItemID.WandofSparking;
         public override int RamUsage => 0;
 
         public override void SetStaticDefaults()
@@ -19,7 +18,8 @@ namespace GamerClass.Items.Weapons
 
         public override void SafeSetDefaults()
         {
-            item.width = item.height = 32;
+            item.width = 38;
+            item.height = 40;
             item.noMelee = true;
             item.damage = 10;
             item.useStyle = ItemUseStyleID.SwingThrow;

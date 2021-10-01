@@ -8,17 +8,17 @@ namespace GamerClass.Items.Weapons
 {
     public class GasterBlaster : GamerWeapon
     {
-        public override string Texture => "Terraria/Item_" + ItemID.Skull;
         public override int RamUsage => 0;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Funny Looking Skull");
-            Tooltip.SetDefault("Ignores a huge amount of enemy defense\n'It wants to tell you a pun about skeletons'");
+            DisplayName.SetDefault("Funny Looking Bone");
+            Tooltip.SetDefault("Ignores some enemy defense\n'It wants to tell you a pun about skeletons'");
         }
 
         public override void SafeSetDefaults()
         {
+            item.width = item.height = 42;
             item.noMelee = true;
             item.damage = 8;
             item.rare = ItemRarityID.Green;
@@ -51,7 +51,7 @@ namespace GamerClass.Items.Weapons
 
         public override void HoldItem(Player player)
         {
-            player.armorPenetration += 100;
+            player.armorPenetration += 10;
 
             Vector2 eyePosition = new Vector2(1.5f * player.direction, -10f);
 
@@ -59,6 +59,10 @@ namespace GamerClass.Items.Weapons
             dust.noGravity = true;
             dust.noLight = false;
             dust.velocity *= 0f;
+        }
+
+        public override void UseStyle(Player player)
+        {
         }
     }
 }
