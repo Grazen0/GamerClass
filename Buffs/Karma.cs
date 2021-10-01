@@ -16,6 +16,7 @@ namespace GamerClass.Buffs
         {
             DisplayName.SetDefault("Karmic Retribution");
             Description.SetDefault("You feel your sins crawling on your back");
+            Main.debuff[Type] = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex)
