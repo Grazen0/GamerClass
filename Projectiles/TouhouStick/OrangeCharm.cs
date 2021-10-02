@@ -10,16 +10,18 @@ namespace GamerClass.Projectiles.TouhouStick
     {
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 20;
+            projectile.width = projectile.height = 32;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ignoreWater = true;
             projectile.timeLeft = 360;
+            projectile.alpha = 255;
         }
 
         public override void AI()
         {
             projectile.rotation += MathHelper.TwoPi / 180f;
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 40, 0);
         }
 
         public override void Kill(int timeLeft)

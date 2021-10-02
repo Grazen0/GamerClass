@@ -10,7 +10,7 @@ namespace GamerClass.Projectiles.TouhouStick
     {
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 2;
+            projectile.width = projectile.height = 6;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ignoreWater = true;
@@ -18,11 +18,13 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;
             projectile.timeLeft = 360;
+            projectile.alpha = 255;
         }
 
         public override void AI()
         {
             projectile.rotation = projectile.velocity.ToRotation();
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 50, 0);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
