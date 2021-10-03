@@ -93,7 +93,7 @@ namespace GamerClass
             c.EmitDelegate<Func<LegacySoundStyle, Player, LegacySoundStyle>>((sound, player) =>
             {
                 ModItem raccoonLeaf = ModContent.GetModItem(ModContent.ItemType<Items.Accessories.Misc.RaccoonLeaf>());
-                if (player.wings == raccoonLeaf.item.wingSlot)
+                if (player.wings == raccoonLeaf.item.wingSlot && ModContent.GetInstance<GamerConfig>().RaccoonFlySound)
                 {
                     sound = GetLegacySoundSlot(Terraria.ModLoader.SoundType.Item, "Sounds/Item/RaccoonFly");
                 }
