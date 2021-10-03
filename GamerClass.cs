@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using MonoMod.Cil;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.UI;
-using GamerClass.UI;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.UI;
+using Terraria.Audio;
+using Terraria.ModLoader;
+using GamerClass.UI;
 
 namespace GamerClass
 {
@@ -19,6 +21,7 @@ namespace GamerClass
         {
             IL.Terraria.NPC.NPCLoot += NPC_NPCLoot;
             IL.Terraria.Player.OpenBossBag += Player_OpenBossBag;
+            IL.Terraria.Player.Update += Player_Update;
 
             RamUsageBar = new RamUsageBar();
             RamUsageBar.Activate();
@@ -40,14 +43,12 @@ namespace GamerClass
                 Logger.Error("NPC_NPCLoot IL patch could not apply");
                 return;
             }
-            else
+
+            c.Index--;
+            c.EmitDelegate<Func<int, int>>(itemId =>
             {
-                c.Index--;
-                c.EmitDelegate<Func<int, int>>(itemId =>
-                {
-                    return 1;
-                });
-            }
+                return 1;
+            });
         }
 
         private void Player_OpenBossBag(ILContext il)
@@ -63,14 +64,42 @@ namespace GamerClass
                 Logger.Error("Player_OpenBossBag IL patch could not apply");
                 return;
             }
-            else
+
+            c.Index--;
+            c.EmitDelegate<Func<int, int>>(itemId =>
             {
-                c.Index--;
-                c.EmitDelegate<Func<int, int>>(itemId =>
-                {
-                    return 1;
-                });
+                return 1;
+            });
+        }
+
+        private void Player_Update(ILContext il)
+        {
+            var c = new ILCursor(il);
+
+            if (!c.TryGotoNext(MoveType.Before,
+                i => i.MatchLdsfld(typeof(SoundID).GetField("Item32")),
+                i => i.MatchLdarg(0),
+                i => i.MatchLdfld(typeof(Entity).GetField("position")),
+                i => i.MatchCall(typeof(Main).GetMethod("PlaySound", new Type[] { typeof(LegacySoundStyle), typeof(Vector2) })),
+                i => i.MatchPop()))
+            {
+                Logger.Error("Player_Update IL patch could not apply");
+                return;
             }
+
+            c.Index++;
+
+            c.Emit(Mono.Cecil.Cil.OpCodes.Ldarg_0);
+            c.EmitDelegate<Func<LegacySoundStyle, Player, LegacySoundStyle>>((sound, player) =>
+            {
+                ModItem raccoonLeaf = ModContent.GetModItem(ModContent.ItemType<Items.Accessories.Misc.RaccoonLeaf>());
+                if (player.wings == raccoonLeaf.item.wingSlot)
+                {
+                    sound = GetLegacySoundSlot(Terraria.ModLoader.SoundType.Item, "Sounds/Item/RaccoonFly");
+                }
+
+                return sound;
+            });
         }
 
         public override void UpdateUI(GameTime gameTime)
