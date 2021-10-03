@@ -10,7 +10,7 @@ namespace GamerClass.Items.Accessories.Misc
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Strange Leaf");
-            Tooltip.SetDefault("Transforms the holder into a flying raccoon\nIncreases gamer damage by 20%");
+            Tooltip.SetDefault("Transforms the holder into a flying raccoon\nIncreases gamer damage by 20% and gravity by 80%");
         }
 
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace GamerClass.Items.Accessories.Misc
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
             modPlayer.gamerDamageMult += 0.2f;
 
-            player.wingTimeMax = 300;
+            player.wingTimeMax = 200;
             player.gravity *= 1.8f;
         }
 
@@ -42,11 +42,6 @@ namespace GamerClass.Items.Accessories.Misc
         {
             speed = 6f;
             acceleration *= 8f;
-        }
-
-        public override bool WingUpdate(Player player, bool inUse)
-        {
-            return base.WingUpdate(player, inUse);
         }
     }
 }
