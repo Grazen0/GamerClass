@@ -7,6 +7,8 @@ namespace GamerClass
 {
     public class GamerPlayer : ModPlayer
     {
+        public bool linkArmorBonus;
+
         public bool gamerCooldown;
 
         public int maxRam;
@@ -31,6 +33,7 @@ namespace GamerClass
 
         private void ResetVariables()
         {
+            linkArmorBonus = false;
             gamerCooldown = false;
             maxRam = 0;
             gamerDamageMult = 1f;
