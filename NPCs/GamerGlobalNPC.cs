@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GamerClass.NPCs
@@ -38,6 +39,15 @@ namespace GamerClass.NPCs
             if (karma) return new Color(133, 29, 140);
 
             return null;
+        }
+
+        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        {
+            if (Main.hardMode && type == NPCID.Clothier)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.PeakEvolution>());
+                nextSlot++;
+            }
         }
     }
 }
