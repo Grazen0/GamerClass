@@ -48,10 +48,7 @@ namespace GamerClass.Items.Weapons
                 Main.dust[id].noGravity = true;
             }
 
-            float rocketJump = player.altFunctionUse == 2 ? 1f : 0f;
-            Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI, rocketJump);
-
-            return false;
+            return true;
         }
 
         public override Vector2? HoldoutOffset()
