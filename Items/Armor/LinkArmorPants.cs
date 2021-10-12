@@ -21,8 +21,6 @@ namespace GamerClass.Items.Armor
             item.rare = ItemRarityID.Orange;
             item.defense = 5;
         }
-        efense = 6;
-        }
 
     public override void UpdateEquip(Player player)
     {
