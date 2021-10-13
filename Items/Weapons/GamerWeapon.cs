@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using GamerClass.Buffs;
+using Terraria.Utilities;
 
 namespace GamerClass.Items.Weapons
 {
@@ -136,7 +137,7 @@ namespace GamerClass.Items.Weapons
             tooltips.Add(ramTooltip);
         }
 
-        public override bool UseItem(Player player)
+        public sealed override bool UseItem(Player player)
         {
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
 
@@ -170,6 +171,17 @@ namespace GamerClass.Items.Weapons
             }
 
             return true;
+        }
+
+        public override int ChoosePrefix(UnifiedRandom rand)
+        {
+            var val = new WeightedRandom<string>();
+
+            val.Add("Polished");
+            val.Add("Dusty");
+
+            string type = val;
+            return mod.PrefixType(type);
         }
     }
 }
