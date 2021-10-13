@@ -36,14 +36,7 @@ namespace GamerClass.Items.Weapons
             Vector2 velocity = new Vector2(speedX, speedY);
             Vector2 frontDirection = Vector2.Normalize(velocity);
 
-            position += frontDirection.RotatedBy(-MathHelper.PiOver2) * 10f * player.direction;
-
-            Vector2 muzzleOffset = frontDirection * 20f;
-
-            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0) || true)
-            {
-                position += muzzleOffset;
-            }
+            position += (frontDirection.RotatedBy(-MathHelper.PiOver2) * 10f * player.direction) + (frontDirection * 20f);
 
             for (int d = 0; d < 6; d++)
             {
@@ -55,10 +48,7 @@ namespace GamerClass.Items.Weapons
                 Main.dust[id].noGravity = true;
             }
 
-            float rocketJump = player.altFunctionUse == 2 ? 1f : 0f;
-            Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI, rocketJump);
-
-            return false;
+            return true;
         }
 
         public override Vector2? HoldoutOffset()
