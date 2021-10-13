@@ -59,6 +59,8 @@ namespace GamerClass.Items.Weapons
             dust.noGravity = true;
             dust.noLight = false;
             dust.velocity *= 0f;
+
+            base.HoldItem(player);
         }
     }
 }
