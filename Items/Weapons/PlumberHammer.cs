@@ -10,7 +10,6 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plumber's Hammer");
-            Tooltip.SetDefault("'It has some japanese scribbles on it'");
         }
 
         public override void SafeSetDefaults()

@@ -11,7 +11,7 @@ namespace GamerClass.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dusty Joystick");
+            DisplayName.SetDefault("Old Joystick");
             Tooltip.SetDefault("'There's some sort of martian scribble on it'");
         }
 
