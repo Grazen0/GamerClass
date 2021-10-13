@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using GamerClass.Buffs;
 
-namespace GamerClass.Items
+namespace GamerClass.Items.Weapons
 {
     public abstract class GamerWeapon : ModItem
     {
