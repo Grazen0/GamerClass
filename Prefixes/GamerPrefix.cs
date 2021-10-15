@@ -7,10 +7,11 @@ namespace GamerClass.Prefixes
 {
     public class GamerPrefix : ModPrefix
     {
-        internal float damageMult = 1f;
-        internal int critBonus = 0;
-        internal float useTimeMult = 1f;
-        internal float ramUsageMult;
+        public float damageMult = 1f;
+        public float knockbackMult = 1f;
+        public float useTimeMult = 1f;
+        public int critBonus = 0;
+        public float ramUsageMult;
 
         public override PrefixCategory Category => PrefixCategory.Custom;
 
@@ -19,11 +20,12 @@ namespace GamerClass.Prefixes
 
         }
 
-        public GamerPrefix(float damageMult = 1f, int critBonus = 0, float useTimeMult = 1f, float ramUsageMult = 1f)
+        public GamerPrefix(float damageMult = 1f, float knockbackMult = 1f, float useTimeMult = 1f, int critBonus = 0, float ramUsageMult = 1f)
         {
             this.damageMult = damageMult;
-            this.critBonus = critBonus;
+            this.knockbackMult = knockbackMult;
             this.useTimeMult = useTimeMult;
+            this.critBonus = critBonus;
             this.ramUsageMult = ramUsageMult;
         }
 
@@ -31,8 +33,8 @@ namespace GamerClass.Prefixes
         {
             if (base.Autoload(ref name))
             {
-                mod.AddPrefix("Polished", new GamerPrefix(damageMult: 1.1f, useTimeMult: 5));
                 mod.AddPrefix("Dusty", new GamerPrefix(useTimeMult: 0.85f, critBonus: -5));
+                mod.AddPrefix("Polished", new GamerPrefix(damageMult: 1.1f, useTimeMult: 5f));
                 mod.AddPrefix("Heated", new GamerPrefix(ramUsageMult: 1.15f));
             }
 
@@ -41,9 +43,10 @@ namespace GamerClass.Prefixes
 
         public override void Apply(Item item)
         {
-            Main.NewText("Applying " + ramUsageMult + " ram usage mult");
-            GamerWeapon gamerWeapon = item.modItem as GamerWeapon;
-            gamerWeapon.ramUsageMult = ramUsageMult;
+            if (item.modItem is GamerWeapon gamerWeapon)
+            {
+                gamerWeapon.ramUsageMult = ramUsageMult;
+            }
         }
 
         public override void ModifyValue(ref float valueMult)
@@ -57,8 +60,9 @@ namespace GamerClass.Prefixes
         public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
         {
             damageMult = this.damageMult;
-            critBonus = this.critBonus;
+            knockbackMult = this.knockbackMult;
             useTimeMult = this.useTimeMult;
+            critBonus = this.critBonus;
         }
 
         public override void ValidateItem(Item item, ref bool invalid)
