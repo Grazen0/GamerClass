@@ -8,8 +8,6 @@ namespace GamerClass.Items.Weapons
 {
     public class TF2RocketLauncher : GamerWeapon
     {
-        public override int RamUsage => 0;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soldier's Rocket Launcher");

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -13,13 +14,19 @@ namespace GamerClass.Items.Weapons
     public abstract class GamerWeapon : ModItem
     {
         public override bool CloneNewInstances => true;
+        public virtual int RamUsage => 0;
+        public float ramUsageMult = 1f;
 
-        public abstract int RamUsage
-        {
-            get;
-        }
+        public int TotalRamUsage => (int)Math.Round(RamUsage * ramUsageMult);
 
         private static SoundEffectInstance soundInstance = null;
+
+        public override ModItem Clone(Item item)
+        {
+            var clone = (GamerWeapon)base.Clone(item);
+            clone.ramUsageMult = ramUsageMult;
+            return clone;
+        }
 
         public virtual void SafeSetDefaults()
         {
@@ -34,6 +41,7 @@ namespace GamerClass.Items.Weapons
             item.ranged = false;
             item.magic = false;
             item.summon = false;
+            item.thrown = false;
             item.crit = 4;
         }
 
@@ -90,6 +98,7 @@ namespace GamerClass.Items.Weapons
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            Main.NewText(ramUsageMult);
             TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt != null)
             {
@@ -98,26 +107,26 @@ namespace GamerClass.Items.Weapons
             }
 
             string ramText;
-            if (RamUsage > 0)
+            if (TotalRamUsage > 0)
             {
                 string suffix = "B";
-                float roundedRAM = RamUsage;
-                if (RamUsage >= 1e12)
+                float roundedRAM = TotalRamUsage;
+                if (TotalRamUsage >= 1e12)
                 {
                     suffix = "TB";
                     roundedRAM /= 1e12f;
                 }
-                else if (RamUsage >= 1e9)
+                else if (TotalRamUsage >= 1e9)
                 {
                     suffix = "GB";
                     roundedRAM /= 1e9f;
                 }
-                else if (RamUsage >= 1e6)
+                else if (TotalRamUsage >= 1e6)
                 {
                     suffix = "MB";
                     roundedRAM /= 1e6f;
                 }
-                else if (RamUsage >= 1000)
+                else if (TotalRamUsage >= 1000)
                 {
                     suffix = "KB";
                     roundedRAM /= 1000f;
@@ -143,7 +152,7 @@ namespace GamerClass.Items.Weapons
 
             modPlayer.ramRegenTimer = -item.useTime;
             modPlayer.ramRegenRate = 1f;
-            modPlayer.usedRam += RamUsage;
+            modPlayer.usedRam += TotalRamUsage;
 
             if (modPlayer.usedRam > modPlayer.maxRam)
             {
@@ -175,13 +184,29 @@ namespace GamerClass.Items.Weapons
 
         public override int ChoosePrefix(UnifiedRandom rand)
         {
-            var val = new WeightedRandom<string>();
+            var val = new WeightedRandom<int>();
 
-            val.Add("Polished");
-            val.Add("Dusty");
+            val.Add(mod.PrefixType("Polished"));
+            val.Add(mod.PrefixType("Dusty"));
+            val.Add(mod.PrefixType("Heated"));
+            //val.Add(PrefixID.Quick);
+            //val.Add(PrefixID.Deadly);
+            //val.Add(PrefixID.Agile);
+            //val.Add(PrefixID.Nimble);
+            //val.Add(PrefixID.Murderous);
+            //val.Add(PrefixID.Slow);
+            //val.Add(PrefixID.Sluggish);
+            //val.Add(PrefixID.Lazy);
+            //val.Add(PrefixID.Annoying);
+            //val.Add(PrefixID.Nasty);
 
-            string type = val;
-            return mod.PrefixType(type);
+            return val;
+        }
+
+        public override bool NewPreReforge()
+        {
+            ramUsageMult = 1f;
+            return true;
         }
     }
 }

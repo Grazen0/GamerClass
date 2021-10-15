@@ -5,7 +5,7 @@ namespace GamerClass.Items.Weapons
 {
     public class PlumberHammer : GamerWeapon
     {
-        public override int RamUsage => 0;
+        public override int RamUsage => 100;
 
         public override void SetStaticDefaults()
         {
