@@ -98,7 +98,6 @@ namespace GamerClass.Items.Weapons
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            Main.NewText(ramUsageMult);
             TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt != null)
             {
