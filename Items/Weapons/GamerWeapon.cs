@@ -160,7 +160,7 @@ namespace GamerClass.Items.Weapons
             tooltips.Add(ramTooltip);
         }
 
-        public sealed override bool UseItem(Player player)
+        public override bool UseItem(Player player)
         {
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
 
