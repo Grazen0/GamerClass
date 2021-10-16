@@ -34,7 +34,7 @@ namespace GamerClass.Items.Weapons
             Vector2 velocity = new Vector2(speedX, speedY);
             Vector2 frontDirection = Vector2.Normalize(velocity);
 
-            position += (frontDirection.RotatedBy(-MathHelper.PiOver2) * 10f * player.direction) + (frontDirection * 20f);
+            position += (frontDirection.RotatedBy(-MathHelper.PiOver2) * 10f * player.direction) + (frontDirection * 24f);
 
             for (int d = 0; d < 6; d++)
             {
@@ -51,7 +51,7 @@ namespace GamerClass.Items.Weapons
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-60f, -2f);
+            return new Vector2(-65f, -8f);
         }
     }
 }

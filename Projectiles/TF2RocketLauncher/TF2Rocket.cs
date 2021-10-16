@@ -24,7 +24,7 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
         public override void AI()
         {
             projectile.rotation = projectile.velocity.ToRotation();
-            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 15, 0);
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 30, 0);
 
             if (projectile.alpha < 200)
                 SpawnDust();
@@ -100,7 +100,7 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture = Main.projectileTexture[projectile.type];
-            Vector2 origin = new Vector2(44f, texture.Height / 2);
+            Vector2 origin = new Vector2(texture.Width - projectile.width / 2, texture.Height / 2);
 
             Color color = GetAlpha(lightColor) ?? lightColor;
 
@@ -112,8 +112,9 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
                 projectile.rotation,
                 origin,
                 projectile.scale,
-                SpriteEffects.None,
+                projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically,
                 0f);
+
             return false;
         }
     }
