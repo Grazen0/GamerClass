@@ -49,9 +49,6 @@ namespace GamerClass.Items.Weapons
             return true;
         }
 
-        public override Vector2? HoldoutOffset()
-        {
-            return new Vector2(-65f, -8f);
-        }
+        public override Vector2? HoldoutOffset() => new Vector2(-65f, -8f);
     }
 }
