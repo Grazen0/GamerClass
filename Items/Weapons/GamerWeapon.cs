@@ -99,6 +99,7 @@ namespace GamerClass.Items.Weapons
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            // Damage tooltip 
             TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt != null)
             {
@@ -106,6 +107,19 @@ namespace GamerClass.Items.Weapons
                 tt.text = words.First() + " gamer " + words.Last();
             }
 
+            // Modifier tooltip
+            if (item.prefix > 0 && ramUsageMult != 1f)
+            {
+                string operand = ramUsageMult > 1f ? "+" : "-";
+                TooltipLine modifierTooltip = new TooltipLine(mod, "PrefixRAMUsage", operand + Math.Round((ramUsageMult - 1f) * 100f) + "% RAM usage")
+                {
+                    isModifier = true,
+                    isModifierBad = ramUsageMult > 1f
+                };
+                tooltips.Add(modifierTooltip);
+            }
+
+            // RAM usage tooltip
             string ramText;
             if (TotalRamUsage > 0)
             {
