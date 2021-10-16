@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using GamerClass.Items.Weapons;
@@ -7,6 +8,8 @@ namespace GamerClass.Prefixes
 {
     public class GamerPrefix : ModPrefix
     {
+        public static List<byte> GamerPrefixes;
+
         public float damageMult = 1f;
         public float knockbackMult = 1f;
         public float useTimeMult = 1f;
@@ -33,9 +36,25 @@ namespace GamerClass.Prefixes
         {
             if (base.Autoload(ref name))
             {
-                mod.AddPrefix("Dusty", new GamerPrefix(useTimeMult: 0.85f, critBonus: -5));
-                mod.AddPrefix("Polished", new GamerPrefix(damageMult: 1.1f, useTimeMult: 5f));
-                mod.AddPrefix("Heated", new GamerPrefix(ramUsageMult: 1.15f));
+                GamerPrefixes = new List<byte>();
+
+                // Bad prefixes
+                AddGamerPrefix(mod, "Glitched", new GamerPrefix(damageMult: 0.8f, knockbackMult: 0.9f, critBonus: -10, ramUsageMult: 1.2f));
+                AddGamerPrefix(mod, "Laggy", new GamerPrefix(useTimeMult: 0.8f, ramUsageMult: 0.95f));
+                AddGamerPrefix(mod, "Dusty", new GamerPrefix(damageMult: 0.95f, useTimeMult: 0.85f, ramUsageMult: 1.1f));
+
+                // Eh prefixes
+                AddGamerPrefix(mod, "Heated", new GamerPrefix(damageMult: 1.1f, ramUsageMult: 1.2f));
+                AddGamerPrefix(mod, "Frantic", new GamerPrefix(useTimeMult: 1.15f, ramUsageMult: 1.15f));
+                AddGamerPrefix(mod, "Berserk", new GamerPrefix(useTimeMult: 1.2f, critBonus: 5, ramUsageMult: 1.25f));
+
+                // Good prefixes
+                AddGamerPrefix(mod, "Polished", new GamerPrefix(damageMult: 1.05f, useTimeMult: 1.05f, critBonus: 5));
+                AddGamerPrefix(mod, "Blazing", new GamerPrefix(useTimeMult: 1.15f, critBonus: 5));
+                AddGamerPrefix(mod, "Cool", new GamerPrefix(useTimeMult: 1.1f, ramUsageMult: 0.8f));
+                AddGamerPrefix(mod, "Swole", new GamerPrefix(damageMult: 1.15f, knockbackMult: 1.2f));
+                AddGamerPrefix(mod, "Broken", new GamerPrefix(damageMult: 1.1f, useTimeMult: 1.15f, knockbackMult: 1.15f, ramUsageMult: 0.8f)); // We do a little trolling
+                AddGamerPrefix(mod, "OP", new GamerPrefix(damageMult: 1.15f, useTimeMult: 1.1f, critBonus: 5, knockbackMult: 1.15f, ramUsageMult: 0.85f));
             }
 
             return false;
@@ -76,6 +95,12 @@ namespace GamerClass.Prefixes
             {
                 invalid = true;
             }
+        }
+
+        private static void AddGamerPrefix(Mod mod, string name, GamerPrefix prefix)
+        {
+            mod.AddPrefix(name, prefix);
+            GamerPrefixes.Add(mod.PrefixType(name));
         }
     }
 }

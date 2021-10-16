@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework.Audio;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using GamerClass.Buffs;
 using Terraria.Utilities;
+using GamerClass.Buffs;
+using GamerClass.Prefixes;
 
 namespace GamerClass.Items.Weapons
 {
@@ -185,19 +186,18 @@ namespace GamerClass.Items.Weapons
         {
             var val = new WeightedRandom<int>();
 
-            val.Add(mod.PrefixType("Polished"));
-            val.Add(mod.PrefixType("Dusty"));
-            val.Add(mod.PrefixType("Heated"));
-            //val.Add(PrefixID.Quick);
-            //val.Add(PrefixID.Deadly);
-            //val.Add(PrefixID.Agile);
-            //val.Add(PrefixID.Nimble);
-            //val.Add(PrefixID.Murderous);
-            //val.Add(PrefixID.Slow);
-            //val.Add(PrefixID.Sluggish);
-            //val.Add(PrefixID.Lazy);
-            //val.Add(PrefixID.Annoying);
-            //val.Add(PrefixID.Nasty);
+            GamerPrefix.GamerPrefixes.ForEach(t => val.Add(t));
+
+            val.Add(PrefixID.Quick);
+            val.Add(PrefixID.Deadly);
+            val.Add(PrefixID.Agile);
+            val.Add(PrefixID.Nimble);
+            val.Add(PrefixID.Murderous);
+            val.Add(PrefixID.Slow);
+            val.Add(PrefixID.Sluggish);
+            val.Add(PrefixID.Lazy);
+            val.Add(PrefixID.Annoying);
+            val.Add(PrefixID.Nasty);
 
             return val;
         }
