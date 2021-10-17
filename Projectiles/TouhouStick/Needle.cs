@@ -41,16 +41,17 @@ namespace GamerClass.Projectiles.TouhouStick
             Color color = GetAlpha(lightColor) ?? lightColor;
 
             // Afterimages
-            int trails = 4;
+            int trails = 5;
             for (int i = 1; i <= trails; i++)
             {
-                Vector2 position = projectile.Center - projectile.velocity * i * 0.3f;
+                int reverseIndex = trails - i + 1;
+                Vector2 position = projectile.Center - projectile.velocity * reverseIndex * 0.3f;
 
                 spriteBatch.Draw(
                     texture,
                     position - Main.screenPosition,
                     null,
-                    color * projectile.Opacity * 0.2f,
+                    color * projectile.Opacity * 0.1f,
                     projectile.rotation,
                     origin,
                     projectile.scale,
