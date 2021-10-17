@@ -23,7 +23,7 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Scar");
-            Tooltip.SetDefault("'Ten kills on the board right now'");
+            Tooltip.SetDefault("Requires magazines, right click to reload\n'Ten kills on the board right now'");
         }
 
         public override void SafeSetDefaults()
@@ -42,7 +42,7 @@ namespace GamerClass.Items.Weapons
             if (player.altFunctionUse == 2)
             {
                 // Reload
-                item.UseSound = SoundID.Item98;
+                item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/ScarReload");
                 item.useTime = item.useAnimation = 124;
 
                 return player.GetModPlayer<GamerPlayer>().FindAndRemoveAmmo(ModContent.ItemType<Ammo.Magazine>());
