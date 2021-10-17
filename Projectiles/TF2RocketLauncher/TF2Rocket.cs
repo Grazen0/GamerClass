@@ -67,7 +67,7 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
 
                 if (distance <= range)
                 {
-                    float force = (1f - (distance / range)) * 30f;
+                    float force = (1f - (distance / range)) * 40f;
                     player.velocity = Vector2.Normalize(toPlayer) * force;
                 }
             }
