@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GamerClass.Projectiles
@@ -50,6 +51,16 @@ namespace GamerClass.Projectiles
                 0f);
 
             return false;
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Main.PlaySound(SoundID.Item10, projectile.Center);
+
+            for (int d = 0; d < 10; d++)
+            {
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Asphalt);
+            }
         }
     }
 }
