@@ -21,15 +21,9 @@ namespace GamerClass
         public float gamerUseTimeMult;
         public int gamerCrit;
 
-        public override void ResetEffects()
-        {
-            ResetVariables();
-        }
+        public override void ResetEffects() => ResetVariables();
 
-        public override void UpdateDead()
-        {
-            ResetVariables();
-        }
+        public override void UpdateDead() => ResetVariables();
 
         private void ResetVariables()
         {
@@ -79,6 +73,43 @@ namespace GamerClass
                     ramRegenRate *= 0.997f;
                 }
             }
+        }
+
+        public bool FindAndRemoveAmmo(int type)
+        {
+            bool CheckSlot(int slot)
+            {
+                Item item = player.inventory[slot];
+                if (item.type == type)
+                {
+                    if (item.stack > 1)
+                    {
+                        item.stack--;
+                    }
+                    else
+                    {
+                        item.TurnToAir();
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            // Search in ammo slots
+            for (int i = 54; i < 58; i++)
+            {
+                if (CheckSlot(i)) return true;
+            }
+
+            // Search in main inventory
+            for (int i = 0; i < 50; i++)
+            {
+                if (CheckSlot(i)) return true;
+            }
+
+            return false;
         }
     }
 }
