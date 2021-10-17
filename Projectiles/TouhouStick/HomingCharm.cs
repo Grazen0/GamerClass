@@ -10,6 +10,7 @@ namespace GamerClass.Projectiles.TouhouStick
     public class HomingCharm : ModProjectile
     {
         private readonly float RangeSQ = (float)Math.Pow(1000, 2);
+        private readonly float rotationSpeed = MathHelper.TwoPi / 180f;
 
         public int CurrentTarget
         {
@@ -24,12 +25,13 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.hostile = false;
             projectile.ignoreWater = true;
             projectile.timeLeft = 420;
+            projectile.scale = 0.8f;
             projectile.alpha = 255;
         }
 
         public override void AI()
         {
-            projectile.rotation += MathHelper.TwoPi / 180f;
+            projectile.rotation += rotationSpeed;
             projectile.alpha = (int)MathHelper.Max(projectile.alpha - 40, 0);
 
             FindTarget();
@@ -75,7 +77,7 @@ namespace GamerClass.Projectiles.TouhouStick
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
+            Main.PlaySound(SoundID.Item10, projectile.Center);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -84,6 +86,24 @@ namespace GamerClass.Projectiles.TouhouStick
             Vector2 origin = texture.Size() / 2f;
 
             Color color = GetAlpha(lightColor) ?? lightColor;
+
+            // Afterimages
+            int trails = 4;
+            for (int i = 1; i <= trails; i++)
+            {
+                Vector2 position = projectile.Center - projectile.velocity * i * 0.3f;
+
+                spriteBatch.Draw(
+                    texture,
+                    position - Main.screenPosition,
+                    null,
+                    color * projectile.Opacity * 0.2f,
+                    projectile.rotation - rotationSpeed * i,
+                    origin,
+                    projectile.scale,
+                    SpriteEffects.None,
+                    0f);
+            }
 
             spriteBatch.Draw(
                 texture,

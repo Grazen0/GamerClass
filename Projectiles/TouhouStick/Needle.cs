@@ -18,13 +18,19 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;
             projectile.timeLeft = 360;
+            projectile.scale = 0.8f;
             projectile.alpha = 255;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation();
+            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
             projectile.alpha = (int)MathHelper.Max(projectile.alpha - 50, 0);
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Main.PlaySound(SoundID.Item10, projectile.Center);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -34,23 +40,36 @@ namespace GamerClass.Projectiles.TouhouStick
             Vector2 origin = new Vector2(texture.Width / 2, projectile.height / 2);
             Color color = GetAlpha(lightColor) ?? lightColor;
 
+            // Afterimages
+            int trails = 4;
+            for (int i = 1; i <= trails; i++)
+            {
+                Vector2 position = projectile.Center - projectile.velocity * i * 0.3f;
+
+                spriteBatch.Draw(
+                    texture,
+                    position - Main.screenPosition,
+                    null,
+                    color * projectile.Opacity * 0.2f,
+                    projectile.rotation,
+                    origin,
+                    projectile.scale,
+                    SpriteEffects.None,
+                    0f);
+            }
+
             spriteBatch.Draw(
                 texture,
                 projectile.Center - Main.screenPosition,
                 null,
                 color * projectile.Opacity,
-                projectile.rotation + MathHelper.PiOver2,
+                projectile.rotation,
                 origin,
                 projectile.scale,
                 SpriteEffects.None,
                 0f);
 
             return false;
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            Main.PlaySound(SoundID.Dig, projectile.Center);
         }
     }
 }
