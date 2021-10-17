@@ -24,6 +24,7 @@ namespace GamerClass.Items.Weapons
 
         public override ModItem Clone(Item item)
         {
+            return base.Clone(item);
             var clone = (GamerWeapon)base.Clone(item);
             clone.ramUsageMult = ramUsageMult;
             return clone;
@@ -65,9 +66,46 @@ namespace GamerClass.Items.Weapons
         {
             bool canUseItem = !player.GetModPlayer<GamerPlayer>().gamerCooldown;
 
-            if (!canUseItem && (soundInstance == null || soundInstance.State != SoundState.Playing))
+            if (!canUseItem)
             {
-                soundInstance = Main.PlaySound(SoundID.NPCHit34);
+                // Play heated sound
+                if (soundInstance == null || soundInstance.State != SoundState.Playing)
+                {
+                    soundInstance = Main.PlaySound(SoundID.NPCHit34);
+                }
+            } else
+            {
+                // Increase player RAM bar and stuff
+                GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
+
+                modPlayer.ramRegenTimer = -item.useTime;
+                modPlayer.ramRegenRate = 1f;
+                modPlayer.usedRam += TotalRamUsage;
+
+                if (modPlayer.usedRam > modPlayer.maxRam)
+                {
+                    modPlayer.usedRam = modPlayer.maxRam;
+                    player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
+
+                    for (int d = 0; d < 20; d++)
+                    {
+                        bool fire = Main.rand.NextBool(3);
+
+                        int size = 20;
+                        Vector2 position = player.Center - new Vector2(1f, 1f) * (size / 2);
+
+                        int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Smoke);
+                        Main.dust[id].noGravity = true;
+                        Main.dust[id].fadeIn = 2f;
+                        Main.dust[id].velocity *= fire ? 8f : 4f;
+                        Main.dust[id].scale = 1f;
+                    }
+
+                    if (Main.myPlayer == player.whoAmI)
+                    {
+                        soundInstance = Main.PlaySound(SoundID.NPCHit53);
+                    }
+                }
             }
 
             return canUseItem;
@@ -158,42 +196,6 @@ namespace GamerClass.Items.Weapons
                 overrideColor = Color.Yellow
             };
             tooltips.Add(ramTooltip);
-        }
-
-        public override bool UseItem(Player player)
-        {
-            GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
-
-            modPlayer.ramRegenTimer = -item.useTime;
-            modPlayer.ramRegenRate = 1f;
-            modPlayer.usedRam += TotalRamUsage;
-
-            if (modPlayer.usedRam > modPlayer.maxRam)
-            {
-                modPlayer.usedRam = modPlayer.maxRam;
-                player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
-
-                for (int d = 0; d < 20; d++)
-                {
-                    bool fire = Main.rand.NextBool(3);
-
-                    int size = 20;
-                    Vector2 position = player.Center - new Vector2(1f, 1f) * (size / 2);
-
-                    int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Smoke);
-                    Main.dust[id].noGravity = true;
-                    Main.dust[id].fadeIn = 2f;
-                    Main.dust[id].velocity *= fire ? 8f : 4f;
-                    Main.dust[id].scale = 1f;
-                }
-
-                if (Main.myPlayer == player.whoAmI)
-                {
-                    soundInstance = Main.PlaySound(SoundID.NPCHit53);
-                }
-            }
-
-            return true;
         }
 
         public override int ChoosePrefix(UnifiedRandom rand)
