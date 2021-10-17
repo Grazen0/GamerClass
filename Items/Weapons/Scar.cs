@@ -80,10 +80,13 @@ namespace GamerClass.Items.Weapons
             else
             {
                 // Shoot
-                charge= 1;
+                charge--;
 
-                Vector2 frontDirection = Vector2.Normalize(new Vector2(speedX, speedY));
-                position += frontDirection * 62f;
+                Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 62f;
+                if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+                {
+                    position += muzzleOffset;
+                }
 
                 return true;
             }
