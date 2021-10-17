@@ -34,7 +34,12 @@ namespace GamerClass.Items.Weapons
             Vector2 velocity = new Vector2(speedX, speedY);
             Vector2 frontDirection = Vector2.Normalize(velocity);
 
-            position += (frontDirection.RotatedBy(-MathHelper.PiOver2) * 10f * player.direction) + (frontDirection * 24f);
+            Vector2 muzzleOffset = frontDirection * 24f;
+
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+            {
+                position += muzzleOffset;
+            }
 
             for (int d = 0; d < 6; d++)
             {
@@ -49,6 +54,6 @@ namespace GamerClass.Items.Weapons
             return true;
         }
 
-        public override Vector2? HoldoutOffset() => new Vector2(-65f, -8f);
+        public override Vector2? HoldoutOffset() => new Vector2(-55f, 2f);
     }
 }
