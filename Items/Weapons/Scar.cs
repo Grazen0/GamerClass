@@ -31,8 +31,8 @@ namespace GamerClass.Items.Weapons
             item.noMelee = true;
             item.damage = 40;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shootSpeed = 10;
-            item.shoot = ProjectileID.BulletHighVelocity;
+            item.shootSpeed = 7;
+            item.shoot = ModContent.ProjectileType<Projectiles.ScarBullet>();
             item.knockBack = 1;
             item.autoReuse = true;
         }
@@ -80,7 +80,11 @@ namespace GamerClass.Items.Weapons
             else
             {
                 // Shoot
-                charge--;
+                charge= 1;
+
+                Vector2 frontDirection = Vector2.Normalize(new Vector2(speedX, speedY));
+                position += frontDirection * 62f;
+
                 return true;
             }
         }
@@ -101,5 +105,7 @@ namespace GamerClass.Items.Weapons
         public override void NetRecieve(BinaryReader reader) => charge = reader.ReadVarInt();
 
         public override Vector2? HoldoutOffset() => new Vector2(-20f, 2f);
+
+        public override Vector2? HoldoutOrigin() => new Vector2(0f, 0f);
     }
 }
