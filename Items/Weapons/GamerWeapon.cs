@@ -24,7 +24,6 @@ namespace GamerClass.Items.Weapons
 
         public override ModItem Clone(Item item)
         {
-            return base.Clone(item);
             var clone = (GamerWeapon)base.Clone(item);
             clone.ramUsageMult = ramUsageMult;
             return clone;
