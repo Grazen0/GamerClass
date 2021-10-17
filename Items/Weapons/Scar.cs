@@ -10,8 +10,6 @@ namespace GamerClass.Items.Weapons
 {
     public class Scar : GamerWeapon
     {
-        public override string Texture => "Terraria/Item_" + ItemID.Uzi;
-
         private readonly int MaxCharge = 30;
         private int charge = 0;
 
@@ -33,7 +31,7 @@ namespace GamerClass.Items.Weapons
             item.noMelee = true;
             item.damage = 40;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shootSpeed = 100;
+            item.shootSpeed = 10;
             item.shoot = ProjectileID.BulletHighVelocity;
             item.knockBack = 1;
             item.autoReuse = true;
@@ -101,5 +99,7 @@ namespace GamerClass.Items.Weapons
         public override void NetSend(BinaryWriter writer) => writer.WriteVarInt(charge);
 
         public override void NetRecieve(BinaryReader reader) => charge = reader.ReadVarInt();
+
+        public override Vector2? HoldoutOffset() => new Vector2(-20f, 2f);
     }
 }
