@@ -32,6 +32,9 @@ namespace GamerClass.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            Vector2 velocity = new Vector2(speedX, speedY);
+            Vector2 frontDirection = Vector2.Normalize(velocity);
+
             // Main shot
             for (int side = -1; side <= 1; side += 2)
             {
@@ -50,14 +53,13 @@ namespace GamerClass.Items.Weapons
                     }
 
                     float angle = MathHelper.PiOver4 * shot * separation;
-                    Vector2 velocity = new Vector2(speedX, speedY).RotatedBy(angle * side);
-
-                    Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI);
+                    Vector2 orangeCharmVelocity = new Vector2(speedX, speedY).RotatedBy(angle * side);
+                    
+                    Projectile.NewProjectile(position, orangeCharmVelocity, type, damage, knockBack, player.whoAmI);
                 }
             }
 
             // Special shot
-            Vector2 frontDirection = Vector2.Normalize(new Vector2(speedX, speedY));
 
             if (player.altFunctionUse == 2)
             {
@@ -69,7 +71,7 @@ namespace GamerClass.Items.Weapons
 
                 for (int side = -1; side <= 1; side += 2)
                 {
-                    Vector2 basePosition = player.Center + perpendicular * side * 20f;
+                    Vector2 basePosition = player.Center + perpendicular * side * 10f;
                     if (side == -1)
                     {
                         basePosition -= perpendicular * needleSpacing * needlesPerSide;
@@ -84,9 +86,20 @@ namespace GamerClass.Items.Weapons
 
 
                         Vector2 needlePosition = basePosition + (perpendicular * needleSpacing * needle);
-                        Vector2 velocity = frontDirection * 45f;
+                        Vector2 needleVelocity = frontDirection * 45f;
 
-                        Projectile.NewProjectile(needlePosition, velocity, ModContent.ProjectileType<Needle>(), (int)(damage * 1.2f), knockBack, player.whoAmI);
+                        Vector2 offset = frontDirection * Main.rand.NextFloat(64f);
+                        if (Collision.CanHit(needlePosition, 0, 0, needlePosition + offset, 0, 0))
+                        {
+                            needlePosition += offset;
+                        }
+
+                        Projectile.NewProjectile(
+                            needlePosition,
+                            needleVelocity,
+                            ModContent.ProjectileType<Needle>(),
+                            (int)(damage * 1.2f),
+                            knockBack, player.whoAmI);
                     }
                 }
             }
@@ -101,11 +114,11 @@ namespace GamerClass.Items.Weapons
                     int animationIndex = (item.useAnimation - player.itemAnimation - 1) / item.useTime;
 
                     Vector2 baseDirection = frontDirection.RotatedBy(MathHelper.PiOver2 * -side * 0.9f);
-                    Vector2 velocity = baseDirection.RotatedBy(animationIndex * MathHelper.PiOver4 * 0.42f * side) * 30f;
+                    Vector2 homingShotVelocity = baseDirection.RotatedBy(animationIndex * MathHelper.PiOver4 * 0.42f * side) * 30f;
 
                     Projectile.NewProjectile(
                         shotPosition, 
-                        velocity, 
+                        homingShotVelocity, 
                         ModContent.ProjectileType<HomingCharm>(), 
                         damage, 
                         knockBack, 
