@@ -25,11 +25,27 @@ namespace GamerClass.Projectiles.TouhouStick
         {
             projectile.rotation += rotationSpeed;
             projectile.alpha = (int)MathHelper.Max(projectile.alpha - 40, 0);
+
+            if (Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.OrangeTorch);
+                dust.velocity = Vector2.Normalize(projectile.velocity) * dust.velocity.Length() * 0.5f;
+                dust.fadeIn = 1.2f;
+                dust.noGravity = true;
+            }
         }
 
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Item10, projectile.Center);
+
+            for (int d = 0; d < 4; d++)
+            {
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.OrangeTorch);
+                dust.fadeIn = 1.1f;
+                dust.noGravity = true;
+                dust.velocity *= 2f;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

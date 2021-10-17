@@ -45,6 +45,13 @@ namespace GamerClass.Projectiles.TouhouStick
                 Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
                 projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
             }
+
+            if (Main.rand.NextBool(16))
+            {
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PurificationPowder);
+                dust.velocity = Vector2.Normalize(projectile.velocity) * dust.velocity.Length() * 0.5f;
+                dust.fadeIn *= 0.2f;
+            }
         }
 
         private void FindTarget()
@@ -78,6 +85,12 @@ namespace GamerClass.Projectiles.TouhouStick
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Item10, projectile.Center);
+
+            for (int d = 0; d < 5; d++)
+            {
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PurificationPowder);
+                dust.velocity *= 2f;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
