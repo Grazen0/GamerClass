@@ -86,7 +86,7 @@ namespace GamerClass.Items.Weapons
 
 
                         Vector2 needlePosition = basePosition + (perpendicular * needleSpacing * needle);
-                        Vector2 needleVelocity = frontDirection * 45f;
+                        Vector2 needleVelocity = frontDirection * item.shootSpeed * Main.rand.NextFloat(1.4f, 1.6f);
 
                         Vector2 offset = frontDirection * Main.rand.NextFloat(64f);
                         if (Collision.CanHit(needlePosition, 0, 0, needlePosition + offset, 0, 0))
