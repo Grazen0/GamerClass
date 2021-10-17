@@ -62,7 +62,11 @@ namespace GamerClass.Items.Weapons
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            tooltips.Add(new TooltipLine(mod, "ScarCharge", $"Charge: {charge}/{MaxCharge}"));
+            var tt = new TooltipLine(mod, "ScarCharge", $"Charge: {charge}/{MaxCharge}") { 
+                overrideColor = charge > 0 ? Color.LightGreen : Color.Red
+            };
+
+            tooltips.Add(tt);
             base.ModifyTooltips(tooltips);
         }
 
@@ -74,7 +78,8 @@ namespace GamerClass.Items.Weapons
                 charge = MaxCharge;
                 player.itemRotation = MathHelper.PiOver4 * 0.7f * player.direction;
                 return false;
-            } else
+            }
+            else
             {
                 // Shoot
                 charge--;
