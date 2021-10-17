@@ -108,7 +108,5 @@ namespace GamerClass.Items.Weapons
         public override void NetRecieve(BinaryReader reader) => charge = reader.ReadVarInt();
 
         public override Vector2? HoldoutOffset() => new Vector2(-20f, 2f);
-
-        public override Vector2? HoldoutOrigin() => new Vector2(0f, 0f);
     }
 }

@@ -30,7 +30,6 @@ namespace GamerClass.Projectiles
                 dust.rotation = Main.rand.NextFloat(MathHelper.PiOver2);
                 dust.noGravity = true;
                 dust.fadeIn = 0f;
-                dust.customData = projectile;
                 dust.velocity = direction.RotatedBy(MathHelper.PiOver2 * (Main.rand.NextBool() ? 1 : -1)) * dust.velocity.Length() * 0.1f;
             }
         }
@@ -43,8 +42,8 @@ namespace GamerClass.Projectiles
 
             for (int d = 0; d < 5; d++)
             {
-                Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.WhiteTorch, Scale: 2f);
-                dust.velocity = -projectile.velocity.RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length() * 1.2f;
+                Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.BubbleBurst_White, Scale: 1.3f);
+                dust.velocity = -projectile.velocity.RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length() * 0.3f;
                 dust.noGravity = true;
                 dust.fadeIn = 0f;
             }
