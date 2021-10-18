@@ -36,6 +36,8 @@ namespace GamerClass.Items.Weapons
 
         public sealed override void SetDefaults()
         {
+            item.crit = 4;
+
             SafeSetDefaults();
 
             item.melee = false;
@@ -43,7 +45,6 @@ namespace GamerClass.Items.Weapons
             item.magic = false;
             item.summon = false;
             item.thrown = false;
-            item.crit = 4;
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
