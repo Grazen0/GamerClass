@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,10 +7,12 @@ namespace GamerClass.Items.Weapons
 {
     public class BerdlyHalberd : GamerWeapon
     {
+        private float MaxCursorLength = new Vector2(1920 / 2, 1080 / 2).Length();
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Berdly's Halberd");
-            Tooltip.SetDefault("'It smells like feathers'");
+            Tooltip.SetDefault("The weapon of a true gamer\n'It smells like feathers'");
         }
 
         public override void SafeSetDefaults()
@@ -19,14 +22,24 @@ namespace GamerClass.Items.Weapons
             item.height = 34;
             item.noMelee = true;
             item.damage = 110;
-            item.useAnimation = 40;
-            item.useTime = 24;
+            item.useAnimation = item.useTime = 45;
             item.shoot = ModContent.ProjectileType<Projectiles.BerdlyHalberd.HalberdSpear>();
             item.shootSpeed = 15f;
             item.knockBack = 6f;
             item.noUseGraphic = true;
             item.autoReuse = true;
             item.UseSound = SoundID.Item1;
+        }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            float MaxCursorLength = new Vector2(1920 / 2, 1080 / 2).Length();
+            float cursorLength = MathHelper.Min((Main.MouseWorld - position).Length(), MaxCursorLength);
+            float SineFactor = 0.5f + cursorLength * 0.0005f;
+
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 0f, SineFactor);
+
+            return false;
         }
 
         public override bool CanUseItem(Player player) => player.ownedProjectileCounts[item.shoot] < 1;
