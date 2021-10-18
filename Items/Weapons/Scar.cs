@@ -51,16 +51,17 @@ namespace GamerClass.Items.Weapons
             {
                 // Shoot
                 item.useTime = item.useAnimation = 10;
-                item.UseSound = SoundID.Item11;
+                item.UseSound = charge > 0 ? SoundID.Item11 : SoundID.Item98;
 
-                return charge > 0 && base.CanUseItem(player);
+                return base.CanUseItem(player);
             }
 
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            var tt = new TooltipLine(mod, "ScarCharge", $"Charge: {charge}/{MaxCharge}") { 
+            var tt = new TooltipLine(mod, "ScarCharge", $"Charge: {charge}/{MaxCharge}")
+            {
                 overrideColor = charge > 0 ? Color.LightGreen : Color.Red
             };
 
@@ -80,15 +81,20 @@ namespace GamerClass.Items.Weapons
             else
             {
                 // Shoot
-                charge--;
-
-                Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 62f;
-                if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+                if (charge > 0)
                 {
-                    position += muzzleOffset;
+                    charge--;
+
+                    Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 62f;
+                    if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+                    {
+                        position += muzzleOffset;
+                    }
+
+                    return true;
                 }
 
-                return true;
+                return false;
             }
         }
 
