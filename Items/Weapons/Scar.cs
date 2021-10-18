@@ -95,7 +95,7 @@ namespace GamerClass.Items.Weapons
                 } else
                 {
                     float spread = MathHelper.PiOver4;
-                    for (int d = 0; d < 3; d++)
+                    for (int d = 0; d < 4; d++)
                     {
                         Dust dust = Dust.NewDustPerfect(position, DustID.Smoke, Scale: 0.8f);
                         dust.velocity = frontDirection.RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length();
