@@ -81,20 +81,28 @@ namespace GamerClass.Items.Weapons
             else
             {
                 // Shoot
+                Vector2 frontDirection = Vector2.Normalize(new Vector2(speedX, speedY));
+                Vector2 muzzleOffset = frontDirection * 62f;
+                if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+                {
+                    position += muzzleOffset;
+                }
+
                 if (charge > 0)
                 {
                     charge--;
-
-                    Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 62f;
-                    if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+                    return true;
+                } else
+                {
+                    float spread = MathHelper.PiOver4;
+                    for (int d = 0; d < 3; d++)
                     {
-                        position += muzzleOffset;
+                        Dust dust = Dust.NewDustPerfect(position, DustID.Smoke, Scale: 0.8f);
+                        dust.velocity = frontDirection.RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length();
                     }
 
-                    return true;
+                    return false;
                 }
-
-                return false;
             }
         }
 
