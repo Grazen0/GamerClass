@@ -16,6 +16,8 @@ namespace GamerClass.Projectiles.GasterBlaster
 
         private Vector2 Unit => projectile.rotation.ToRotationVector2() * projectile.height;
 
+        public int OwnerProjectile => (int)projectile.ai[0];
+
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 3;
@@ -34,11 +36,6 @@ namespace GamerClass.Projectiles.GasterBlaster
             projectile.timeLeft = 60;
         }
 
-        public Projectile OwnerProjectile
-        {
-            get => Main.projectile[(int)projectile.ai[1]];
-        }
-
         public override void AI()
         {
             if (init)
@@ -47,11 +44,29 @@ namespace GamerClass.Projectiles.GasterBlaster
                 init = false;
             }
 
-            projectile.velocity = OwnerProjectile.velocity;
+            UpdateMovement();
+            UpdateVisuals();
+            CastLights();
+        }
 
-            projectile.rotation = projectile.ai[0];
+        private void UpdateMovement()
+        {
+            Projectile owner = Main.projectile[OwnerProjectile];
+            
+            if (owner.active)
+            {
+                projectile.position += owner.velocity;
+            } else
+            {
+                projectile.Kill();
+            }
+        }
 
-            int fadeOutDuration = 20;
+        private void UpdateVisuals()
+        {
+            projectile.rotation = projectile.velocity.ToRotation();
+
+            float fadeOutDuration = 20f;
 
             if (projectile.timeLeft > fadeOutDuration)
             {
@@ -72,8 +87,10 @@ namespace GamerClass.Projectiles.GasterBlaster
                 xScale = MathHelper.Max(xScale - scaleOutSpeed, 0f);
                 projectile.alpha = (int)MathHelper.Min(projectile.alpha + fadeOutSpeed, 255);
             }
+        }
 
-            // Cast light
+        private void CastLights()
+        {
             DelegateMethods.v3_1 = new Vector3(0.5f, 0.5f, 0.5f);
             Utils.PlotTileLine(projectile.Center, projectile.Center + (Unit * Segments), projectile.width * xScale * 0.8f, DelegateMethods.CastLight);
         }
@@ -141,6 +158,8 @@ namespace GamerClass.Projectiles.GasterBlaster
         {
             
         }
+
+        public override bool ShouldUpdatePosition() => false;
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

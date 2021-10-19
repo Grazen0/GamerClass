@@ -46,7 +46,7 @@ namespace GamerClass.Projectiles.GasterBlaster
         public override void AI()
         {
             float moveDuration = 20f;
-            float shootDelay = 8f;
+            float shootDelay = 5f;
 
             #region Visuals
             int targetCounter;
@@ -110,6 +110,8 @@ namespace GamerClass.Projectiles.GasterBlaster
             }
             else if (Timer > moveDuration + shootDelay)
             {
+                float acceleration = 0.6f;
+
                 if (Main.myPlayer == projectile.owner && shoot)
                 {
                     Vector2 direction = projectile.rotation.ToRotationVector2();
@@ -117,19 +119,18 @@ namespace GamerClass.Projectiles.GasterBlaster
 
                     Projectile.NewProjectile(
                         position, 
-                        Vector2.Zero, 
+                        direction, 
                         ModContent.ProjectileType<GasterBeam>(), 
                         projectile.damage / 4, 
                         projectile.knockBack, 
                         projectile.owner,
-                        projectile.rotation,
                         projectile.whoAmI);
 
                     shoot = false;
                 }
 
                 Vector2 frontDirection = projectile.rotation.ToRotationVector2();
-                projectile.velocity -= frontDirection * 0.6f;
+                projectile.velocity -= frontDirection * acceleration;
             }
 
             Timer++;
