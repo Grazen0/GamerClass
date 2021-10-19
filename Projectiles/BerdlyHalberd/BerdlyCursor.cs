@@ -9,10 +9,8 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 {
     public class BerdlyCursor : ModProjectile
     {
-        private Vector2 baseDirection = Vector2.Zero;
         private bool init = true;
         private int timer = 0;
-        private float rotationOffset = 0f;
         private float cursorTimer = 0f;
 
         public override void SetDefaults()
@@ -47,11 +45,22 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                 init = false;
             }
 
-            if (projectile.velocity != Vector2.Zero)
-            {
-                projectile.rotation = projectile.velocity.ToRotation();
-            }
-            else
+            int moveDelay = CursorIndex * 3;
+
+            if (timer == moveDelay)
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BerdlyCursor"));
+
+            SpawnDusts(moveDelay);
+            Movement(moveDelay);
+
+            if (CursorIndex == 1) SpawnCursors();
+
+            timer++;
+        }
+
+        private void SpawnDusts(int moveDelay)
+        {
+            if (timer < moveDelay)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, Scale: 4f);
                 dust.customData = projectile;
@@ -59,41 +68,23 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                 dust.noGravity = true;
                 dust.noLight = false;
             }
-
-            if (baseDirection == Vector2.Zero)
-            {
-                baseDirection = projectile.velocity;
-            }
-
-            UpdateVelocity();
-
-            if (CursorIndex == 1) SpawnCursors();
-
-            timer++;
         }
 
-        private void UpdateVelocity()
+        private void Movement(int moveDelay)
         {
-            int moveDelay = CursorIndex * 3;
-
             if (timer >= moveDelay)
             {
-                if (projectile.velocity == Vector2.Zero)
-                {
-                    projectile.velocity = baseDirection;
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BerdlyCursor"));
-                }
+                int sineTimer = timer - moveDelay + 90;
 
-                int actualTimer = timer - moveDelay;
-                float previousOffset = rotationOffset;
+                float rotation = (float)Math.Sin(MathHelper.ToRadians(sineTimer * 5f)) * SineFactor;
+                Vector2 realVelocity = projectile.velocity.RotatedBy(rotation);
 
-                rotationOffset = (float)Math.Sin(MathHelper.ToRadians(actualTimer * 5f)) * SineFactor;
-                projectile.velocity = projectile.velocity.RotatedBy((-previousOffset + rotationOffset));
+                projectile.position += realVelocity;
+                projectile.rotation = realVelocity.ToRotation();
             }
             else
             {
                 projectile.timeLeft++;
-                projectile.velocity = Vector2.Zero;
             }
         }
 
@@ -123,7 +114,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             }
         }
 
-        public override bool CanDamage() => projectile.velocity != Vector2.Zero;
+        public override bool CanDamage() => timer >= CursorIndex * 3;
 
         public override void Kill(int timeLeft)
         {
@@ -136,6 +127,8 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                 dust.noLight = false;
             }
         }
+
+        public override bool ShouldUpdatePosition() => false;
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
