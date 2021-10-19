@@ -90,7 +90,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 
         private void SpawnCursors()
         {
-            if (++cursorTimer > 8)
+            if (++cursorTimer > 6)
             {
                 cursorTimer = 0;
 

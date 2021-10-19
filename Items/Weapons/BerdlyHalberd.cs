@@ -24,7 +24,7 @@ namespace GamerClass.Items.Weapons
             item.damage = 110;
             item.useAnimation = item.useTime = 45;
             item.shoot = ModContent.ProjectileType<Projectiles.BerdlyHalberd.HalberdSpear>();
-            item.shootSpeed = 15f;
+            item.shootSpeed = 18f;
             item.knockBack = 6f;
             item.noUseGraphic = true;
             item.autoReuse = true;
@@ -35,7 +35,7 @@ namespace GamerClass.Items.Weapons
         {
             float MaxCursorLength = new Vector2(1920 / 2, 1080 / 2).Length();
             float cursorLength = MathHelper.Min((Main.MouseWorld - position).Length(), MaxCursorLength);
-            float SineFactor = 0.5f + cursorLength * 0.0005f;
+            float SineFactor = 0.5f + cursorLength * 0.0008f;
 
             Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 0f, SineFactor);
 
