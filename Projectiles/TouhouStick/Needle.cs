@@ -25,7 +25,7 @@ namespace GamerClass.Projectiles.TouhouStick
         public override void AI()
         {
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
-            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 50, 0);
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 50, 50);
 
             if (Main.rand.NextBool(10))
             {
