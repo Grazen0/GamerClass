@@ -71,17 +71,37 @@ namespace GamerClass.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+
             if (player.altFunctionUse == 2)
             {
                 // Reload
                 charge = MaxCharge;
                 player.itemRotation = MathHelper.PiOver4 * 0.7f * player.direction;
+
+                // Magazine gore
+                Vector2 offset = player.itemRotation.ToRotationVector2() * 10f * player.direction;
+                if (player.direction == -1)
+                    offset *= 2.2f;
+
+                Gore gore = Gore.NewGoreDirect(
+                    position + offset,
+                    Vector2.Zero,
+                    mod.GetGoreSlot("Gores/Magazine"));
+
+                float spread = Main.rand.NextFloat(MathHelper.PiOver4 * 0.2f, MathHelper.PiOver4 * 0.5f);
+                gore.velocity = (-Vector2.UnitY).RotatedBy(-spread * player.direction) * 6f;
+                gore.timeLeft /= 3;
+                if (player.direction == 1)
+                    gore.rotation += MathHelper.PiOver4;
+
                 return false;
             }
             else
             {
                 // Shoot
                 Vector2 frontDirection = Vector2.Normalize(new Vector2(speedX, speedY));
+                Vector2 cross = frontDirection.RotatedBy(MathHelper.PiOver2 * -player.direction);
+
                 Vector2 muzzleOffset = frontDirection * 62f;
                 if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
                 {
@@ -91,9 +111,25 @@ namespace GamerClass.Items.Weapons
                 if (charge > 0)
                 {
                     charge--;
+
+                    // Bullet round gore
+                    Vector2 offset = frontDirection * 13f;
+                    if (player.direction == -1)
+                        offset *= 2f;
+
+                    Gore gore = Gore.NewGoreDirect(
+                        player.Center + offset + cross * 3f,
+                        Vector2.Zero,
+                        mod.GetGoreSlot("Gores/BulletRound"));
+
+                    float spread = Main.rand.NextFloat(MathHelper.PiOver4 * 0.1f, MathHelper.PiOver4 * 0.5f);
+                    gore.velocity = cross.RotatedBy(-spread * player.direction) * 5f;
+                    gore.timeLeft /= 4;
+
                     return true;
                 } else
                 {
+                    // No charges left
                     float spread = MathHelper.PiOver4;
                     for (int d = 0; d < 4; d++)
                     {
