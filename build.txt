@@ -1,3 +1,5 @@
 displayName = The Gamer Class
 author = ElCholoGamer
 version = 0.1
+hideCode = true
+hideResources = true
