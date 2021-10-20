@@ -74,10 +74,13 @@ namespace GamerClass.Projectiles.BerdlyHalberd
         {
             if (timer >= moveDelay)
             {
-                int sineTimer = timer - moveDelay + 90;
+                float sineValue = MathHelper.ToRadians((timer - moveDelay) * 5f) - MathHelper.Pi;
 
-                float rotation = (float)Math.Sin(MathHelper.ToRadians(sineTimer * 5f)) * SineFactor;
-                Vector2 realVelocity = projectile.velocity.RotatedBy(rotation);
+                if (sineValue < 0f) timer++; // Speed up timer
+
+                float sine = (float)Math.Sin(sineValue);
+
+                Vector2 realVelocity = projectile.velocity.RotatedBy(sine * SineFactor);
 
                 projectile.position += realVelocity;
                 projectile.rotation = realVelocity.ToRotation();
