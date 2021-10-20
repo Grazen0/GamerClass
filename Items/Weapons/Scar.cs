@@ -79,20 +79,23 @@ namespace GamerClass.Items.Weapons
                 player.itemRotation = MathHelper.PiOver4 * 0.7f * player.direction;
 
                 // Magazine gore
-                Vector2 offset = player.itemRotation.ToRotationVector2() * 10f * player.direction;
-                if (player.direction == -1)
-                    offset *= 2.2f;
+                if (ModContent.GetInstance<GamerConfig>().ScarGores)
+                {
+                    Vector2 offset = player.itemRotation.ToRotationVector2() * 10f * player.direction;
+                    if (player.direction == -1)
+                        offset *= 2.2f;
 
-                Gore gore = Gore.NewGoreDirect(
-                    position + offset,
-                    Vector2.Zero,
-                    mod.GetGoreSlot("Gores/Magazine"));
+                    Gore gore = Gore.NewGoreDirect(
+                        position + offset,
+                        Vector2.Zero,
+                        mod.GetGoreSlot("Gores/Magazine"));
 
-                float spread = Main.rand.NextFloat(MathHelper.PiOver4 * 0.2f, MathHelper.PiOver4 * 0.5f);
-                gore.velocity = (-Vector2.UnitY).RotatedBy(-spread * player.direction) * 6f;
-                gore.timeLeft /= 3;
-                if (player.direction == 1)
-                    gore.rotation += MathHelper.PiOver4;
+                    float spread = Main.rand.NextFloat(MathHelper.PiOver4 * 0.2f, MathHelper.PiOver4 * 0.5f);
+                    gore.velocity = (-Vector2.UnitY).RotatedBy(-spread * player.direction) * 6f;
+                    gore.timeLeft /= 3;
+                    if (player.direction == 1)
+                        gore.rotation += MathHelper.PiOver4;
+                }
 
                 return false;
             }
@@ -113,21 +116,25 @@ namespace GamerClass.Items.Weapons
                     charge--;
 
                     // Bullet round gore
-                    Vector2 offset = frontDirection * 13f;
-                    if (player.direction == -1)
-                        offset *= 2f;
+                    if (ModContent.GetInstance<GamerConfig>().ScarGores)
+                    {
+                        Vector2 offset = frontDirection * 13f;
+                        if (player.direction == -1)
+                            offset *= 2f;
 
-                    Gore gore = Gore.NewGoreDirect(
-                        player.Center + offset + cross * 3f,
-                        Vector2.Zero,
-                        mod.GetGoreSlot("Gores/BulletRound"));
+                        Gore gore = Gore.NewGoreDirect(
+                            player.Center + offset + cross * 3f,
+                            Vector2.Zero,
+                            mod.GetGoreSlot("Gores/BulletRound"));
 
-                    float spread = Main.rand.NextFloat(MathHelper.PiOver4 * 0.1f, MathHelper.PiOver4 * 0.5f);
-                    gore.velocity = cross.RotatedBy(-spread * player.direction) * 5f;
-                    gore.timeLeft /= 4;
+                        float spread = Main.rand.NextFloat(MathHelper.PiOver4 * 0.1f, MathHelper.PiOver4 * 0.5f);
+                        gore.velocity = cross.RotatedBy(-spread * player.direction) * 5f;
+                        gore.timeLeft /= 4;
+                    }
 
                     return true;
-                } else
+                }
+                else
                 {
                     // No charges left
                     float spread = MathHelper.PiOver4;

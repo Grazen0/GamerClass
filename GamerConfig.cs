@@ -11,5 +11,10 @@ namespace GamerClass
         [Tooltip("Replace the normal flap sound when using the Strange Leaf")]
         [DefaultValue(true)]
         public bool RaccoonFlySound;
+
+        [Label("Scar rounds and magazines")]
+        [Tooltip("Spawn bullet round and magazine gores when using the Scar")]
+        [DefaultValue(true)]
+        public bool ScarGores;
     }
 }
