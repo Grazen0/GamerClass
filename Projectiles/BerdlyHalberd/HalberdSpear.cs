@@ -92,11 +92,11 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                     shootCursors = false;
                 }
 
-                MovementFactor -= 0.4f;
+                MovementFactor -= 0.3f;
             }
             else
             {
-                MovementFactor += 0.4f;
+                MovementFactor += 0.3f;
             }
         }
 
