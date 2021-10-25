@@ -24,11 +24,19 @@ namespace GamerClass
             IL.Terraria.Player.OpenBossBag += Player_OpenBossBag;
             IL.Terraria.Player.Update += Player_Update;
 
-            RamUsageBar = new RamUsageBar();
-            RamUsageBar.Activate();
+            if (!Main.dedServ)
+            {
+                RamUsageBar = new RamUsageBar();
+                RamUsageBar.Activate();
 
-            _ramUsageBar = new UserInterface();
-            _ramUsageBar.SetState(RamUsageBar);
+                _ramUsageBar = new UserInterface();
+                _ramUsageBar.SetState(RamUsageBar);
+
+                AddMusicBox(
+                    GetSoundSlot(Terraria.ModLoader.SoundType.Music, "Sounds/Music/Megalovania"),
+                    ItemType("SansMusicBox"),
+                    TileType("SansMusicBox"));
+            }
         }
 
         public override void AddRecipes()
