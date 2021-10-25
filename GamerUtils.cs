@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 
@@ -6,11 +7,19 @@ namespace GamerClass
 {
     public class GamerUtils
     {
-        public static void DustExplosion(Vector2 position, int dustType, float size, float dustScale = 1f, Color? color = null)
+        public static List<Dust> DustExplosion(
+            int points,
+            Vector2 position,
+            int dustType,
+            float size,
+            float baseRotation = -MathHelper.PiOver2,
+            float dustScale = 1f,
+            Color? color = null,
+            int dustPerPoint = 4)
         {
-            Vector2 baseDirection = -Vector2.UnitY;
-            int points = 7;
-            int dustPerPoint = 4;
+            List<Dust> dusts = new List<Dust>();
+
+            Vector2 baseDirection = baseRotation.ToRotationVector2();
             float separation = MathHelper.TwoPi / points;
 
             float minVelocity = size / 2;
@@ -29,15 +38,19 @@ namespace GamerClass
                         Vector2 direction = Vector2.Lerp(baseDirection, sideDirection, dustRadius);
                         float dustVelocity = maxVelocity - ((maxVelocity - minVelocity) * (float)Math.Sin(dustRadius * MathHelper.PiOver2));
 
-                        Dust dust = Dust.NewDustPerfect(position, dustType, Scale: dustScale, newColor: color ?? Color.White);
-                        dust.scale *= 0.8f;
+                        Dust dust = Dust.NewDustPerfect(position, dustType, newColor: color ?? Color.White);
+                        dust.scale = dustScale;
                         dust.velocity = direction * dustVelocity;
                         dust.noGravity = true;
+
+                        dusts.Add(dust);
                     }
                 }
 
                 baseDirection = baseDirection.RotatedBy(separation);
             }
+
+            return dusts;
         }
     }
 }
