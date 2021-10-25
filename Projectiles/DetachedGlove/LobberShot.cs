@@ -62,7 +62,7 @@ namespace GamerClass.Projectiles.DetachedGlove
                     jumpCooldown = 5;
                     jumps++;
 
-                    for (int d = 0; d < 8; d++)
+                    for (int d = 0; d < 4; d++)
                     {
                         Vector2 position = projectile.position;
                         position.Y += projectile.height;
@@ -79,6 +79,8 @@ namespace GamerClass.Projectiles.DetachedGlove
 
         public override void Kill(int timeLeft)
         {
+            Main.PlaySound(SoundID.Item10, projectile.Center);
+
             int separation = 2;
             int ringLength = 360 / separation;
 
