@@ -1,14 +1,15 @@
+using GamerClass.Items.Accessories.Misc;
+using GamerClass.UI;
+using Microsoft.Xna.Framework;
+using MonoMod.Cil;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using MonoMod.Cil;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
-using Terraria.UI;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
-using GamerClass.UI;
+using Terraria.UI;
 
 namespace GamerClass
 {
@@ -28,6 +29,21 @@ namespace GamerClass
 
             _ramUsageBar = new UserInterface();
             _ramUsageBar.SetState(RamUsageBar);
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(this);
+
+            recipe.AddIngredient(ModContent.ItemType<GamerEmblem>());
+            recipe.AddIngredient(ItemID.SoulofMight, 5);
+            recipe.AddIngredient(ItemID.SoulofSight, 5);
+            recipe.AddIngredient(ItemID.SoulofFright, 5);
+
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.SetResult(ItemID.AvengerEmblem);
+
+            recipe.AddRecipe();
         }
 
         private void NPC_NPCLoot(ILContext il)
