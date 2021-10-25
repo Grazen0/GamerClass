@@ -31,6 +31,7 @@ namespace GamerClass.Items.Weapons
             item.noMelee = true;
             item.damage = 40;
             item.useStyle = ItemUseStyleID.HoldingOut;
+            item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Scar");
             item.shootSpeed = 7;
             item.shoot = ModContent.ProjectileType<Projectiles.ScarBullet>();
             item.knockBack = 1;
@@ -51,7 +52,7 @@ namespace GamerClass.Items.Weapons
             {
                 // Shoot
                 item.useTime = item.useAnimation = 10;
-                item.UseSound = charge > 0 ? SoundID.Item11 : SoundID.Item98;
+                item.UseSound = charge > 0 ? mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Scar") : SoundID.Item98;
 
                 return base.CanUseItem(player);
             }
