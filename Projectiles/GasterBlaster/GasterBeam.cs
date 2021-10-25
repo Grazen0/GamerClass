@@ -55,7 +55,7 @@ namespace GamerClass.Projectiles.GasterBlaster
             
             if (owner.active)
             {
-                projectile.position += owner.velocity;
+                projectile.Center = owner.Center + projectile.velocity;
             } else
             {
                 projectile.Kill();
@@ -152,11 +152,6 @@ namespace GamerClass.Projectiles.GasterBlaster
             }
 
             return false;
-        }
-
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            
         }
 
         public override bool ShouldUpdatePosition() => false;

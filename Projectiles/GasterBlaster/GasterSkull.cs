@@ -48,35 +48,6 @@ namespace GamerClass.Projectiles.GasterBlaster
             float moveDuration = 20f;
             float shootDelay = 5f;
 
-            #region Visuals
-            int targetCounter;
-            if (projectile.frame == 0)
-            {
-                targetCounter = (int)moveDuration - 9;
-            }
-            else if (projectile.frame < Main.projFrames[projectile.type] - 3)
-            {
-                targetCounter = 3;
-            }
-            else
-            {
-                targetCounter = 4;
-            }
-
-            if (projectile.frameCounter++ > targetCounter)
-            {
-                if (projectile.frame == Main.projFrames[projectile.type] - 1)
-                {
-                    projectile.frame--;
-                }
-                else
-                {
-                    projectile.frame++;
-                }
-                projectile.frameCounter = 0;
-            }
-            #endregion
-
             if (init)
             {
                 float velocityRotation = projectile.velocity.ToRotation();
@@ -114,15 +85,14 @@ namespace GamerClass.Projectiles.GasterBlaster
 
                 if (Main.myPlayer == projectile.owner && shoot)
                 {
-                    Vector2 direction = projectile.rotation.ToRotationVector2();
-                    Vector2 position = projectile.Center + direction * 38f;
+                    Vector2 offset = projectile.rotation.ToRotationVector2() * 38f;
 
                     Projectile.NewProjectile(
-                        position, 
-                        direction, 
-                        ModContent.ProjectileType<GasterBeam>(), 
-                        projectile.damage / 4, 
-                        projectile.knockBack, 
+                        projectile.Center + offset,
+                        offset,
+                        ModContent.ProjectileType<GasterBeam>(),
+                        projectile.damage / 4,
+                        projectile.knockBack,
                         projectile.owner,
                         projectile.whoAmI);
 
@@ -134,6 +104,38 @@ namespace GamerClass.Projectiles.GasterBlaster
             }
 
             Timer++;
+
+            UpdateVisuals(moveDuration);
+        }
+
+        private void UpdateVisuals(float moveDuration)
+        {
+            int targetCounter;
+            if (projectile.frame == 0)
+            {
+                targetCounter = (int)moveDuration - 9;
+            }
+            else if (projectile.frame < Main.projFrames[projectile.type] - 3)
+            {
+                targetCounter = 3;
+            }
+            else
+            {
+                targetCounter = 4;
+            }
+
+            if (projectile.frameCounter++ > targetCounter)
+            {
+                if (projectile.frame == Main.projFrames[projectile.type] - 1)
+                {
+                    projectile.frame--;
+                }
+                else
+                {
+                    projectile.frame++;
+                }
+                projectile.frameCounter = 0;
+            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
