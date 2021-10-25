@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Items.Weapons;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
@@ -24,6 +25,14 @@ namespace GamerClass.UI
             barColor = Color.LightBlue;
 
             Append(area);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (Main.LocalPlayer.HeldItem.modItem is GamerWeapon)
+            {
+                base.Draw(spriteBatch);
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
