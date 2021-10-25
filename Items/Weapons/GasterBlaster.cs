@@ -30,7 +30,7 @@ namespace GamerClass.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            float spawnRange = 600f;
+            float spawnRange = 400f;
 
             Vector2 spawnAt = new Vector2(Main.MouseWorld.X + Main.rand.NextFloat(-spawnRange, spawnRange), 580f);
             if (Main.rand.NextBool()) spawnAt.Y *= -1f;
