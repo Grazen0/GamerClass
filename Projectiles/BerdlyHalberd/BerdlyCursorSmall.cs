@@ -10,6 +10,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 {
     public class BerdlyCursorSmall : ModProjectile
     {
+        private readonly int MaxLife = 240;
         private readonly float RangeSQ = (float)Math.Pow(1000, 2);
 
         public override void SetDefaults()
@@ -18,16 +19,12 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             projectile.friendly = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 240;
+            projectile.timeLeft = MaxLife;
             projectile.scale = 1.2f;
             projectile.hide = true;
         }
 
-        public float MoveTimer
-        {
-            get => projectile.ai[0];
-            set => projectile.ai[0] = value;
-        }
+        public float InitialRotation => projectile.ai[0];
 
         public int CurrentTarget
         {
@@ -39,13 +36,14 @@ namespace GamerClass.Projectiles.BerdlyHalberd
         {
             if (projectile.velocity == Vector2.Zero)
             {
-                if (++MoveTimer > 20)
+                if (projectile.timeLeft < MaxLife - 20)
                 {
-                    MoveTimer = 0;
                     projectile.velocity = projectile.rotation.ToRotationVector2() * 10f;
                 }
+
+                projectile.rotation = InitialRotation;
             }
-            else if (++MoveTimer > 15)
+            else if (projectile.timeLeft < MaxLife - 35)
             {
                 projectile.rotation = projectile.velocity.ToRotation();
 

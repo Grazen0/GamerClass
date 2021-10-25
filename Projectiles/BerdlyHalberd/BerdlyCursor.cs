@@ -101,17 +101,15 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                 {
                     for (int side = -1; side <= 1; side += 2)
                     {
-                        Projectile cursor = Projectile.NewProjectileDirect(
+                        Projectile.NewProjectile(
                             projectile.Center,
                             Vector2.Zero,
                             ModContent.ProjectileType<BerdlyCursorSmall>(),
                             projectile.damage,
                             projectile.knockBack,
                             projectile.owner,
-                            0f, -1f);
-
-                        cursor.rotation = projectile.rotation + MathHelper.PiOver2 * side;
-                        cursor.netUpdate = true;
+                            projectile.rotation + MathHelper.PiOver2 * side, 
+                            -1f);
                     }
                 }
             }
