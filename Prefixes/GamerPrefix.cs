@@ -52,7 +52,7 @@ namespace GamerClass.Prefixes
                 AddGamerPrefix(mod, "Polished", new GamerPrefix(damageMult: 1.05f, useTimeMult: 1.05f, critBonus: 5));
                 AddGamerPrefix(mod, "Blazing", new GamerPrefix(useTimeMult: 1.15f, critBonus: 5));
                 AddGamerPrefix(mod, "Cool", new GamerPrefix(useTimeMult: 1.1f, ramUsageMult: 0.8f));
-                AddGamerPrefix(mod, "Swole", new GamerPrefix(damageMult: 1.15f, knockbackMult: 1.2f));
+                AddGamerPrefix(mod, "Goated", new GamerPrefix(damageMult: 1.15f, knockbackMult: 1.2f));
                 AddGamerPrefix(mod, "Broken", new GamerPrefix(damageMult: 1.1f, useTimeMult: 1.15f, knockbackMult: 1.15f, ramUsageMult: 0.8f)); // We do a little trolling
                 AddGamerPrefix(mod, "OP", new GamerPrefix(damageMult: 1.15f, useTimeMult: 1.1f, critBonus: 5, knockbackMult: 1.15f, ramUsageMult: 0.85f));
             }
