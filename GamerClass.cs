@@ -16,7 +16,7 @@ namespace GamerClass
     public class GamerClass : Mod
     {
         internal RamUsageBar RamUsageBar;
-        private UserInterface _ramUsageBar;
+        internal UserInterface RamInterface;
 
         public override void Load()
         {
@@ -27,15 +27,22 @@ namespace GamerClass
             if (!Main.dedServ)
             {
                 RamUsageBar = new RamUsageBar();
-                RamUsageBar.Activate();
-
-                _ramUsageBar = new UserInterface();
-                _ramUsageBar.SetState(RamUsageBar);
+                RamInterface = new UserInterface();
+                RamInterface.SetState(RamUsageBar);
 
                 AddMusicBox(
                     GetSoundSlot(Terraria.ModLoader.SoundType.Music, "Sounds/Music/Megalovania"),
                     ItemType("SansMusicBox"),
                     TileType("SansMusicBox"));
+            }
+        }
+
+        public override void Unload()
+        {
+            if (RamUsageBar != null)
+            {
+                RamUsageBar.Unload();
+                RamUsageBar = null;
             }
         }
 
@@ -128,7 +135,7 @@ namespace GamerClass
 
         public override void UpdateUI(GameTime gameTime)
         {
-            _ramUsageBar.Update(gameTime);
+            RamInterface?.Update(gameTime);
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -140,7 +147,7 @@ namespace GamerClass
                     "GamerClass: RAM Usage",
                     delegate
                     {
-                        _ramUsageBar.Draw(Main.spriteBatch, new GameTime());
+                        RamInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;
                     },
                     InterfaceScaleType.UI)
