@@ -68,7 +68,6 @@ namespace GamerClass.UI
 
                     shakeTimer--;
                 }
-
             } else
             {
                 shakeTimer = -1;
