@@ -11,8 +11,8 @@ namespace GamerClass.Items.Weapons
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Berdly's Halberd");
-            Tooltip.SetDefault("The weapon of a true gamer\n'It smells like feathers'");
+            DisplayName.SetDefault("Green Halbird");
+            Tooltip.SetDefault("The weapon of a true gamer\n'It smells like math'");
         }
 
         public override void SafeSetDefaults()
