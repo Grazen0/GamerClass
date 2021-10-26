@@ -112,7 +112,7 @@ namespace GamerClass.UI
             if (hitbox.Intersects(mouse))
             {
                 Main.LocalPlayer.mouseInterface = true;
-                Main.instance.MouseText($"Used RAM: {modPlayer.usedRam} / {modPlayer.maxRam}");
+                Main.instance.MouseText($"Used RAM: {modPlayer.usedRam}B / {modPlayer.maxRam}B");
             }
         }
 
