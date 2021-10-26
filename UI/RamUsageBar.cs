@@ -52,11 +52,13 @@ namespace GamerClass.UI
             // Draw frame
             int frameHeight = frameTexture.Height / 10;
             int frameIndex = (int)(ramRadius * 3);
+            if (frameIndex > 2) 
+                frameIndex = 2;
 
-            if (ramRadius == 1f)
+            if (modPlayer.gamerCooldown)
             {
                 UpdateFireAnimation();
-                frameIndex += fireFrame;
+                frameIndex += 1 + fireFrame;
 
                 if (shakeTimer == -1)
                     shakeTimer = 60;
