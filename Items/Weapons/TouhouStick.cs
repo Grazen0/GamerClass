@@ -8,8 +8,6 @@ namespace GamerClass.Items.Weapons
 {
     public class TouhouStick : GamerWeapon
     {
-        public new int ramUsage = 1;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reimu's Gohei");
@@ -29,6 +27,8 @@ namespace GamerClass.Items.Weapons
             item.useTime = 6;
             item.shoot = ModContent.ProjectileType<OrangeCharm>();
             item.shootSpeed = 30f;
+
+            ramUsage = 3;
         }
 
 

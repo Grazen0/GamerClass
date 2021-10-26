@@ -7,8 +7,6 @@ namespace GamerClass.Items.Weapons
 {
     public class BerdlyHalberd : GamerWeapon
     {
-        public new int ramUsage = 5;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Green Halbird");
@@ -29,6 +27,8 @@ namespace GamerClass.Items.Weapons
             item.noUseGraphic = true;
             item.autoReuse = true;
             item.UseSound = SoundID.Item1;
+
+            ramUsage = 5;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -42,6 +42,6 @@ namespace GamerClass.Items.Weapons
             return false;
         }
 
-        public override bool CanUseItem(Player player) => player.ownedProjectileCounts[item.shoot] < 1;
+        public override bool CanUseItem(Player player) => player.ownedProjectileCounts[item.shoot] < 1 && base.CanUseItem(player);
     }
 }

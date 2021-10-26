@@ -39,6 +39,8 @@ namespace GamerClass.Items.Weapons
             item.shootSpeed = 40f;
             item.useTime = item.useAnimation = 10;
             item.autoReuse = true;
+
+            ramUsage = 2;
         }
 
         public override bool CanUseItem(Player player)
@@ -60,28 +62,34 @@ namespace GamerClass.Items.Weapons
                     case 0: // Peashooter
                         item.useTime = item.useAnimation = 8;
                         soundName = "PeaShot";
+                        ramUsage = 1;
                         break;
                     case 1: // Spread
                         item.useTime = item.useAnimation = 9;
                         soundName = "SpreadShot";
+                        ramUsage = 1;
                         break;
                     case 2: // Chaser
                         item.useTime = item.useAnimation = 10;
                         soundName = "ChaserShot";
+                        ramUsage = 2;
                         break;
                     case 3: // Lobber
                         item.useTime = item.useAnimation = 20;
                         soundName = "LobberShot";
+                        ramUsage = 3;
                         break;
                     case 4: // Charge
                         item.channel = true;
                         item.UseSound = null;
                         item.useTime = item.useAnimation = 15;
                         soundName = "ChargeShot";
+                        ramUsage = 3;
                         break;
                     case 5: // Roundabout
                         item.useTime = item.useAnimation = 16;
                         soundName = "RoundaboutShot";
+                        ramUsage = 3;
                         break;
                 }
 

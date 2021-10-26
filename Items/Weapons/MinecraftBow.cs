@@ -28,6 +28,8 @@ namespace GamerClass.Items.Weapons
             item.useTime = item.useAnimation = 10;
             item.autoReuse = true;
             item.noUseGraphic = true;
+
+            ramUsage = 3;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

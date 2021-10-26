@@ -5,8 +5,6 @@ namespace GamerClass.Items.Weapons
 {
     public class PlumberHammer : GamerWeapon
     {
-        public new int ramUsage = 3;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plumber's Hammer");
@@ -25,6 +23,8 @@ namespace GamerClass.Items.Weapons
             item.shoot = ModContent.ProjectileType<Projectiles.FlyingHammer>();
             item.shootSpeed = 15;
             item.autoReuse = true;
+
+            ramUsage = 3;
         }
     }
 }

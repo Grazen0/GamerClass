@@ -8,8 +8,6 @@ namespace GamerClass.Items.Weapons
 {
     public class GasterBlaster : GamerWeapon
     {
-        public new int ramUsage = 4;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Funny Looking Bone");
@@ -28,6 +26,8 @@ namespace GamerClass.Items.Weapons
             item.UseSound = SoundID.Item78;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<GasterSkull>();
+
+            ramUsage = 4;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

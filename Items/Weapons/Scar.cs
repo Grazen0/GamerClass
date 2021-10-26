@@ -10,8 +10,6 @@ namespace GamerClass.Items.Weapons
 {
     public class Scar : GamerWeapon
     {
-        public new int ramUsage = 1;
-
         private readonly int MaxCharge = 30;
         private int charge = 0;
 
@@ -38,6 +36,8 @@ namespace GamerClass.Items.Weapons
             item.shoot = ModContent.ProjectileType<Projectiles.ScarBullet>();
             item.knockBack = 1;
             item.autoReuse = true;
+
+            ramUsage = 1;
         }
 
         public override bool CanUseItem(Player player)

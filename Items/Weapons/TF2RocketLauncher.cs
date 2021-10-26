@@ -8,8 +8,6 @@ namespace GamerClass.Items.Weapons
 {
     public class TF2RocketLauncher : GamerWeapon
     {
-        public new int ramUsage = 3;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soldier's Rocket Launcher");
@@ -28,6 +26,8 @@ namespace GamerClass.Items.Weapons
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<TF2Rocket>();
             item.shootSpeed = 20f;
+
+            ramUsage = 3;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -24,6 +24,8 @@ namespace GamerClass.Items.Weapons
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SpaceInvadersCannon");
             item.shoot = ModContent.ProjectileType<Projectiles.DustyLaserCannon.ShoddyBeam>();
             item.shootSpeed = 30;
+
+            ramUsage = 2;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
