@@ -53,6 +53,8 @@ namespace GamerClass.Projectiles.MinecraftBow
                 }
             } else
             {
+                player.GetModPlayer<GamerPlayer>().ramRegenTimer = -2;
+
                 if (charge < MaxCharge) charge++;
                 projectile.timeLeft = 15;
             }
@@ -74,8 +76,6 @@ namespace GamerClass.Projectiles.MinecraftBow
             player.heldProj = projectile.whoAmI;
             player.itemTime = player.itemAnimation = 2;
             player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
-
-            player.GetModPlayer<GamerPlayer>().ramRegenTimer = -2;
         }
 
         private void UpdateShake()
