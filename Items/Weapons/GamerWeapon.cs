@@ -82,7 +82,7 @@ namespace GamerClass.Items.Weapons
                 modPlayer.ramRegenRate = 1f;
                 modPlayer.usedRam += TotalRamUsage;
 
-                if (modPlayer.usedRam > modPlayer.maxRam)
+                if (modPlayer.usedRam >= modPlayer.maxRam)
                 {
                     modPlayer.usedRam = modPlayer.maxRam;
                     player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
