@@ -48,6 +48,8 @@ namespace GamerClass.Projectiles.DetachedGlove
 
         public override void Kill(int timeLeft)
         {
+            Main.PlaySound(SoundID.Item10, projectile.Center);
+
             int lines = 7;
             float separation = MathHelper.TwoPi / lines;
             Vector2 direction = Main.rand.NextVector2CircularEdge(1f, 1f);
