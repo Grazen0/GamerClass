@@ -1,24 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using GamerClass.Buffs;
+using GamerClass.Prefixes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using GamerClass.Buffs;
-using GamerClass.Prefixes;
 
 namespace GamerClass.Items.Weapons
 {
     public abstract class GamerWeapon : ModItem
     {
         public override bool CloneNewInstances => true;
-        public virtual int RamUsage => 0;
+        public int ramUsage = 0;
         public float ramUsageMult = 1f;
 
-        public int TotalRamUsage => (int)Math.Round(RamUsage * ramUsageMult);
+        public int TotalRamUsage => (int)Math.Round(ramUsage * ramUsageMult);
 
         private static SoundEffectInstance soundInstance = null;
 
