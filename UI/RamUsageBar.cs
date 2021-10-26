@@ -59,12 +59,16 @@ namespace GamerClass.UI
 
                 if (shakeTimer == -1)
                     shakeTimer = 60;
-                else if (shakeTimer > 0)
-                    shakeTimer--;
 
-                int shake = shakeTimer / 8;
-                hitbox.X += Main.rand.Next(-shake, shake);
-                hitbox.Y += Main.rand.Next(-shake, shake);
+                if (shakeTimer > 0)
+                {
+                    int shake = shakeTimer / 8;
+                    hitbox.X += Main.rand.Next(-shake, shake);
+                    hitbox.Y += Main.rand.Next(-shake, shake);
+
+                    shakeTimer--;
+                }
+
             } else
             {
                 shakeTimer = -1;
