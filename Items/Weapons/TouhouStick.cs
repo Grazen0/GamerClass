@@ -8,6 +8,8 @@ namespace GamerClass.Items.Weapons
 {
     public class TouhouStick : GamerWeapon
     {
+        public new int ramUsage = 1;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reimu's Gohei");

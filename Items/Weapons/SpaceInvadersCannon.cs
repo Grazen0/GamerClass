@@ -7,6 +7,8 @@ namespace GamerClass.Items.Weapons
 {
     public class SpaceInvadersCannon : GamerWeapon
     {
+        public new int ramUsage = 2;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Old Joystick");

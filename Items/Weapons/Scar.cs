@@ -10,6 +10,8 @@ namespace GamerClass.Items.Weapons
 {
     public class Scar : GamerWeapon
     {
+        public new int ramUsage = 1;
+
         private readonly int MaxCharge = 30;
         private int charge = 0;
 
@@ -45,14 +47,16 @@ namespace GamerClass.Items.Weapons
                 // Reload
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/ScarReload");
                 item.useTime = item.useAnimation = 124;
+                ramUsage = 0;
 
-                return player.GetModPlayer<GamerPlayer>().FindAndRemoveAmmo(ModContent.ItemType<Ammo.Magazine>());
+                return base.CanUseItem(player) && player.GetModPlayer<GamerPlayer>().FindAndRemoveAmmo(ModContent.ItemType<Ammo.Magazine>());
             }
             else
             {
                 // Shoot
                 item.useTime = item.useAnimation = 10;
                 item.UseSound = charge > 0 ? mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Scar") : SoundID.Item98;
+                ramUsage = 2;
 
                 return base.CanUseItem(player);
             }

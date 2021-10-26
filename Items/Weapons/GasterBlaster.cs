@@ -8,6 +8,8 @@ namespace GamerClass.Items.Weapons
 {
     public class GasterBlaster : GamerWeapon
     {
+        public new int ramUsage = 4;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Funny Looking Bone");

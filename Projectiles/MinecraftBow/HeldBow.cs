@@ -72,10 +72,10 @@ namespace GamerClass.Projectiles.MinecraftBow
 
             player.ChangeDir(projectile.direction);
             player.heldProj = projectile.whoAmI;
-            player.itemTime = 2;
-            player.itemAnimation = 2;
-
+            player.itemTime = player.itemAnimation = 2;
             player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
+
+            player.GetModPlayer<GamerPlayer>().ramRegenTimer = -2;
         }
 
         private void UpdateShake()
