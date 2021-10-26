@@ -11,7 +11,7 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soldier's Rocket Launcher");
-            Tooltip.SetDefault("Uses rockets as ammo\n'Great against red spies in the base'");
+            Tooltip.SetDefault("'Great against red spies in the base'");
         }
 
         public override void SafeSetDefaults()
@@ -26,7 +26,6 @@ namespace GamerClass.Items.Weapons
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<TF2Rocket>();
             item.shootSpeed = 20f;
-            item.useAmmo = AmmoID.Rocket;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
