@@ -3,64 +3,143 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
-using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader;
 
 namespace GamerClass.UI
 {
     internal class RamUsageBar : UIState
     {
-        private UIElement area;
-        private UIImage barFrame;
-
-        private Color barColor;
+        internal int fireFrame = 0;
+        internal int fireTimer = 0;
+        internal int shakeTimer = -1;
+        internal UIElement barFrame;
+        internal Texture2D frameTexture;
+        internal Texture2D fillTexture;
 
         public override void OnInitialize()
         {
-            area = new UIElement();
-            area.Left.Set(-area.Width.Pixels - 600, 1f);
-            area.Top.Set(30, 0f); // Placing it just a bit below the top of the screen.
-            area.Width.Set(182, 0f); // We will be placing the following 2 UIElements within this 182x60 area.
-            area.Height.Set(30, 0f);
+            barFrame = new UIElement();
+            barFrame.Left.Set(-barFrame.Width.Pixels - 500, 1f);
+            barFrame.Top.Set(30, 0f);
+            barFrame.Width.Set(168, 0f);
+            barFrame.Height.Set(51, 0f);
 
-            barColor = Color.LightBlue;
+            frameTexture = ModContent.GetTexture("GamerClass/UI/RamUsageFrame");
+            fillTexture = ModContent.GetTexture("GamerClass/UI/RamUsageFill");
 
-            Append(area);
+            Append(barFrame);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (Main.LocalPlayer.HeldItem.modItem is GamerWeapon)
-            {
                 base.Draw(spriteBatch);
-            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             base.DrawSelf(spriteBatch);
 
-            GamerPlayer modPlayer = Main.LocalPlayer.GetModPlayer<GamerPlayer>();
+            var modPlayer = Main.LocalPlayer.GetModPlayer<GamerPlayer>();
+
+            // For some reason, the spriteBatch uses anti-aliasing by default
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
             float ramRadius = MathHelper.Clamp((float)modPlayer.usedRam / modPlayer.maxRam, 0f, 1f);
+            Rectangle hitbox = barFrame.GetInnerDimensions().ToRectangle();
 
-            Rectangle hitbox = area.GetInnerDimensions().ToRectangle();
-            int border = 5;
+            // Draw frame
+            int frameHeight = frameTexture.Height / 10;
+            int frameIndex = (int)(ramRadius * 3);
+
+            if (ramRadius == 1f) {
+                UpdateFireAnimation();
+                frameIndex += fireFrame;
+
+                if (shakeTimer == -1)
+                    shakeTimer = 60;
+                else if (shakeTimer > 0)
+                    shakeTimer--;
+
+                int shake = shakeTimer / 8;
+                hitbox.X += Main.rand.Next(-shake, shake);
+                hitbox.Y += Main.rand.Next(-shake, shake);
+            } else
+            {
+                shakeTimer = -1;
+            }
 
             spriteBatch.Draw(
-                Main.magicPixel,
-                hitbox, 
-                Color.Black);
+                frameTexture,
+                hitbox,
+                new Rectangle(0, frameIndex * frameHeight, frameTexture.Width, frameHeight),
+                Color.White);
 
-            int barWidth = hitbox.Right - hitbox.Left - border * 2;
+            hitbox.X += 21;
+            hitbox.Width -= 42;
+            hitbox.Y += 30;
+            hitbox.Height -= 39;
 
-            float interpolationStart = 0.4f;
-            float colorInterpolation = MathHelper.Max(0f, ramRadius - interpolationStart) * (1f / (1f - interpolationStart));
-            Color color = Color.Lerp(Color.LightBlue, Color.OrangeRed, colorInterpolation);
+            Rectangle destinationRectangle = new Rectangle(hitbox.Left, hitbox.Y, (int)(hitbox.Width * ramRadius), hitbox.Height);
+            Rectangle sourceRectangle = new Rectangle(0, 0, (int)(fillTexture.Width * ramRadius), fillTexture.Height);
 
             spriteBatch.Draw(
-                Main.magicPixel,
-                new Rectangle(hitbox.Left + border, hitbox.Y + border, (int)(barWidth * ramRadius), hitbox.Height - border * 2),
-                color
-                );
+                fillTexture,
+                destinationRectangle,
+                sourceRectangle,
+                Color.White);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
+
+            DrawHoverTooltip(modPlayer);
+        }
+
+        private void DrawHoverTooltip(GamerPlayer modPlayer)
+        {
+            Rectangle hitbox = barFrame.GetInnerDimensions().ToRectangle();
+            hitbox.X += 12;
+            hitbox.Width -= 24;
+            hitbox.Y += 21;
+            hitbox.Height -= 21;
+
+            Rectangle mouse = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 1, 1);
+
+            if (hitbox.Intersects(mouse))
+            {
+                Main.LocalPlayer.mouseInterface = true;
+                Main.instance.MouseText($"Used RAM: {modPlayer.usedRam} / {modPlayer.maxRam}");
+            }
+        }
+
+        private void UpdateFireAnimation()
+        {
+            if (++fireTimer > 4)
+            {
+                fireTimer = 0;
+                if (++fireFrame >= 6)
+                {
+                    fireFrame = 0;
+                }
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (!(Main.LocalPlayer.HeldItem.modItem is GamerWeapon)) return;
+
+
+            base.Update(gameTime);
+        }
+
+        public void Unload()
+        {
+            fireFrame = 0;
+            fireTimer = 0;
+            shakeTimer = -1;
+            frameTexture = null;
+            fillTexture = null;
         }
     }
 }
