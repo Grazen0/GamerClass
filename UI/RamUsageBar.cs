@@ -53,7 +53,8 @@ namespace GamerClass.UI
             int frameHeight = frameTexture.Height / 10;
             int frameIndex = (int)(ramRadius * 3);
 
-            if (ramRadius == 1f) {
+            if (ramRadius == 1f)
+            {
                 UpdateFireAnimation();
                 frameIndex += fireFrame;
 
@@ -68,7 +69,8 @@ namespace GamerClass.UI
 
                     shakeTimer--;
                 }
-            } else
+            }
+            else
             {
                 shakeTimer = -1;
             }
@@ -130,10 +132,8 @@ namespace GamerClass.UI
 
         public override void Update(GameTime gameTime)
         {
-            if (!(Main.LocalPlayer.HeldItem.modItem is GamerWeapon)) return;
-
-
-            base.Update(gameTime);
+            if (Main.LocalPlayer.HeldItem.modItem is GamerWeapon)
+                base.Update(gameTime);
         }
 
         public void Unload()
