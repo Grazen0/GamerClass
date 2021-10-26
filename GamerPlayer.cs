@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Buffs;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -109,6 +111,48 @@ namespace GamerClass
             }
 
             return false;
+        }
+
+        public bool ConsumeRam(int amount, int regenDelay)
+        {
+            if (gamerCooldown) return false;
+
+            ramRegenTimer = -regenDelay;
+            ramRegenRate = 1f;
+            usedRam += amount;
+
+            if (usedRam >= maxRam)
+            {
+                // RAM overheat
+                usedRam = maxRam;
+                player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
+
+                for (int d = 0; d < 20; d++)
+                {
+                    bool fire = Main.rand.NextBool(3);
+
+                    int size = 20;
+                    Vector2 position = player.Center - new Vector2(1f, 1f) * (size / 2);
+
+                    int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Smoke);
+                    Main.dust[id].noGravity = true;
+                    Main.dust[id].fadeIn = 2f;
+                    Main.dust[id].velocity *= fire ? 8f : 4f;
+                    Main.dust[id].scale = 1f;
+                }
+
+                for (int g = 0; g < 6; g++)
+                {
+                    Gore gore = Gore.NewGoreDirect(player.position, Vector2.Zero, 99, Scale: 1.25f);
+                    gore.velocity *= 0.75f;
+                }
+
+                Main.PlaySound(SoundID.NPCHit53);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
