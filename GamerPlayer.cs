@@ -29,7 +29,7 @@ namespace GamerClass
         {
             linkArmorBonus = false;
             gamerCooldown = false;
-            maxRam = 0;
+            maxRam = 1;
             gamerDamageMult = 1f;
             gamerKnockback = 0f;
             gamerUseTimeMult = 1f;
