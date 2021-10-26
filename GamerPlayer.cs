@@ -29,7 +29,7 @@ namespace GamerClass
         {
             linkArmorBonus = false;
             gamerCooldown = false;
-            maxRam = 1;
+            maxRam = 5;
             gamerDamageMult = 1f;
             gamerKnockback = 0f;
             gamerUseTimeMult = 1f;
@@ -40,22 +40,21 @@ namespace GamerClass
         {
             if (gamerCooldown)
             {
-                float spread = MathHelper.PiOver4;
-                int size = 20;
+                float spread = MathHelper.PiOver2 * 0.8f;
 
-                Vector2 position = player.Center;
-                position.X -= size / 2;
-                position.Y -= size / 2 + 32;
+                Vector2 position = player.position;
+                position.Y -= player.height / 4;
 
                 Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
-                bool fire = Main.rand.NextBool(6);
 
-                int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Smoke);
-                Main.dust[id].noGravity = true;
-                Main.dust[id].scale *= fire ? 3f : 2f;
-                Main.dust[id].fadeIn = 1.4f;
+                Dust dust = Dust.NewDustDirect(position, player.width, player.height / 2, DustID.Smoke, Scale: 1.6f);
+                dust.velocity = direction * 2f;
 
-                Main.dust[id].velocity = direction * 3f;
+                if (Main.rand.NextBool(8))
+                {
+                    dust = Dust.NewDustDirect(position, player.width, (int)(player.height * 0.75f), DustID.Fire, Scale: 1.5f);
+                    dust.velocity *= 2f;
+                }
             }
         }
 

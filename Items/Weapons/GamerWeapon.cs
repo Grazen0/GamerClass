@@ -72,8 +72,15 @@ namespace GamerClass.Items.Weapons
                 if (soundInstance == null || soundInstance.State != SoundState.Playing)
                 {
                     soundInstance = Main.PlaySound(SoundID.NPCHit34);
+
+                    for (int d = 0; d < 8; d++)
+                    {
+                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Fire, Scale: 2.5f);
+                        dust.velocity.X *= 4f;
+                    }
                 }
-            } else
+            }
+            else
             {
                 // Increase player RAM bar and stuff
                 GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
@@ -84,6 +91,7 @@ namespace GamerClass.Items.Weapons
 
                 if (modPlayer.usedRam >= modPlayer.maxRam)
                 {
+                    // RAM overheat
                     modPlayer.usedRam = modPlayer.maxRam;
                     player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
 
@@ -101,10 +109,13 @@ namespace GamerClass.Items.Weapons
                         Main.dust[id].scale = 1f;
                     }
 
-                    if (Main.myPlayer == player.whoAmI)
+                    for (int g = 0; g < 6; g++)
                     {
-                        soundInstance = Main.PlaySound(SoundID.NPCHit53);
+                        Gore gore = Gore.NewGoreDirect(player.position, Vector2.Zero, 99, Scale: 1.25f);
+                        gore.velocity *= 0.75f;
                     }
+
+                    soundInstance = Main.PlaySound(SoundID.NPCHit53);
                 }
             }
 
@@ -116,22 +127,29 @@ namespace GamerClass.Items.Weapons
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
             float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam;
 
-            if (!modPlayer.gamerCooldown && ramRadius > 0.6f && Main.rand.NextBool(1))
+            if (!modPlayer.gamerCooldown && ramRadius > 0.6f)
             {
-                float spread = MathHelper.PiOver4 * 0.8f;
-                int size = 10;
+                int chance = (int)(10 * (1f - ramRadius)) + 2;
+                if (chance < 1)
+                    chance = 1;
 
-                Vector2 position = player.Center;
-                position.X -= size / 2 - player.direction * 10;
-                position.Y -= size / 2 - 5;
+                if (Main.rand.NextBool(chance))
+                {
+                    float spread = MathHelper.PiOver4 * 0.8f;
+                    int size = 10;
 
-                Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
+                    Vector2 position = player.Center;
+                    position.X -= size / 2 - player.direction * 10;
+                    position.Y -= size / 2 - 5;
 
-                int id = Dust.NewDust(position, size, size, DustID.Smoke);
-                Main.dust[id].noGravity = true;
-                Main.dust[id].velocity = direction * Main.rand.NextFloat(3f, 6f);
-                Main.dust[id].scale *= 1.5f;
-                Main.dust[id].fadeIn = 1.2f;
+                    Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
+
+                    Dust dust = Dust.NewDustDirect(position, size, size, DustID.Smoke);
+                    dust.noGravity = true;
+                    dust.velocity = direction * Main.rand.NextFloat(3f, 6f);
+                    dust.scale *= 1.5f;
+                    dust.fadeIn = 1.2f;
+                }
             }
         }
 
