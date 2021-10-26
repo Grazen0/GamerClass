@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamerClass.Items.Weapons;
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -17,6 +18,7 @@ namespace GamerClass.Projectiles.DetachedGlove
         private int charge = 0;
         private int ringTimer = 0;
         private int explosionTimer = 0;
+        private int ramTimer = 0;
 
         public override void SetDefaults()
         {
@@ -51,7 +53,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             player.ChangeDir(projectile.direction);
             player.heldProj = projectile.whoAmI;
             player.itemTime = player.itemAnimation = 2;
-            player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.  direction, projectile.velocity.X * projectile.direction);
+            player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
         }
 
         private void ChargeShot(Player player)
@@ -62,12 +64,25 @@ namespace GamerClass.Projectiles.DetachedGlove
             }
             else
             {
+                if (++ramTimer > 10)
+                {
+                    ramTimer = 0;
+
+                    if (
+                        player.HeldItem.modItem is GamerWeapon modItem
+                        && !player.GetModPlayer<GamerPlayer>().ConsumeRam(modItem.ramUsage / 2, player.HeldItem.useTime)
+                        )
+                    {
+                        projectile.Kill();
+                    }
+                }
+
                 if (charge < MaxCharge)
                 {
                     charge++;
-                } else
+                }
+                else
                 {
-
                     if (chargeSound && projectile.owner == Main.myPlayer)
                     {
                         Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/ChargeReady"));
@@ -92,7 +107,8 @@ namespace GamerClass.Projectiles.DetachedGlove
                 dust = Dust.NewDustPerfect(position - dustDirection, DustID.AmberBolt, Scale: 0.8f);
                 dust.noGravity = true;
                 dust.velocity = dustDirection * 0.1f;
-            } else
+            }
+            else
             {
                 if (Main.rand.NextBool(2))
                 {
@@ -143,7 +159,8 @@ namespace GamerClass.Projectiles.DetachedGlove
                     dust.noGravity = true;
                     dust.velocity *= 1.6f;
                 }
-            } else
+            }
+            else
             {
                 float baseRotation = Main.rand.NextFloat(MathHelper.Pi);
                 for (int e = 0; e < 2; e++)
