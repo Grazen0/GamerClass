@@ -7,8 +7,6 @@ namespace GamerClass.Items.Weapons
 {
     public class SpaceInvadersCannon : GamerWeapon
     {
-        public new int ramUsage = 2;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Old Joystick");
@@ -23,15 +21,19 @@ namespace GamerClass.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SpaceInvadersCannon");
             item.shoot = ModContent.ProjectileType<Projectiles.DustyLaserCannon.ShoddyBeam>();
-            item.shootSpeed = 30;
+            item.shootSpeed = 20;
 
             ramUsage = 2;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Vector2 front = Vector2.Normalize(new Vector2(speedX, speedY));
-            position += front * 12f;
+            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 12f;
+            
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+            {
+                position += muzzleOffset;
+            }
 
             return true;
         }
