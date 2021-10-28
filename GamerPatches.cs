@@ -10,16 +10,16 @@ using Terraria.ModLoader;
 
 namespace GamerClass
 {
-    public class GamerPatches
+    public partial class GamerClass
     {
-        public static void Apply()
+        private void ApplyPatches()
         {
             IL.Terraria.NPC.NPCLoot += NPC_NPCLoot;
             IL.Terraria.Player.OpenBossBag += Player_OpenBossBag;
             IL.Terraria.Player.Update += Player_Update;
         }
 
-        private static void NPC_NPCLoot(ILContext il)
+        private void NPC_NPCLoot(ILContext il)
         {
             var c = new ILCursor(il);
 
@@ -30,7 +30,7 @@ namespace GamerClass
                 i => i.MatchAdd(),
                 i => i.MatchStloc(50)))
             {
-                GamerClass.Instance.Logger.Error("NPC_NPCLoot IL patch could not apply (2)");
+                Logger.Error("NPC_NPCLoot IL patch could not apply (2)");
             }
             else
             {
@@ -45,7 +45,7 @@ namespace GamerClass
                 i => i.MatchCall(out _),
                 i => i.MatchStloc(56)))
             {
-                GamerClass.Instance.Logger.Error("NPC_NPCLoot IL patch could not apply (3)");
+                Logger.Error("NPC_NPCLoot IL patch could not apply (3)");
             }
             else
             {
@@ -57,7 +57,7 @@ namespace GamerClass
             }
         }
 
-        private static void Player_OpenBossBag(ILContext il)
+        private void Player_OpenBossBag(ILContext il)
         {
             var c = new ILCursor(il);
 
@@ -68,7 +68,7 @@ namespace GamerClass
                 i => i.MatchAdd(),
                 i => i.MatchStloc(10)))
             {
-                GamerClass.Instance.Logger.Error("Player_OpenBossBag IL patch could not apply (1)");
+                Logger.Error("Player_OpenBossBag IL patch could not apply (1)");
             }
             else
             {
@@ -84,7 +84,7 @@ namespace GamerClass
                 i => i.MatchCall(out _),
                 i => i.MatchStloc(11)))
             {
-                GamerClass.Instance.Logger.Error("Player_OpenBossBag IL patch could not apply (2)");
+                Logger.Error("Player_OpenBossBag IL patch could not apply (2)");
             }
             else
             {
@@ -96,7 +96,7 @@ namespace GamerClass
             }
         }
 
-        private static void Player_Update(ILContext il)
+        private void Player_Update(ILContext il)
         {
             var c = new ILCursor(il);
 
@@ -107,7 +107,7 @@ namespace GamerClass
                 i => i.MatchCall(typeof(Main).GetMethod("PlaySound", new Type[] { typeof(LegacySoundStyle), typeof(Vector2) })),
                 i => i.MatchPop()))
             {
-                GamerClass.Instance.Logger.Error("Player_Update IL patch could not apply");
+                Logger.Error("Player_Update IL patch could not apply");
                 return;
             }
 
@@ -119,14 +119,14 @@ namespace GamerClass
                 ModItem raccoonLeaf = ModContent.GetModItem(ModContent.ItemType<RaccoonLeaf>());
                 if (player.wings == raccoonLeaf.item.wingSlot && ModContent.GetInstance<GamerConfig>().RaccoonFlySound)
                 {
-                    sound = GamerClass.Instance.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Item, "Sounds/Item/RaccoonFly");
+                    sound = GetLegacySoundSlot(Terraria.ModLoader.SoundType.Item, "Sounds/Item/RaccoonFly");
                 }
 
                 return sound;
             });
         }
 
-        private static int ChooseGamerEmblem(int itemId)
+        private int ChooseGamerEmblem(int itemId)
         {
             if (Main.rand.NextBool(5))
                 itemId = ModContent.ItemType<GamerEmblem>();

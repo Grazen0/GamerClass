@@ -10,18 +10,14 @@ using Terraria.UI;
 
 namespace GamerClass
 {
-    public class GamerClass : Mod
+    public partial class GamerClass : Mod
     {
-        public static GamerClass Instance { get; private set; }
-
         internal RamUsageBar RamUsageBar;
         internal UserInterface RamInterface;
 
         public override void Load()
         {
-            Instance = this;
-
-            GamerPatches.Apply();
+            ApplyPatches();
 
             if (!Main.dedServ)
             {
