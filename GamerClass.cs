@@ -1,4 +1,5 @@
 using GamerClass.Items.Accessories.Misc;
+using GamerClass.Items.Placeable;
 using GamerClass.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -30,8 +31,12 @@ namespace GamerClass
 
                 AddMusicBox(
                     GetSoundSlot(SoundType.Music, "Sounds/Music/Megalovania"),
-                    ItemType("SansMusicBox"),
-                    TileType("SansMusicBox"));
+                    ModContent.ItemType<SansMusicBox>(),
+                    ModContent.TileType<Tiles.SansMusicBox>());
+                AddMusicBox(
+                    GetSoundSlot(SoundType.Music, "Sounds/Music/GerudoValley"),
+                    ModContent.ItemType<ZeldaMusicBox>(),
+                    ModContent.TileType<Tiles.ZeldaMusicBox>());
             }
         }
 
