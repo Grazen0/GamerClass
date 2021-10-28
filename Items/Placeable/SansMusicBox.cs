@@ -22,7 +22,7 @@ namespace GamerClass.Items.Placeable
             item.consumable = true;
             item.createTile = ModContent.TileType<Tiles.SansMusicBox>();
             item.rare = ItemRarityID.Orange;
-            item.value = Item.sellPrice(gold: 1, silver: 50);
+            item.value = Item.sellPrice(gold: 1);
             item.accessory = true;
         }
 
