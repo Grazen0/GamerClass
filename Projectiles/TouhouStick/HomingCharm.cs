@@ -12,10 +12,9 @@ namespace GamerClass.Projectiles.TouhouStick
         private readonly float RangeSQ = (float)Math.Pow(1000, 2);
         private readonly float rotationSpeed = MathHelper.TwoPi / 180f;
 
-        public int CurrentTarget
+        public override void SetStaticDefaults()
         {
-            get => (int)projectile.ai[0];
-            set => projectile.ai[0] = value;
+            ProjectileID.Sets.Homing[projectile.type] = true;
         }
 
         public override void SetDefaults()
@@ -28,6 +27,12 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.scale = 0.8f;
             projectile.alpha = 255;
             projectile.GamerProjectile().gamer = true;
+        }
+
+        public int CurrentTarget
+        {
+            get => (int)projectile.ai[0];
+            set => projectile.ai[0] = value;
         }
 
         public override void AI()

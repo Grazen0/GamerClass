@@ -14,6 +14,7 @@ namespace GamerClass.Projectiles.DetachedGlove
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 7;
+            ProjectileID.Sets.Homing[projectile.type] = true;
         }
 
         public override void SetDefaults()

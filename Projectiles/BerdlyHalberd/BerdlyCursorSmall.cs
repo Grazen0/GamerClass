@@ -10,8 +10,13 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 {
     public class BerdlyCursorSmall : ModProjectile
     {
-        private readonly int MaxLife = 240;
+        private const int MaxLife = 240;
         private readonly float RangeSQ = (float)Math.Pow(1000, 2);
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.Homing[projectile.type] = true;
+        }
 
         public override void SetDefaults()
         {
