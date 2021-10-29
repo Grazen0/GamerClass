@@ -33,6 +33,10 @@ namespace GamerClass
                     GetSoundSlot(SoundType.Music, "Sounds/Music/GerudoValley"),
                     ModContent.ItemType<ZeldaMusicBox>(),
                     ModContent.TileType<Tiles.ZeldaMusicBox>());
+                AddMusicBox(
+                    GetSoundSlot(SoundType.Music, "Sounds/Music/MaidensCapriccio"),
+                    ModContent.ItemType<TouhouMusicBox>(),
+                    ModContent.TileType<Tiles.TouhouMusicBox>());
             }
         }
 
