@@ -1,8 +1,10 @@
 ﻿using GamerClass.Projectiles;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace GamerClass
 {
@@ -56,5 +58,27 @@ namespace GamerClass
 
         public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) => 
             projectile.GetGlobalProjectile<GamerGlobalProjectile>();
+
+        public static void DrawCenteredAndFlip(this ModProjectile modProj, SpriteBatch spriteBatch, Color lightColor, bool flip = true)
+        {
+            Texture2D texture = Main.projectileTexture[modProj.projectile.type];
+            int frameHeight = texture.Height / Main.projFrames[modProj.projectile.type];
+
+            Rectangle sourceRectangle = new Rectangle(0, modProj.projectile.frame * frameHeight, texture.Width, frameHeight);
+            Color color = modProj.projectile.GetAlpha(lightColor);
+            Vector2 origin = sourceRectangle.Size() / 2;
+            SpriteEffects spriteEffects = (modProj.projectile.direction == 1 || !flip) ? SpriteEffects.None : SpriteEffects.FlipVertically;
+
+            spriteBatch.Draw(
+                texture,
+                modProj.projectile.Center - Main.screenPosition,
+                sourceRectangle,
+                color,
+                modProj.projectile.rotation,
+                origin,
+                modProj.projectile.scale,
+                spriteEffects,
+                0f);
+        }
     }
 }

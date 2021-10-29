@@ -134,22 +134,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-
-            Vector2 origin = texture.Size() / 2;
-            Color color = projectile.GetAlpha(lightColor);
-
-            spriteBatch.Draw(
-                texture,
-                projectile.Center - Main.screenPosition,
-                null,
-                color,
-                projectile.rotation,
-                origin,
-                projectile.scale,
-                SpriteEffects.None,
-                0f);
-
+            this.DrawCenteredAndFlip(spriteBatch, lightColor, false);
             return false;
         }
 

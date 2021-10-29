@@ -42,7 +42,7 @@ namespace GamerClass.Projectiles.TouhouStick
 
             FindTarget();
 
-            if (CurrentTarget != -1)
+            if (CurrentTarget != -1 && Main.npc[CurrentTarget].active)
             {
                 NPC target = Main.npc[CurrentTarget];
 
