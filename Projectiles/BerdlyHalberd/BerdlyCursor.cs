@@ -134,7 +134,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            this.DrawCenteredAndFlip(spriteBatch, lightColor, false);
+            this.DrawCentered(spriteBatch, lightColor, false);
             return false;
         }
 

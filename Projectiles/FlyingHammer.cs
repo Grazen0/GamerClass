@@ -35,7 +35,7 @@ namespace GamerClass.Projectiles
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            this.DrawCenteredAndFlip(spriteBatch, lightColor);
+            this.DrawCentered(spriteBatch, lightColor);
             return false;
         }
 

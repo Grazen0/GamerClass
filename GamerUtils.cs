@@ -59,7 +59,7 @@ namespace GamerClass
         public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) => 
             projectile.GetGlobalProjectile<GamerGlobalProjectile>();
 
-        public static void DrawCenteredAndFlip(this ModProjectile modProj, SpriteBatch spriteBatch, Color lightColor, bool flip = true)
+        public static void DrawCentered(this ModProjectile modProj, SpriteBatch spriteBatch, Color lightColor, bool flip = true)
         {
             Texture2D texture = Main.projectileTexture[modProj.projectile.type];
             int frameHeight = texture.Height / Main.projFrames[modProj.projectile.type];
