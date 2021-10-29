@@ -115,7 +115,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             Texture2D texture = Main.projectileTexture[projectile.type];
 
             Vector2 origin = texture.Size() / 2;
-            Color color = GetAlpha(lightColor) ?? lightColor;
+            Color color = projectile.GetAlpha(lightColor);
 
             // Afterimages
             if (projectile.alpha < 100)

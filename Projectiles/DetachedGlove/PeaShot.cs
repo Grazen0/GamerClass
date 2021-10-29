@@ -83,7 +83,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 
             Rectangle sourceRectangle = new Rectangle(0, projectile.frame * frameHeight, texture.Width, frameHeight);
             Vector2 origin = new Vector2(texture.Width - 8, frameHeight / 2);
-            Color color = GetAlpha(lightColor) ?? lightColor;
+            Color color = projectile.GetAlpha(lightColor);
             Vector2 scale = new Vector2(xScale, 1f) * projectile.scale;
 
             // Afterimages

@@ -104,7 +104,7 @@ namespace GamerClass.Projectiles.TouhouStick
             Texture2D texture = Main.projectileTexture[projectile.type];
             Vector2 origin = texture.Size() / 2f;
 
-            Color color = GetAlpha(lightColor) ?? lightColor;
+            Color color = projectile.GetAlpha(lightColor);
 
             // Afterimages
             int trails = 5;

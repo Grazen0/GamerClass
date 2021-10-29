@@ -125,7 +125,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 
             Rectangle sourceRectangle = new Rectangle(0, projectile.frame * frameHeight, texture.Width, frameHeight);
             Vector2 origin = new Vector2(texture.Width, frameHeight) / 2;
-            Color color = GetAlpha(lightColor) ?? lightColor;
+            Color color = projectile.GetAlpha(lightColor);
             SpriteEffects spriteEffects = projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 
             spriteBatch.Draw(

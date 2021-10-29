@@ -48,7 +48,7 @@ namespace GamerClass.Projectiles.DustyLaserCannon
 
             Vector2 origin = new Vector2(texture.Width, frameHeight) / 2;
             Rectangle sourceRectangle = new Rectangle(0, projectile.frame * (frameHeight + pad), frameHeight, texture.Width);
-            Color color = GetAlpha(lightColor) ?? lightColor;
+            Color color = projectile.GetAlpha(lightColor);
 
             spriteBatch.Draw(
                 texture,

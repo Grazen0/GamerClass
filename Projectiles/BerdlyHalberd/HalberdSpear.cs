@@ -137,7 +137,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                 origin.Y = texture.Height - origin.Y;
             }
 
-            Color color = GetAlpha(lightColor) ?? lightColor;
+            Color color = projectile.GetAlpha(lightColor);
 
             spriteBatch.Draw(
                 texture,
