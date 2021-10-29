@@ -151,12 +151,13 @@ namespace GamerClass.Projectiles.GasterBlaster
 
             Rectangle sourceRectangle = new Rectangle(0, projectile.frame * frameHeight, texture.Width, frameHeight);
             Vector2 origin = sourceRectangle.Size() / 2f;
+            Color color = projectile.GetAlpha(lightColor);
 
             spriteBatch.Draw(
                 texture,
                 projectile.Center - Main.screenPosition,
                 sourceRectangle,
-                Color.White * projectile.Opacity,
+                color,
                 projectile.rotation - MathHelper.PiOver2,
                 origin,
                 projectile.scale,
@@ -165,5 +166,7 @@ namespace GamerClass.Projectiles.GasterBlaster
 
             return false;
         }
+
+        public override Color? GetAlpha(Color lightColor) => Color.White;
     }
 }
