@@ -34,6 +34,7 @@ namespace GamerClass.Projectiles.GasterBlaster
             projectile.ignoreWater = true;
             projectile.usesLocalNPCImmunity = true;
             projectile.timeLeft = 60;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

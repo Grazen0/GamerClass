@@ -24,6 +24,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             projectile.timeLeft = 10;
             projectile.frame = Main.rand.Next(Main.projFrames[projectile.type]);
             projectile.alpha = 255;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public bool LongerLife => projectile.ai[0] == 1f;

@@ -17,6 +17,7 @@ namespace GamerClass.Projectiles.DustyLaserCannon
             projectile.friendly = true;
             projectile.alpha = 255;
             projectile.timeLeft = 600;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

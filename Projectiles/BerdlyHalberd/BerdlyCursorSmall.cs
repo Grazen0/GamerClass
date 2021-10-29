@@ -22,6 +22,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             projectile.timeLeft = MaxLife;
             projectile.scale = 1.2f;
             projectile.hide = true;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public float InitialRotation => projectile.ai[0];

@@ -20,6 +20,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             projectile.friendly = true;
             projectile.timeLeft = 600;
             projectile.scale = 1.5f;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public float ForceDirection => projectile.ai[0];

@@ -25,6 +25,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             projectile.hide = true;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public float MovementFactor

@@ -23,6 +23,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             projectile.penetrate = -1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 30;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public int CursorIndex => (int)projectile.ai[0];

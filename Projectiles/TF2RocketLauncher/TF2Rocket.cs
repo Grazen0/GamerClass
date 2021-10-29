@@ -19,6 +19,7 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.alpha = 255;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

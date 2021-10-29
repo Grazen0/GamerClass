@@ -20,6 +20,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             projectile.timeLeft = 300;
             projectile.scale = 1.5f;
             projectile.alpha = 255;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

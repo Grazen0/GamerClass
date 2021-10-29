@@ -12,6 +12,7 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
             projectile.hostile = false;
             projectile.penetrate = -1;
             projectile.timeLeft = 3;
+            projectile.GamerProjectile().gamer = true;
         }
     }
 }

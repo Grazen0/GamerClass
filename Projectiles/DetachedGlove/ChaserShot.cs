@@ -23,6 +23,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             projectile.timeLeft = 600;
             projectile.frame = Main.rand.Next(Main.projFrames[projectile.type]);
             projectile.alpha = 60;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public int CurrentTarget

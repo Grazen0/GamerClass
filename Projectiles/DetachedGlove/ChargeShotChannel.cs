@@ -28,6 +28,7 @@ namespace GamerClass.Projectiles.DetachedGlove
             projectile.ignoreWater = true;
             projectile.hide = true;
             projectile.penetrate = -1;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

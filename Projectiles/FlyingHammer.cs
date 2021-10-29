@@ -8,11 +8,17 @@ namespace GamerClass.Projectiles
 {
     public class FlyingHammer : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 14;
-            projectile.hostile = false;
             projectile.friendly = true;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public float RotationTimer
@@ -38,6 +44,24 @@ namespace GamerClass.Projectiles
 
             Vector2 origin = texture.Size() / 2;
             Color color = GetAlpha(lightColor) ?? lightColor;
+            SpriteEffects spriteEffects = projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            {
+                Color trailColor = color * 0.5f;
+                trailColor *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+
+                spriteBatch.Draw(
+                    texture,
+                    projectile.oldPos[i] + (projectile.Size / 2) - Main.screenPosition, 
+                    null, 
+                    trailColor,
+                    projectile.oldRot[i],
+                    origin,
+                    projectile.scale,
+                    spriteEffects,
+                    0f);
+            }
 
             spriteBatch.Draw(
                 texture,
@@ -47,7 +71,7 @@ namespace GamerClass.Projectiles
                 projectile.rotation,
                 origin,
                 projectile.scale,
-                projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+                spriteEffects,
                 0f);
 
             return false;

@@ -15,6 +15,7 @@ namespace GamerClass.Projectiles
             projectile.friendly = true;
             projectile.extraUpdates = 20;
             projectile.timeLeft = 60 * projectile.extraUpdates;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

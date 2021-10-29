@@ -29,6 +29,7 @@ namespace GamerClass.Projectiles.MinecraftBow
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.penetrate = -1;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()

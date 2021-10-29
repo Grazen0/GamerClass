@@ -19,6 +19,7 @@ namespace GamerClass.Projectiles.DustyLaserCannon
             projectile.ignoreWater = true;
             projectile.light = 0.3f;
             projectile.timeLeft = 30;
+            projectile.GamerProjectile().gamer = true;
         }
 
         private void RunAnimation()
@@ -33,15 +34,9 @@ namespace GamerClass.Projectiles.DustyLaserCannon
             }
         }
 
-        public override bool CanDamage()
-        {
-            return false;
-        }
+        public override bool CanDamage() => false;
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White;
-        }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {

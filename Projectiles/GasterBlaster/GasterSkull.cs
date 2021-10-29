@@ -30,6 +30,7 @@ namespace GamerClass.Projectiles.GasterBlaster
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.timeLeft = 180;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public float Timer
