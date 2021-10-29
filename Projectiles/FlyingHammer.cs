@@ -12,6 +12,7 @@ namespace GamerClass.Projectiles
         {
             projectile.width = projectile.height = 14;
             projectile.friendly = true;
+            projectile.scale = 0.8f;
             projectile.GamerProjectile().gamer = true;
         }
 
@@ -29,28 +30,12 @@ namespace GamerClass.Projectiles
                 projectile.rotation += MathHelper.PiOver2 * projectile.direction;
             }
 
-            projectile.velocity.Y = MathHelper.Min(projectile.velocity.Y + 0.3f, 25f);
+            projectile.velocity.Y = MathHelper.Min(projectile.velocity.Y + 0.4f, 25f);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-
-            Vector2 origin = texture.Size() / 2;
-            Color color = projectile.GetAlpha(lightColor);
-            SpriteEffects spriteEffects = projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            spriteBatch.Draw(
-                texture,
-                projectile.Center - Main.screenPosition,
-                null,
-                color * projectile.Opacity,
-                projectile.rotation,
-                origin,
-                projectile.scale,
-                spriteEffects,
-                0f);
-
+            this.DrawCenteredAndFlip(spriteBatch, lightColor);
             return false;
         }
 
