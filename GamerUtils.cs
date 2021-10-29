@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GamerClass.Projectiles;
 using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
 using Terraria;
 
 namespace GamerClass
 {
-    public class GamerUtils
+    public static class GamerUtils
     {
         public static List<Dust> DustExplosion(
             int points,
@@ -52,5 +53,8 @@ namespace GamerClass
 
             return dusts;
         }
+
+        public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) => 
+            projectile.GetGlobalProjectile<GamerGlobalProjectile>();
     }
 }
