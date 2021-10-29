@@ -9,11 +9,17 @@ namespace GamerClass.Projectiles.DetachedGlove
 {
     public class LobberShot : ModProjectile
     {
-        private readonly float RotationSpeed = MathHelper.TwoPi / 60f;
+        private const float RotationSpeed = MathHelper.TwoPi / 60f;
 
         private float spriteScale = 0f;
         private float jumpCooldown = 0f;
         private int jumps = 0;
+
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
 
         public override void SetDefaults()
         {
@@ -118,25 +124,19 @@ namespace GamerClass.Projectiles.DetachedGlove
             Color color = projectile.GetAlpha(lightColor);
 
             // Afterimages
-            if (projectile.alpha < 100)
+            int trails = ProjectileID.Sets.TrailCacheLength[projectile.type];
+            for (int i = 0; i < trails; i++)
             {
-                int trails = 4;
-                for (int i = 1; i <= trails; i++)
-                {
-                    int reverseIndex = trails - i + 1;
-                    Vector2 position = projectile.Center - projectile.velocity * reverseIndex * 0.3f;
-
-                    spriteBatch.Draw(
-                        texture,
-                        position - Main.screenPosition,
-                        null,
-                        color * (projectile.Opacity * i * 0.08f),
-                        projectile.rotation - RotationSpeed * projectile.direction * reverseIndex,
-                        origin,
-                        projectile.scale * spriteScale * 0.9f,
-                        SpriteEffects.None,
-                        0f);
-                }
+                spriteBatch.Draw(
+                    texture,
+                    projectile.oldPos[i] + projectile.Size / 2f - Main.screenPosition,
+                    null,
+                    color * 0.5f * (1f - ((float)i / trails)),
+                    projectile.oldRot[i],
+                    origin,
+                    projectile.scale,
+                    SpriteEffects.None,
+                    0f);
             }
 
             spriteBatch.Draw(

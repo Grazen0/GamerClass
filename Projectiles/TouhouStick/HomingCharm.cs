@@ -10,11 +10,13 @@ namespace GamerClass.Projectiles.TouhouStick
     public class HomingCharm : ModProjectile
     {
         private readonly float RangeSQ = (float)Math.Pow(1000, 2);
-        private readonly float rotationSpeed = MathHelper.TwoPi / 180f;
+        private const float rotationSpeed = MathHelper.TwoPi / 180f;
 
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -107,21 +109,18 @@ namespace GamerClass.Projectiles.TouhouStick
             Color color = projectile.GetAlpha(lightColor);
 
             // Afterimages
-            int trails = 5;
-            for (int i = 1; i <= trails; i++)
+            int trails = ProjectileID.Sets.TrailCacheLength[projectile.type];
+            for (int i = 0; i < trails; i++)
             {
-                int reverseIndex = trails - i + 1;
-                Vector2 position = projectile.Center - projectile.velocity * reverseIndex * 0.3f;
-
                 spriteBatch.Draw(
-                    texture,
-                    position - Main.screenPosition,
+                    texture, 
+                    projectile.oldPos[i] + projectile.Size / 2f - Main.screenPosition, 
                     null,
-                    color * (projectile.Opacity * i * 0.05f),
-                    projectile.rotation - rotationSpeed * i,
-                    origin,
-                    projectile.scale,
-                    SpriteEffects.None,
+                    color * 0.5f * (1f - ((float)i / trails)), 
+                    projectile.oldRot[i], 
+                    origin, 
+                    projectile.scale, 
+                    SpriteEffects.None, 
                     0f);
             }
 

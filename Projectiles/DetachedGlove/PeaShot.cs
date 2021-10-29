@@ -13,6 +13,8 @@ namespace GamerClass.Projectiles.DetachedGlove
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 4;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -87,25 +89,19 @@ namespace GamerClass.Projectiles.DetachedGlove
             Vector2 scale = new Vector2(xScale, 1f) * projectile.scale;
 
             // Afterimages
-            if (xScale > 0.8f)
+            int trails = ProjectileID.Sets.TrailCacheLength[projectile.type];
+            for (int i = 0; i < trails; i++)
             {
-                int trails = 8;
-                for (int i = 1; i <= trails; i++)
-                {
-                    int reverseIndex = trails - i + 1;
-                    Vector2 position = projectile.Center - projectile.velocity * reverseIndex * 0.3f;
-
-                    spriteBatch.Draw(
-                        texture,
-                        position - Main.screenPosition,
-                        sourceRectangle,
-                        color * (projectile.Opacity * i * 0.06f),
-                        projectile.rotation,
-                        origin,
-                        scale * 0.9f,
-                        SpriteEffects.None,
-                        0f);
-                }
+                spriteBatch.Draw(
+                    texture,
+                    projectile.oldPos[i] + projectile.Size / 2f - Main.screenPosition,
+                    sourceRectangle,
+                    color * 0.6f * (1f - ((float)i / trails)),
+                    projectile.oldRot[i],
+                    origin,
+                    projectile.scale,
+                    SpriteEffects.None,
+                    0f);
             }
 
             spriteBatch.Draw(

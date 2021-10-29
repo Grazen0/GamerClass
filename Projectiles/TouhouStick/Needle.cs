@@ -8,6 +8,12 @@ namespace GamerClass.Projectiles.TouhouStick
 {
     public class Needle : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 2;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 6;
@@ -58,18 +64,15 @@ namespace GamerClass.Projectiles.TouhouStick
             Color color = projectile.GetAlpha(lightColor);
 
             // Afterimages
-            int trails = 7;
-            for (int i = 1; i <= trails; i++)
+            int trails = ProjectileID.Sets.TrailCacheLength[projectile.type];
+            for (int i = 0; i < trails; i++)
             {
-                int reverseIndex = trails - i + 1;
-                Vector2 position = projectile.Center - projectile.velocity * reverseIndex * 0.2f;
-
                 spriteBatch.Draw(
                     texture,
-                    position - Main.screenPosition,
+                    projectile.oldPos[i] + projectile.Size / 2f - Main.screenPosition,
                     null,
-                    color * projectile.Opacity * 0.1f,
-                    projectile.rotation,
+                    color * 0.5f * (1f - ((float)i / trails)),
+                    projectile.oldRot[i],
                     origin,
                     projectile.scale,
                     SpriteEffects.None,
