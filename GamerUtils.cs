@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GamerClass
@@ -68,6 +69,21 @@ namespace GamerClass
             Color color = modProj.projectile.GetAlpha(lightColor);
             Vector2 origin = sourceRectangle.Size() / 2;
             SpriteEffects spriteEffects = (modProj.projectile.direction == 1 || !flip) ? SpriteEffects.None : SpriteEffects.FlipVertically;
+
+            int trails = ProjectileID.Sets.TrailCacheLength[modProj.projectile.type];
+            for (int i = 0; i < trails; i++)
+            {
+                spriteBatch.Draw(
+                    texture,
+                    modProj.projectile.oldPos[i] + modProj.projectile.Size / 2f - Main.screenPosition,
+                    sourceRectangle,
+                    color * 0.5f * (1f - ((float)i / trails)),
+                    modProj.projectile.oldRot[i],
+                    origin,
+                    modProj.projectile.scale,
+                    SpriteEffects.None,
+                    0f);
+            }
 
             spriteBatch.Draw(
                 texture,

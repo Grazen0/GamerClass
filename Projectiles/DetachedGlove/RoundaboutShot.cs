@@ -12,6 +12,8 @@ namespace GamerClass.Projectiles.DetachedGlove
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 7;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 2;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -120,25 +122,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-            int frameHeight = texture.Height / Main.projFrames[projectile.type];
-
-            Rectangle sourceRectangle = new Rectangle(0, projectile.frame * frameHeight, texture.Width, frameHeight);
-            Vector2 origin = new Vector2(texture.Width, frameHeight) / 2;
-            Color color = projectile.GetAlpha(lightColor);
-            SpriteEffects spriteEffects = projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-
-            spriteBatch.Draw(
-                texture,
-                projectile.Center - Main.screenPosition,
-                sourceRectangle,
-                color,
-                projectile.rotation,
-                origin,
-                projectile.scale,
-                spriteEffects,
-                0f);
-
+            this.DrawCentered(spriteBatch, lightColor);
             return false;
         }
     }

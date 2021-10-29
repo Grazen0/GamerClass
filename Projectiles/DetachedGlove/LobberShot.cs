@@ -118,38 +118,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-
-            Vector2 origin = texture.Size() / 2;
-            Color color = projectile.GetAlpha(lightColor);
-
-            // Afterimages
-            int trails = ProjectileID.Sets.TrailCacheLength[projectile.type];
-            for (int i = 0; i < trails; i++)
-            {
-                spriteBatch.Draw(
-                    texture,
-                    projectile.oldPos[i] + projectile.Size / 2f - Main.screenPosition,
-                    null,
-                    color * 0.5f * (1f - ((float)i / trails)),
-                    projectile.oldRot[i],
-                    origin,
-                    projectile.scale,
-                    SpriteEffects.None,
-                    0f);
-            }
-
-            spriteBatch.Draw(
-                texture,
-                projectile.Center - Main.screenPosition,
-                null,
-                color * projectile.Opacity,
-                projectile.rotation,
-                origin,
-                projectile.scale * spriteScale,
-                SpriteEffects.None,
-                0f);
-
+            this.DrawCentered(spriteBatch, lightColor, flip: false);
             return false;
         }
     }
