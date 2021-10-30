@@ -12,7 +12,6 @@ namespace GamerClass.Projectiles.MinecraftBow
         private readonly float DistanceOffset = 14f;
         private readonly float MaxCharge = 40f;
 
-        public int ProjectileType => (int)projectile.ai[0];
         public float charge = 0f;
         public bool charging = true;
         public float shakeTimer = 0f;
@@ -100,11 +99,17 @@ namespace GamerClass.Projectiles.MinecraftBow
             if (Main.myPlayer == projectile.owner)
             {
                 float chargeRadius = charge / MaxCharge;
-                int damage = projectile.damage + (int)(Math.Pow(1.115f, charge));
-                Vector2 position = Main.player[projectile.owner].Center + projectile.velocity * 8f;
-                Vector2 velocity = projectile.velocity * (2f + (chargeRadius * 25f));
 
-                Projectile.NewProjectile(position, velocity, ProjectileType, damage, projectile.knockBack, projectile.owner);
+                int damage = (int)(chargeRadius * projectile.damage);
+                if (damage < 1) damage = 1;
+
+                Projectile.NewProjectile(
+                    Main.player[projectile.owner].Center + projectile.velocity * 8f,
+                    projectile.velocity * (1f + (chargeRadius * 18f)), 
+                    ModContent.ProjectileType<PixelatedArrow>(), 
+                    damage, projectile.knockBack * chargeRadius, 
+                    projectile.owner, 
+                    0f, -1f);
 
                 Main.PlaySound(SoundID.Item5);
             }

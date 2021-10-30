@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using GamerClass.Projectiles.MinecraftBow;
-using Microsoft.Xna.Framework;
 
 namespace GamerClass.Items.Weapons
 {
@@ -18,11 +16,11 @@ namespace GamerClass.Items.Weapons
         {
             item.width = item.height = 15;
             item.noMelee = true;
-            item.damage = 2;
+            item.damage = 40;
+            item.knockBack = 3f;
             item.channel = true;
-            item.useAmmo = AmmoID.Arrow;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = 10;
+            item.shoot = ModContent.ProjectileType<Projectiles.MinecraftBow.HeldBow>();
             item.shootSpeed = 14f;
             item.value = Item.sellPrice(copper: 50);
             item.useTime = item.useAnimation = 10;
@@ -30,13 +28,6 @@ namespace GamerClass.Items.Weapons
             item.noUseGraphic = true;
 
             ramUsage = 3;
-        }
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<HeldBow>(), item.damage, knockBack, player.whoAmI, type);
-
-            return false;
         }
 
         public override void AddRecipes()
