@@ -9,7 +9,6 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pixelated Bow");
-            Tooltip.SetDefault("Uses arrows as ammo\n'Enchants not applicable'");
         }
 
         public override void SafeSetDefaults()
