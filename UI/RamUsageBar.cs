@@ -46,7 +46,7 @@ namespace GamerClass.UI
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
 
-            float ramRadius = MathHelper.Clamp((float)modPlayer.usedRam / modPlayer.maxRam, 0f, 1f);
+            float ramRadius = MathHelper.Clamp((float)modPlayer.usedRam / modPlayer.maxRam2, 0f, 1f);
             Rectangle hitbox = barFrame.GetInnerDimensions().ToRectangle();
 
             // Draw frame
@@ -116,7 +116,7 @@ namespace GamerClass.UI
             if (hitbox.Intersects(mouse))
             {
                 Main.LocalPlayer.mouseInterface = true;
-                Main.instance.MouseText($"Used RAM: {modPlayer.usedRam}B / {modPlayer.maxRam}B");
+                Main.instance.MouseText($"Used RAM: {modPlayer.usedRam}B / {modPlayer.maxRam2}B");
             }
         }
 

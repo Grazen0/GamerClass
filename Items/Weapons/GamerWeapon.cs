@@ -87,7 +87,7 @@ namespace GamerClass.Items.Weapons
         public override void HoldItem(Player player)
         {
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
-            float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam;
+            float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam2;
 
             if (!modPlayer.gamerCooldown && ramRadius > 0.6f)
             {

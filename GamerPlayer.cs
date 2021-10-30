@@ -1,5 +1,4 @@
 ﻿using GamerClass.Buffs;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -14,6 +13,7 @@ namespace GamerClass
         public bool gamerCooldown;
 
         public int maxRam;
+        public int maxRam2;
         public int usedRam;
         public int ramRegenTimer;
         public float ramRegenRate;
@@ -23,6 +23,11 @@ namespace GamerClass
         public float gamerUseTimeMult;
         public int gamerCrit;
 
+        public override void Initialize()
+        {
+            maxRam = 5;
+        }
+
         public override void ResetEffects() => ResetVariables();
 
         public override void UpdateDead() => ResetVariables();
@@ -31,7 +36,7 @@ namespace GamerClass
         {
             linkArmorBonus = false;
             gamerCooldown = false;
-            maxRam = 5;
+            maxRam2 = maxRam;
             gamerDamageMult = 1f;
             gamerKnockback = 0f;
             gamerUseTimeMult = 1f;
@@ -121,10 +126,10 @@ namespace GamerClass
             ramRegenRate = 1f;
             usedRam += amount;
 
-            if (usedRam >= maxRam)
+            if (usedRam >= maxRam2)
             {
                 // RAM overheat
-                usedRam = maxRam;
+                usedRam = maxRam2;
                 player.AddBuff(ModContent.BuffType<GamerCooldown>(), 300);
 
                 for (int d = 0; d < 20; d++)
