@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,14 +50,25 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
 
         public override void Kill(int timeLeft)
         {
-            // Create explosion
-            Projectile.NewProjectile(
-                projectile.Center,
-                Vector2.Zero,
-                ModContent.ProjectileType<RocketExplosion>(),
-                projectile.damage,
-                projectile.knockBack,
-                projectile.owner);
+            Main.PlaySound(SoundID.Item14, projectile.Center);
+
+            int size = 144;
+            Rectangle hitbox = new Rectangle((int)projectile.Center.X - size / 2, (int)projectile.Center.Y - size / 2, size, size);
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (
+                    npc.active
+                    && !npc.dontTakeDamage
+                    && npc.immune[projectile.owner] <= 0
+                    && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0)
+                    && npc.Hitbox.Intersects(hitbox)
+                    )
+                {
+                    int hitDirection = Math.Sign(npc.Center.X - projectile.Center.X);
+                    npc.StrikeNPC(projectile.damage / 2, projectile.knockBack * 0.5f, hitDirection);
+                }
+            }
 
             // Pog rocket jump
             float range = 150f;
@@ -72,8 +84,6 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
                     player.velocity = Vector2.Normalize(toPlayer) * force;
                 }
             }
-
-            Main.PlaySound(SoundID.Item14, projectile.Center);
 
             // Dust and gore stuff
             for (int g = 0; g < 6; g++)
@@ -96,6 +106,11 @@ namespace GamerClass.Projectiles.TF2RocketLauncher
                 Main.dust[id].noGravity = true;
                 Main.dust[id].velocity *= 6f;
             }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 5;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
