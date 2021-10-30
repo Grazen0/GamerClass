@@ -42,7 +42,7 @@ namespace GamerClass
 
         public override void Unload()
         {
-            if (RamUsageBar != null)
+            if (!Main.dedServ && RamUsageBar != null)
             {
                 RamUsageBar.Unload();
                 RamUsageBar = null;

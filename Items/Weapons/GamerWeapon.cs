@@ -66,7 +66,7 @@ namespace GamerClass.Items.Weapons
             var modPlayer = player.GetModPlayer<GamerPlayer>();
             bool canUseItem = !modPlayer.gamerCooldown;
 
-            bool ramConsumed = modPlayer.ConsumeRam(TotalRamUsage, item.useTime);
+            bool ramConsumed = modPlayer.ConsumeRam(TotalRamUsage, item.useAnimation + 30);
 
             if (!ramConsumed && (soundInstance == null || soundInstance.State != SoundState.Playing))
             {

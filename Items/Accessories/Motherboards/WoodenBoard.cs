@@ -9,12 +9,11 @@ namespace GamerClass.Items.Accessories.Motherboards
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wooden Motherboard");
-            Tooltip.SetDefault("'It barely holds itself together...'");
+            Tooltip.SetDefault("'It barely holds itself together'");
         }
 
         public override void SafeSetDefaults()
         {
-            item.rare = ItemRarityID.White;
             item.value = Item.sellPrice(silver: 5);
         }
 
