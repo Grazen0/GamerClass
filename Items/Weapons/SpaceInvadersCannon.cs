@@ -16,7 +16,7 @@ namespace GamerClass.Items.Weapons
         public override void SafeSetDefaults()
         {
             item.noMelee = true;
-            item.damage = 22;
+            item.damage = 25;
             item.knockBack = 2f;
             item.useTime = item.useAnimation = 40;
             item.useStyle = ItemUseStyleID.HoldingOut;

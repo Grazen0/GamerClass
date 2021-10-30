@@ -13,7 +13,7 @@ namespace GamerClass.Items.Weapons
 
         public override void SafeSetDefaults()
         {
-            item.damage = 26;
+            item.damage = 30;
             item.knockBack = 2f;
             item.noMelee = true;
             item.useStyle = ItemUseStyleID.SwingThrow;
