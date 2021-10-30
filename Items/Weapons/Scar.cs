@@ -34,7 +34,7 @@ namespace GamerClass.Items.Weapons
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Scar").WithVolume(0.5f);
             item.shootSpeed = 7;
             item.shoot = ModContent.ProjectileType<Projectiles.ScarBullet>();
-            item.knockBack = 1;
+            item.knockBack = 1f;
             item.autoReuse = true;
 
             ramUsage = 1;

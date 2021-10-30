@@ -1,8 +1,8 @@
-﻿using Terraria;
+﻿using GamerClass.Projectiles.GasterBlaster;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using GamerClass.Projectiles.GasterBlaster;
-using Microsoft.Xna.Framework;
 
 namespace GamerClass.Items.Weapons
 {

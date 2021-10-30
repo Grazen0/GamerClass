@@ -1,9 +1,9 @@
-﻿using System;
+﻿using GamerClass.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ModLoader;
-using GamerClass.Buffs;
 
 namespace GamerClass.Projectiles.GasterBlaster
 {

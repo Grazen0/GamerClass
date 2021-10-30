@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Projectiles.TF2RocketLauncher;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using GamerClass.Projectiles.TF2RocketLauncher;
 
 namespace GamerClass.Items.Weapons
 {
@@ -19,6 +19,7 @@ namespace GamerClass.Items.Weapons
             item.width = item.height = 52;
             item.noMelee = true;
             item.damage = 150;
+            item.knockBack = 4f;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = SoundID.Item11;
             item.useTime = item.useAnimation = 30;

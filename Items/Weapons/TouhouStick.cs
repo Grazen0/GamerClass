@@ -1,8 +1,8 @@
-﻿using Terraria.ID;
-using Terraria.ModLoader;
-using GamerClass.Projectiles.TouhouStick;
-using Terraria;
+﻿using GamerClass.Projectiles.TouhouStick;
 using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace GamerClass.Items.Weapons
 {
@@ -11,7 +11,7 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reimu's Gohei");
-            Tooltip.SetDefault("Left click for ReimuA, right click for ReimuB\n'raymoo'");
+            Tooltip.SetDefault("Left click for Reimu A, right click for Reimu B");
         }
 
         public override void SafeSetDefaults()
@@ -20,6 +20,7 @@ namespace GamerClass.Items.Weapons
             item.height = 40;
             item.noMelee = true;
             item.damage = 10;
+            item.knockBack = 0.5f;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.rare = ItemRarityID.LightRed;
             item.autoReuse = true;

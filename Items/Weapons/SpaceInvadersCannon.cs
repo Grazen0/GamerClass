@@ -17,6 +17,7 @@ namespace GamerClass.Items.Weapons
         {
             item.noMelee = true;
             item.damage = 22;
+            item.knockBack = 2f;
             item.useTime = item.useAnimation = 40;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SpaceInvadersCannon");
