@@ -33,9 +33,9 @@ namespace GamerClass.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
 
+            recipe.AddIngredient(ItemID.Wood, 20);
+            recipe.AddIngredient(ItemID.StoneBlock, 6);
             recipe.AddIngredient(ItemID.WhiteString);
-            recipe.AddIngredient(ItemID.Wood, 10);
-            recipe.AddIngredient(ItemID.StoneBlock, 2);
 
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(this);

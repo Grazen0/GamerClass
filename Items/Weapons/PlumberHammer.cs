@@ -24,16 +24,16 @@ namespace GamerClass.Items.Weapons
             item.shoot = ModContent.ProjectileType<Projectiles.FlyingHammer>();
             item.shootSpeed = 15;
 
-            ramUsage = 0;
+            ramUsage = 3;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(ItemID.Wood, 10);
+            recipe.AddIngredient(ItemID.Wood, 30);
             recipe.AddIngredient(ItemID.WhiteString);
-            recipe.AddIngredient(ItemID.PlatinumBar, 8);
+            recipe.AddIngredient(ItemID.PlatinumBar, 15);
 
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
@@ -41,9 +41,9 @@ namespace GamerClass.Items.Weapons
             
             recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(ItemID.Wood, 10);
+            recipe.AddIngredient(ItemID.Wood, 30);
             recipe.AddIngredient(ItemID.WhiteString);
-            recipe.AddIngredient(ItemID.GoldBar, 8);
+            recipe.AddIngredient(ItemID.GoldBar, 15);
 
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);

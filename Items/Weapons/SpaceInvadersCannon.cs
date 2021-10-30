@@ -38,5 +38,18 @@ namespace GamerClass.Items.Weapons
 
             return true;
         }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+
+            recipe.AddIngredient(ItemID.Granite, 30);
+            recipe.AddIngredient(ItemID.StoneBlock, 10);
+            recipe.AddIngredient(ItemID.WhiteString);
+
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
 }
