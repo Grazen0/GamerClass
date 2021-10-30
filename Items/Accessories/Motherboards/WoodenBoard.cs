@@ -6,8 +6,6 @@ namespace GamerClass.Items.Accessories.Motherboards
 {
     public class WoodenBoard : RamAccessory
     {
-        public override string Texture => "Terraria/Item_" + ItemID.GPS;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wooden Motherboard");
@@ -17,12 +15,12 @@ namespace GamerClass.Items.Accessories.Motherboards
         public override void SafeSetDefaults()
         {
             item.rare = ItemRarityID.White;
-            item.value = Item.sellPrice(silver: 1);
+            item.value = Item.sellPrice(silver: 5);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<GamerPlayer>().maxRam += 32;
+            player.GetModPlayer<GamerPlayer>().maxRam2 += 32;
         }
 
         public override void AddRecipes()
