@@ -40,7 +40,7 @@ namespace GamerClass.Items.Weapons
             spawnAt.Y += player.Center.Y;
 
             Vector2 toMouse = Main.MouseWorld - spawnAt;
-            Vector2 velocity = toMouse * Main.rand.NextFloat(0.06f, 0.065f);
+            Vector2 velocity = toMouse * Main.rand.NextFloat(0.09f, 0.095f);
 
             float rotation = Main.rand.NextFloat(MathHelper.TwoPi);
 

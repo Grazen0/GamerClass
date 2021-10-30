@@ -46,8 +46,8 @@ namespace GamerClass.Projectiles.GasterBlaster
 
         public override void AI()
         {
-            float moveDuration = 20f;
-            float shootDelay = 5f;
+            float moveDuration = 15f;
+            float shootDelay = 3f;
 
             if (init)
             {
