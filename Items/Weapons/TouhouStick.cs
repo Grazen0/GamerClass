@@ -26,9 +26,9 @@ namespace GamerClass.Items.Weapons
             item.useAnimation = 24;
             item.useTime = 6;
             item.shoot = ModContent.ProjectileType<OrangeCharm>();
-            item.shootSpeed = 30f;
+            item.shootSpeed = 15f;
 
-            ramUsage = 3;
+            ramUsage = 0;
         }
 
 
@@ -62,7 +62,6 @@ namespace GamerClass.Items.Weapons
             }
 
             // Special shot
-
             if (player.altFunctionUse == 2)
             {
                 // ReimuB needles
@@ -116,7 +115,7 @@ namespace GamerClass.Items.Weapons
                     int animationIndex = (item.useAnimation - player.itemAnimation - 1) / item.useTime;
 
                     Vector2 baseDirection = frontDirection.RotatedBy(MathHelper.PiOver2 * -side * 0.9f);
-                    Vector2 homingShotVelocity = baseDirection.RotatedBy(animationIndex * MathHelper.PiOver4 * 0.42f * side) * 30f;
+                    Vector2 homingShotVelocity = baseDirection.RotatedBy(animationIndex * MathHelper.PiOver4 * 0.42f * side) * item.shootSpeed;
 
                     Projectile.NewProjectile(
                         shotPosition, 

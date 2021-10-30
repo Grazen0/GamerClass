@@ -28,6 +28,8 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.timeLeft = 420;
             projectile.scale = 0.8f;
             projectile.alpha = 255;
+            projectile.extraUpdates = 1;
+            projectile.timeLeft = 360 * projectile.extraUpdates;
             projectile.GamerProjectile().gamer = true;
         }
 
@@ -48,8 +50,8 @@ namespace GamerClass.Projectiles.TouhouStick
             {
                 NPC target = Main.npc[CurrentTarget];
 
-                float speed = 30f;
-                float inertia = 12f;
+                float speed = 12f;
+                float inertia = 20f;
                 Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
                 projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
             }

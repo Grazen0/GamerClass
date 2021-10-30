@@ -23,9 +23,10 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.penetrate = 3;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;
-            projectile.timeLeft = 360;
             projectile.scale = 0.8f;
             projectile.alpha = 255;
+            projectile.extraUpdates = 1;
+            projectile.timeLeft = 360 * projectile.extraUpdates;
             projectile.GamerProjectile().gamer = true;
         }
 

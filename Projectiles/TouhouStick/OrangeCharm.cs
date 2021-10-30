@@ -22,9 +22,10 @@ namespace GamerClass.Projectiles.TouhouStick
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 360;
             projectile.scale = 0.8f;
             projectile.alpha = 255;
+            projectile.extraUpdates = 1;
+            projectile.timeLeft = 360 * projectile.extraUpdates;
             projectile.GamerProjectile().gamer = true;
         }
 
