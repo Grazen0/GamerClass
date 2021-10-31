@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Enums;
 using Terraria.ModLoader;
 
 namespace GamerClass.Projectiles
@@ -86,6 +87,19 @@ namespace GamerClass.Projectiles
             float point = 0f;
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, 42, ref point);
+        }
+
+        public override void CutTiles()
+        {
+            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+
+            Vector2 start = projectile.Center;
+            start.Y -= Size * Unit;
+
+            Vector2 end = projectile.Center;
+            end.Y += Size * Unit;
+
+            Utils.PlotTileLine(start, end, 42, DelegateMethods.CutTiles);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
