@@ -10,7 +10,7 @@ namespace GamerClass.Projectiles
         private readonly int Size = 12;
         private readonly int Unit = 120;
 
-        private float xScale = 0.8f;
+        private float xScale = 0.75f;
         private bool playSound = true;
 
         public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace GamerClass.Projectiles
             projectile.friendly = true;
             projectile.tileCollide = false;
             projectile.penetrate = -1;
-            projectile.alpha = 155;
+            projectile.alpha = 180;
         }
 
         public int State
@@ -48,7 +48,7 @@ namespace GamerClass.Projectiles
                 case 1: // Open up
                     timerTarget = 2;
                     projectile.alpha = (int)MathHelper.Max(projectile.alpha - 200, 0);
-                    xScale += 0.6f;
+                    xScale += 0.5f;
 
                     if (playSound)
                     {
@@ -85,7 +85,7 @@ namespace GamerClass.Projectiles
 
             float point = 0f;
 
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, 36, ref point);
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, 42, ref point);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
