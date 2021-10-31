@@ -23,7 +23,6 @@ namespace GamerClass.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = SoundID.Item11;
             item.useTime = item.useAnimation = 30;
-            item.knockBack = 4;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<TF2Rocket>();
             item.shootSpeed = 20f;
