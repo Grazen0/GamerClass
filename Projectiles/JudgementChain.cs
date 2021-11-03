@@ -20,6 +20,7 @@ namespace GamerClass.Projectiles
             projectile.tileCollide = false;
             projectile.penetrate = -1;
             projectile.alpha = 180;
+            projectile.GamerProjectile().gamer = true;
         }
 
         public int State
