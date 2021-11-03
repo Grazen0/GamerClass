@@ -1,14 +1,19 @@
 ﻿using GamerClass.Buffs;
+using GamerClass.Items.Weapons;
+using GamerClass.Items;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace GamerClass
 {
     public class GamerPlayer : ModPlayer
     {
         public bool linkArmorBonus;
+        public bool friskSet;
 
         public bool gamerCooldown;
 
@@ -17,6 +22,7 @@ namespace GamerClass
         public int usedRam;
         public int ramRegenTimer;
         public float ramRegenRate;
+        public float ramUsageMult;
 
         public float gamerDamageMult;
         public float gamerKnockback;
@@ -34,9 +40,11 @@ namespace GamerClass
 
         private void ResetVariables()
         {
+            friskSet = false;
             linkArmorBonus = false;
             gamerCooldown = false;
             maxRam2 = maxRam;
+            ramUsageMult = 1f;
             gamerDamageMult = 1f;
             gamerKnockback = 0f;
             gamerUseTimeMult = 1f;
@@ -79,6 +87,33 @@ namespace GamerClass
                     ramRegenRate *= 0.997f;
                 }
             }
+        }
+
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            if (crit && friskSet && item.modItem is GamerWeapon)
+                SpawnUndertaleSoul(target.Center);
+        }
+
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (crit && friskSet && proj.GamerProjectile().gamer)
+                SpawnUndertaleSoul(target.Center);
+        }
+
+        private void SpawnUndertaleSoul(Vector2 position)
+        {
+            var type = new WeightedRandom<int>();
+
+            type.Add(ModContent.ItemType<RedSoul>());
+            type.Add(ModContent.ItemType<BlueSoul>());
+            type.Add(ModContent.ItemType<GreenSoul>());
+            type.Add(ModContent.ItemType<PurpleSoul>());
+            type.Add(ModContent.ItemType<YellowSoul>());
+            type.Add(ModContent.ItemType<OrangeSoul>());
+            type.Add(ModContent.ItemType<LightBlueSoul>());
+
+            Item.NewItem(position, type, noBroadcast: true);
         }
 
         public bool FindAndRemoveAmmo(int type)
@@ -124,7 +159,7 @@ namespace GamerClass
 
             ramRegenTimer = -regenDelay;
             ramRegenRate = 1f;
-            usedRam += amount;
+            usedRam += (int)Math.Round(amount * ramUsageMult);
 
             if (usedRam >= maxRam2)
             {

@@ -88,6 +88,8 @@ namespace GamerClass.Items.Weapons
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
             float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam2;
 
+            modPlayer.ramUsageMult += ramUsageMult - 1f;
+
             if (!modPlayer.gamerCooldown && ramRadius > 0.6f)
             {
                 int chance = (int)(10 * (1f - ramRadius)) + 2;
