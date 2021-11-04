@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GamerClass.Projectiles.TF2RocketLauncher
+namespace GamerClass.Projectiles
 {
     public class TF2Rocket : ModProjectile
     {
