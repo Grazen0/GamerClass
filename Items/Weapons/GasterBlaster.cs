@@ -52,7 +52,7 @@ namespace GamerClass.Items.Weapons
             return false;
         }
 
-        public override void HoldItem(Player player)
+        public override void SafeHoldItem(Player player)
         {
             Vector2 eyePosition = new Vector2(1.5f * player.direction, -10f);
 

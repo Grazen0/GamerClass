@@ -28,10 +28,7 @@ namespace GamerClass.Items.Weapons
             return clone;
         }
 
-        public virtual void SafeSetDefaults()
-        {
-
-        }
+        public virtual void SafeSetDefaults() { }
 
         public sealed override void SetDefaults()
         {
@@ -83,8 +80,10 @@ namespace GamerClass.Items.Weapons
             return canUseItem;
         }
 
-        public override void HoldItem(Player player)
+        public sealed override void HoldItem(Player player)
         {
+            SafeHoldItem(player);
+
             GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
             float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam2;
 
@@ -115,6 +114,8 @@ namespace GamerClass.Items.Weapons
                 }
             }
         }
+
+        public virtual void SafeHoldItem(Player player) { }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
@@ -179,7 +180,7 @@ namespace GamerClass.Items.Weapons
             tooltips.Add(ramTooltip);
         }
 
-        public override int ChoosePrefix(UnifiedRandom rand)
+        public sealed override int ChoosePrefix(UnifiedRandom rand)
         {
             var val = new WeightedRandom<int>();
 
@@ -199,7 +200,7 @@ namespace GamerClass.Items.Weapons
             return val;
         }
 
-        public override bool NewPreReforge()
+        public sealed override bool NewPreReforge()
         {
             ramUsageMult = 1f;
             return true;
