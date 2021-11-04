@@ -10,8 +10,6 @@ namespace GamerClass.Projectiles.MinecraftBow
     public class PixelatedArrow : ModProjectile
     {
         private Vector2 stickOffset = Vector2.Zero;
-        private float stickedRotation = 0f;
-        private float stickRotation = 0f;
 
         public override void SetDefaults()
         {
