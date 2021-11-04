@@ -157,7 +157,11 @@ namespace GamerClass
 
             ramRegenTimer = -regenDelay;
             ramRegenRate = 1f;
-            usedRam += (int)Math.Round(amount * ramUsageMult);
+            amount = (int)Math.Round(amount * ramUsageMult);
+
+            if (amount <= 0) return true;
+
+            usedRam += amount;
 
             if (usedRam >= maxRam2)
             {
