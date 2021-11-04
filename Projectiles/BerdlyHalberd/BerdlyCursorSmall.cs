@@ -113,12 +113,11 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 10, 0.5f);
 
             Vector2 baseDirection = -Vector2.Normalize(projectile.velocity);
-            float spread = MathHelper.PiOver2;
 
             for (int d = 0; d < 10; d++)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.AncientLight, Scale: 1.6f);
-                dust.velocity = baseDirection.RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length() * 3f;
+                dust.velocity = baseDirection.RotatedByRandom(MathHelper.PiOver2) * dust.velocity.Length() * 3f;
                 dust.noGravity = true;
                 dust.noLight = false;
             }

@@ -43,8 +43,7 @@ namespace GamerClass.Items.Weapons
 
             for (int d = 0; d < 6; d++)
             {
-                float spread = MathHelper.PiOver4 * 0.7f;
-                Vector2 direction = frontDirection.RotatedBy(Main.rand.NextFloat(-spread, spread));
+                Vector2 direction = frontDirection.RotatedByRandom(MathHelper.PiOver4 * 0.7f);
 
                 int id = Dust.NewDust(position + frontDirection * 28f, 1, 1, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
                 Main.dust[id].velocity = direction * Main.rand.NextFloat(4f, 8f);

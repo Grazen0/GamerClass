@@ -55,12 +55,10 @@ namespace GamerClass
         {
             if (gamerCooldown)
             {
-                float spread = MathHelper.PiOver2 * 0.8f;
-
                 Vector2 position = player.position;
                 position.Y -= player.height / 4;
 
-                Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
+                Vector2 direction = -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2 * 0.8f);
 
                 Dust dust = Dust.NewDustDirect(position, player.width, player.height / 2, DustID.Smoke, Scale: 1.6f);
                 dust.velocity = direction * 2f;

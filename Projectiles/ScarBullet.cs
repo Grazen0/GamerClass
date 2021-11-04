@@ -39,12 +39,10 @@ namespace GamerClass.Projectiles
         {
             Main.PlaySound(SoundID.Item10, projectile.Center);
 
-            float spread = MathHelper.PiOver2 * 0.8f;
-
             for (int d = 0; d < 5; d++)
             {
                 Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.BubbleBurst_White, Scale: 1.3f);
-                dust.velocity = -projectile.velocity.RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length() * 0.3f;
+                dust.velocity = -projectile.velocity.RotatedByRandom(MathHelper.PiOver2 * 0.8f) * dust.velocity.Length() * 0.3f;
                 dust.noGravity = true;
                 dust.fadeIn = 0f;
             }

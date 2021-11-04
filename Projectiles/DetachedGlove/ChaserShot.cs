@@ -78,12 +78,11 @@ namespace GamerClass.Projectiles.DetachedGlove
         
         private void SpawnDusts()
         {
-            float spread = MathHelper.PiOver4 * 0.8f;
             for (int d = 0; d < 3; d++)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.GreenFairy);
                 dust.noGravity = true;
-                dust.velocity = Vector2.Normalize(projectile.velocity).RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length();
+                dust.velocity = Vector2.Normalize(projectile.velocity).RotatedByRandom(MathHelper.PiOver4 * 0.8f) * dust.velocity.Length();
             }
         }
 

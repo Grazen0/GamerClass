@@ -68,11 +68,10 @@ namespace GamerClass.Projectiles.MinecraftBow
 
         public override void Kill(int timeLeft)
         {
-            float spread = MathHelper.PiOver4;
             for (int d = 0; d < 6; d++)
             {
                 Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.Stone, Scale: 1.2f);
-                dust.velocity = Vector2.Normalize(-projectile.velocity).RotatedBy(Main.rand.NextFloat(-spread, spread)) * dust.velocity.Length() * 2f;
+                dust.velocity = Vector2.Normalize(-projectile.velocity).RotatedByRandom(MathHelper.PiOver4) * dust.velocity.Length() * 2f;
                 dust.noGravity = true;
             }
         }

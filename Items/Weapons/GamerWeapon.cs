@@ -97,14 +97,13 @@ namespace GamerClass.Items.Weapons
 
                 if (Main.rand.NextBool(chance))
                 {
-                    float spread = MathHelper.PiOver4 * 0.8f;
                     int size = 10;
 
                     Vector2 position = player.Center;
                     position.X -= size / 2 - player.direction * 10;
                     position.Y -= size / 2 - 5;
 
-                    Vector2 direction = -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-spread, spread));
+                    Vector2 direction = -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4 * 0.8f);
 
                     Dust dust = Dust.NewDustDirect(position, size, size, DustID.Smoke);
                     dust.noGravity = true;
