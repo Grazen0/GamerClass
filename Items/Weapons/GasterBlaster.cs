@@ -11,14 +11,15 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Funny Looking Bone");
-            Tooltip.SetDefault("Ignores some enemy defense\n'It wants to tell you a pun about skeletons'");
+            Tooltip.SetDefault("'It wants to tell you a pun about skeletons'");
         }
 
         public override void SafeSetDefaults()
         {
             item.width = item.height = 42;
             item.noMelee = true;
-            item.damage = 8;
+            item.damage = 20;
+            item.crit = 0;
             item.rare = ItemRarityID.Green;
             item.value = Item.sellPrice(gold: 10);
             item.useStyle = ItemUseStyleID.SwingThrow;
@@ -29,6 +30,8 @@ namespace GamerClass.Items.Weapons
 
             ramUsage = 4;
         }
+
+        public override void GetWeaponCrit(Player player, ref int crit) => crit = 0;
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -51,8 +54,6 @@ namespace GamerClass.Items.Weapons
 
         public override void HoldItem(Player player)
         {
-            player.armorPenetration += 10;
-
             Vector2 eyePosition = new Vector2(1.5f * player.direction, -10f);
 
             Dust dust = Dust.NewDustPerfect(player.Center + eyePosition, DustID.Clentaminator_Cyan, null, 0, default, 0.8f);
