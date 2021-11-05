@@ -176,11 +176,11 @@ namespace GamerClass
                     int size = 20;
                     Vector2 position = player.Center - new Vector2(1f, 1f) * (size / 2);
 
-                    int id = Dust.NewDust(position, size, size, fire ? DustID.Fire : DustID.Smoke);
-                    Main.dust[id].noGravity = true;
-                    Main.dust[id].fadeIn = 2f;
-                    Main.dust[id].velocity *= fire ? 8f : 4f;
-                    Main.dust[id].scale = 1f;
+                    Dust dust = Dust.NewDustDirect(position, size, size, fire ? DustID.Fire : DustID.Smoke);
+                    dust.noGravity = true;
+                    dust.fadeIn = 2f;
+                    dust.velocity *= fire ? 8f : 4f;
+                    dust.scale = 1f;
                 }
 
                 for (int g = 0; g < 6; g++)

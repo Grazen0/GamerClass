@@ -45,9 +45,9 @@ namespace GamerClass.Items.Weapons
             {
                 Vector2 direction = frontDirection.RotatedByRandom(MathHelper.PiOver4 * 0.7f);
 
-                int id = Dust.NewDust(position + frontDirection * 28f, 1, 1, DustID.Smoke, 0f, 0f, 0, default, 1.5f);
-                Main.dust[id].velocity = direction * Main.rand.NextFloat(4f, 8f);
-                Main.dust[id].noGravity = true;
+                Dust dust = Dust.NewDustPerfect(position + frontDirection * 28f, DustID.Smoke, Scale: 1.5f);
+                dust.velocity = direction * Main.rand.NextFloat(4f, 8f);
+                dust.noGravity = true;
             }
 
             return true;

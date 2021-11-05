@@ -37,15 +37,16 @@ namespace GamerClass.Projectiles
             Vector2 position = projectile.position - projectile.rotation.ToRotationVector2() * 40f;
 
             // Trail dust
+            Dust dust;
             for (int d = 0; d < 3; d++)
             {
-                int dustId = Dust.NewDust(position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100);
-                Main.dust[dustId].velocity *= 0.1f;
+                dust = Dust.NewDustDirect(position, projectile.width, projectile.height, DustID.Smoke, Alpha: 100);
+                dust.velocity *= 0.1f;
             }
 
             // Fire trail
-            int fireId = Dust.NewDust(position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100);
-            Main.dust[fireId].velocity *= 0.1f;
+            dust = Dust.NewDustDirect(position, projectile.width, projectile.height, DustID.Fire, Alpha: 100);
+            dust.velocity *= 0.1f;
         }
 
         public override void Kill(int timeLeft)
@@ -95,16 +96,16 @@ namespace GamerClass.Projectiles
 
             for (int d = 0; d < 20; d++)
             {
-                int id = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 0f, 0, default, 4f);
-                Main.dust[id].noGravity = true;
-                Main.dust[id].velocity *= 12f;
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire, Scale: 4f);
+                dust.noGravity = true;
+                dust.velocity *= 12f;
             }
 
             for (int d = 0; d < 10; d++)
             {
-                int id = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 0, default, 2f);
-                Main.dust[id].noGravity = true;
-                Main.dust[id].velocity *= 6f;
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, Scale: 2f);
+                dust.noGravity = true;
+                dust.velocity *= 6f;
             }
         }
 

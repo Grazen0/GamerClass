@@ -56,12 +56,9 @@ namespace GamerClass.Items.Weapons
         {
             Vector2 eyePosition = new Vector2(1.5f * player.direction, -10f);
 
-            Dust dust = Dust.NewDustPerfect(player.Center + eyePosition, DustID.Clentaminator_Cyan, null, 0, default, 0.8f);
+            Dust dust = Dust.NewDustPerfect(player.Center + eyePosition, DustID.Clentaminator_Cyan, Scale: 0.8f);
             dust.noGravity = true;
-            dust.noLight = false;
             dust.velocity *= 0f;
-
-            base.HoldItem(player);
         }
     }
 }
