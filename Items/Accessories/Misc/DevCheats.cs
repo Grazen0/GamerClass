@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GamerClass.Items.Accessories.Motherboards
+namespace GamerClass.Items.Accessories.Misc
 {
     public class DevCheats : ModItem
     {
