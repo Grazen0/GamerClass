@@ -25,16 +25,13 @@ namespace GamerClass
 
             // WoF gamer emblem drop (Normal mode)
             if (!c.TryGotoNext(MoveType.After,
-                i => i.MatchLdcI4(489),
                 i => i.MatchLdloc(50),
-                i => i.MatchAdd(),
-                i => i.MatchStloc(50)))
+                i => i.MatchAdd()))
             {
                 Logger.Error("NPC_NPCLoot IL patch could not apply (2)");
             }
             else
             {
-                c.Index--;
                 c.EmitDelegate<Func<int, int>>(ChooseGamerEmblem);
             }
 
@@ -62,17 +59,14 @@ namespace GamerClass
             var c = new ILCursor(il);
 
             // WoF gamer emblem drop (boss bag)
-            if (!c.TryGotoNext(MoveType.After,
-                i => i.MatchLdcI4(489),
-                i => i.MatchLdloc(10),
-                i => i.MatchAdd(),
-                i => i.MatchStloc(10)))
+            if (!c.TryGotoNext(MoveType.After, 
+                i => i.MatchLdloc(10), 
+                i => i.MatchAdd()))
             {
                 Logger.Error("Player_OpenBossBag IL patch could not apply (1)");
             }
             else
             {
-                c.Index--;
                 c.EmitDelegate<Func<int, int>>(ChooseGamerEmblem);
             }
 
@@ -103,9 +97,8 @@ namespace GamerClass
             if (!c.TryGotoNext(MoveType.Before,
                 i => i.MatchLdsfld(typeof(SoundID).GetField("Item32")),
                 i => i.MatchLdarg(0),
-                i => i.MatchLdfld(typeof(Entity).GetField("position")),
-                i => i.MatchCall(typeof(Main).GetMethod("PlaySound", new Type[] { typeof(LegacySoundStyle), typeof(Vector2) })),
-                i => i.MatchPop()))
+                i => i.MatchLdfld(out _),
+                i => i.MatchCall(typeof(Main).GetMethod("PlaySound", new Type[] { typeof(LegacySoundStyle), typeof(Vector2) }))))
             {
                 Logger.Error("Player_Update IL patch could not apply");
                 return;
