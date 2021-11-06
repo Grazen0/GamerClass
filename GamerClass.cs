@@ -64,6 +64,12 @@ namespace GamerClass
             recipe.AddRecipe();
         }
 
+        public override void AddRecipeGroups()
+        {
+            RecipeGroup group = new RecipeGroup(() => "Any Evil Scale", new int[] { ItemID.ShadowScale, ItemID.TissueSample });
+            RecipeGroup.RegisterGroup("GamerClass:EvilScale", group);
+        }
+
         public override void UpdateUI(GameTime gameTime)
         {
             RamInterface?.Update(gameTime);
