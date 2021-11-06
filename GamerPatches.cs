@@ -25,10 +25,13 @@ namespace GamerClass
 
             // WoF gamer emblem drop (Normal mode)
             if (!c.TryGotoNext(MoveType.After,
-                i => i.MatchLdloc(50),
-                i => i.MatchAdd()))
+                i => i.MatchLdarg(0),
+                i => i.MatchLdfld(typeof(Entity).GetField("width")),
+                i => i.MatchLdarg(0),
+                i => i.MatchLdfld(typeof(Entity).GetField("height")),
+                i => i.MatchLdloc(50)))
             {
-                Logger.Error("NPC_NPCLoot IL patch could not apply (2)");
+                Logger.Error("NPC_NPCLoot IL patch could not apply (1)");
             }
             else
             {
@@ -42,7 +45,7 @@ namespace GamerClass
                 i => i.MatchCall(out _),
                 i => i.MatchStloc(56)))
             {
-                Logger.Error("NPC_NPCLoot IL patch could not apply (3)");
+                Logger.Error("NPC_NPCLoot IL patch could not apply (2)");
             }
             else
             {
@@ -59,9 +62,9 @@ namespace GamerClass
             var c = new ILCursor(il);
 
             // WoF gamer emblem drop (boss bag)
-            if (!c.TryGotoNext(MoveType.After, 
-                i => i.MatchLdloc(10), 
-                i => i.MatchAdd()))
+            if (!c.TryGotoNext(MoveType.After,
+                i => i.MatchLdarg(0),
+                i => i.MatchLdloc(10)))
             {
                 Logger.Error("Player_OpenBossBag IL patch could not apply (1)");
             }
