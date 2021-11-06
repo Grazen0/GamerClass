@@ -46,25 +46,25 @@ namespace GamerClass.Projectiles.ClumpOfBlocks
             switch (FragmentType)
             {
                 case 0:
-                    color = Color.Red;
+                    color = Color.IndianRed;
                     break;
                 case 1:
-                    color = Color.LimeGreen;
+                    color = Color.LightGreen;
                     break;
                 case 2:
-                    color = Color.Magenta;
+                    color = new Color(251, 130, 255); // Magenta-pink
                     break;
                 case 3:
-                    color = Color.Yellow;
+                    color = new Color(255, 224, 130); // Yellow-ish
                     break;
                 case 4:
-                    color = Color.Blue;
+                    color = Color.CornflowerBlue;
                     break;
                 case 5:
-                    color = Color.Orange;
+                    color = new Color(255, 164, 128); // Orange-ish
                     break;
                 case 6:
-                    color = Color.Cyan;
+                    color = Color.LightCyan;
                     break;
             }
 

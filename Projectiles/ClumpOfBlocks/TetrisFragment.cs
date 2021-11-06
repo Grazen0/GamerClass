@@ -40,25 +40,25 @@ namespace GamerClass.Projectiles.ClumpOfBlocks
             switch (projectile.ai[0])
             {
                 case 0:
-                    color = Color.Red;
+                    color = Color.IndianRed;
                     break;
                 case 1:
-                    color = Color.LimeGreen;
+                    color = Color.LightGreen;
                     break;
                 case 2:
-                    color = Color.Magenta;
+                    color = new Color(251, 130, 255); // Magenta-pink
                     break;
                 case 3:
-                    color = Color.Yellow;
+                    color = new Color(255, 224, 130); // Yellow-ish
                     break;
                 case 4:
-                    color = Color.Blue;
+                    color = Color.CornflowerBlue;
                     break;
                 case 5:
-                    color = Color.Orange;
+                    color = new Color(255, 164, 128); // Orange-ish
                     break;
                 case 6:
-                    color = Color.Cyan;
+                    color = Color.LightCyan;
                     break;
             }
 
@@ -66,9 +66,29 @@ namespace GamerClass.Projectiles.ClumpOfBlocks
 
             for (int d = 0; d < 6; d++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.BubbleBurst_White, newColor: color, Scale: 1.6f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.BubbleBurst_White, newColor: color, Scale: 1.5f);
                 dust.noGravity = true;
-                dust.velocity = baseDirection.RotatedByRandom(MathHelper.PiOver2) * dust.velocity.Length() * 2f;
+                dust.velocity = baseDirection.RotatedByRandom(MathHelper.PiOver2) * dust.velocity.Length();
+            }
+
+            int dustsPerSide = 4;
+            float size = 1.5f;
+
+            for (int side = 0; side < 4; side++)
+            {
+                Vector2 baseVelocity = Vector2.UnitY.RotatedBy(side * MathHelper.PiOver2) * size;
+                Vector2 cross = Vector2.Normalize(baseVelocity.RotatedBy(MathHelper.PiOver2));
+
+                baseVelocity -= cross * size;
+
+                for (int d = 0; d < dustsPerSide; d++)
+                {
+                    Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.BubbleBurst_White, newColor: color, Scale: 1.6f);
+                    dust.noGravity = true;
+                    dust.velocity = baseVelocity;
+
+                    baseVelocity += cross * ((size * 2) / dustsPerSide);
+                }
             }
         }
 
