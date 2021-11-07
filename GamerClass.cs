@@ -2,8 +2,11 @@ using GamerClass.Items.Accessories.Misc;
 using GamerClass.Items.Placeable;
 using GamerClass.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -24,6 +27,9 @@ namespace GamerClass
                 RamUsageBar = new RamUsageBar();
                 RamInterface = new UserInterface();
                 RamInterface.SetState(RamUsageBar);
+
+                Ref<Effect> glasses3dRef = new Ref<Effect>(GetEffect("Effects/Glasses3D"));
+                Filters.Scene["GamerClass:Glasses3D"] = new Filter(new ScreenShaderData(glasses3dRef, "Main"), EffectPriority.Low);
 
                 AddMusicBox(
                     GetSoundSlot(SoundType.Music, "Sounds/Music/Megalovania"),

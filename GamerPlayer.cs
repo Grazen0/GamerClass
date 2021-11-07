@@ -1,9 +1,10 @@
 ﻿using GamerClass.Buffs;
-using GamerClass.Items.Weapons;
 using GamerClass.Items;
+using GamerClass.Items.Weapons;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -12,6 +13,7 @@ namespace GamerClass
 {
     public class GamerPlayer : ModPlayer
     {
+        public bool glasses3D;
         public bool linkArmorBonus;
         public bool friskSet;
 
@@ -40,6 +42,7 @@ namespace GamerClass
 
         private void ResetVariables()
         {
+            glasses3D = false;
             friskSet = false;
             linkArmorBonus = false;
             gamerCooldown = false;
@@ -83,6 +86,29 @@ namespace GamerClass
                 else
                 {
                     ramRegenRate *= 0.997f;
+                }
+            }
+        }
+
+        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff) { }
+
+        public override void PreUpdate() { }
+
+        public override void PostUpdate()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                if (glasses3D)
+                {
+                    if (!Filters.Scene["GamerClass:Glasses3D"].IsActive())
+                    {
+                        Filters.Scene.Activate("GamerClass:Glasses3D").GetShader().UseOpacity(0.6f).UseProgress(24f);
+                    }
+                }
+                else if (Filters.Scene["GamerClass:Glasses3D"].IsActive())
+                {
+                    Filters.Scene["GamerClass:Glasses3D"].GetShader().UseProgress(0f);
+                    Filters.Scene.Deactivate("GamerClass:Glasses3D");
                 }
             }
         }
