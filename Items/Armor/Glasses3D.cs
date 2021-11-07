@@ -14,6 +14,8 @@ namespace GamerClass.Items.Armor
 
         public override void SetDefaults()
         {
+            item.width = 16;
+            item.height = 6;
             item.value = Item.sellPrice(silver: 50);
             item.rare = ItemRarityID.LightRed;
         }
