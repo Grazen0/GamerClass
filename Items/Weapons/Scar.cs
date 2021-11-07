@@ -48,8 +48,6 @@ namespace GamerClass.Items.Weapons
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/ScarReload");
                 item.useTime = item.useAnimation = 124;
                 ramUsage = 0;
-
-                return base.CanUseItem(player) && player.GetModPlayer<GamerPlayer>().FindAndRemoveAmmo(ModContent.ItemType<Ammo.Magazine>());
             }
             else
             {
@@ -57,20 +55,18 @@ namespace GamerClass.Items.Weapons
                 item.useTime = item.useAnimation = 10;
                 item.UseSound = charge > 0 ? mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Scar").WithVolume(0.6f) : SoundID.Item98;
                 ramUsage = 2;
-
-                return base.CanUseItem(player);
             }
+
+            return base.CanUseItem(player);
 
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            var tt = new TooltipLine(mod, "ScarCharge", $"Charge: {charge}/{MaxCharge}")
+            tooltips.Add(new TooltipLine(mod, "ScarCharge", $"Charge: {charge}/{MaxCharge}")
             {
-                overrideColor = charge > 0 ? Color.LightGreen : Color.Red
-            };
-
-            tooltips.Add(tt);
+                overrideColor = Color.Lerp(Color.Red, Color.LightGreen, (float)charge / MaxCharge)
+            });
             base.ModifyTooltips(tooltips);
         }
 

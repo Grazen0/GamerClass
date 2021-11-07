@@ -140,43 +140,6 @@ namespace GamerClass
             Item.NewItem(position, type, noBroadcast: true);
         }
 
-        public bool FindAndRemoveAmmo(int type)
-        {
-            bool CheckSlot(int slot)
-            {
-                Item item = player.inventory[slot];
-                if (item.type == type)
-                {
-                    if (item.stack > 1)
-                    {
-                        item.stack--;
-                    }
-                    else
-                    {
-                        item.TurnToAir();
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }
-
-            // Search in ammo slots
-            for (int i = 54; i < 58; i++)
-            {
-                if (CheckSlot(i)) return true;
-            }
-
-            // Search in main inventory
-            for (int i = 0; i < 50; i++)
-            {
-                if (CheckSlot(i)) return true;
-            }
-
-            return false;
-        }
-
         public bool ConsumeRam(int amount, int regenDelay)
         {
             if (gamerCooldown) return false;
