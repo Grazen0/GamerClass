@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GamerClass.Items.Armor
+namespace GamerClass.Items.Armor.Vanity
 {
     [AutoloadEquip(EquipType.Head)]
     public class Glasses3D : ModItem
@@ -10,6 +10,7 @@ namespace GamerClass.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("3D Glasses");
+            Tooltip.SetDefault("1 defense");
         }
 
         public override void SetDefaults()
@@ -20,15 +21,12 @@ namespace GamerClass.Items.Armor
             item.rare = ItemRarityID.LightRed;
         }
 
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawHair = true;
-        }
+        public override void UpdateEquip(Player player) => player.statDefense += 1;
 
-        public override void UpdateVanity(Player player, EquipType type)
-        {
+        public override void DrawHair(ref bool drawHair, ref bool drawAltHair) => drawHair = true;
+
+        public override void UpdateVanity(Player player, EquipType type) =>
             player.GetModPlayer<GamerPlayer>().glasses3D = true;
-        }
 
         public override void AddRecipes()
         {
@@ -36,8 +34,8 @@ namespace GamerClass.Items.Armor
 
             recipe.AddIngredient(ItemID.Goggles);
             recipe.AddIngredient(ItemID.BlackLens);
+            recipe.AddIngredient(ItemID.Diamond);
             recipe.AddIngredient(ItemID.Ruby);
-            recipe.AddIngredient(ItemID.Sapphire);
 
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(this);
