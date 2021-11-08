@@ -21,9 +21,7 @@ namespace GamerClass.Items.Weapons
             item.noMelee = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Splattershot");
-            //item.useAnimation = 15;
-            item.useTime = item.useAnimation = 8;
-            //item.reuseDelay = 8;
+            item.useTime = item.useAnimation = 18;
             item.shoot = ModContent.ProjectileType<Projectiles.InkShot>();
             item.shootSpeed = 5f;
             item.rare = ItemRarityID.Blue;
