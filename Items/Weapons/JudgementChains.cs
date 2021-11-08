@@ -12,6 +12,7 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chains of Judgement");
+            Tooltip.SetDefault("Summons a vertical chain of energy");
         }
 
         public override void SafeSetDefaults()
@@ -34,9 +35,10 @@ namespace GamerClass.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(ItemID.Chain, 60);
-            recipe.AddIngredient(ItemID.HellstoneBar, 16);
-            recipe.AddIngredient(ItemID.DemonTorch, 10);
+            recipe.AddIngredient(ItemID.Chain, 30);
+            recipe.AddIngredient(ItemID.HellstoneBar, 12);
+            recipe.AddIngredient(ItemID.Bone, 20);
+            recipe.AddIngredient(ItemID.DemonTorch, 5);
 
             recipe.AddTile(TileID.Hellforge);
             recipe.SetResult(this);
