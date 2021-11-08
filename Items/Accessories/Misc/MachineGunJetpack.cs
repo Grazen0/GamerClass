@@ -54,13 +54,14 @@ namespace GamerClass.Items.Accessories.Misc
 
                         Projectile.NewProjectile(
                             player.Center + new Vector2(-16f * player.direction, 16f),
-                            Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(30)) * 25f,
+                            Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(25)) * 25f,
                             ModContent.ProjectileType<Projectiles.JetpackBullet>(),
                             (int)MathHelper.Max(1, damage),
                             1.5f,
                             player.whoAmI);
                     }
-                } else if(soundInstance?.State == SoundState.Playing)
+                }
+                else if (soundInstance?.State == SoundState.Playing)
                 {
                     soundInstance.Stop();
                 }
