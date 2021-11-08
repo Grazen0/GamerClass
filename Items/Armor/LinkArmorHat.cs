@@ -24,7 +24,7 @@ namespace GamerClass.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<GamerPlayer>().gamerDamageMult += 0.06f;
+            player.GamerPlayer().gamerDamageMult += 0.06f;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -38,7 +38,7 @@ namespace GamerClass.Items.Armor
                 "15% increased gamer damage, 10% increased gamer critical strike chance\n" + 
                 "Broken pots drop more loot";
 
-            GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
+            GamerPlayer modPlayer = player.GamerPlayer();
             modPlayer.linkArmorBonus = true;
             modPlayer.gamerDamageMult += 0.15f;
             modPlayer.gamerCrit += 10;

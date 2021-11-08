@@ -45,24 +45,24 @@ namespace GamerClass.Items.Weapons
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            mult *= player.GetModPlayer<GamerPlayer>().gamerDamageMult;
+            mult *= player.GamerPlayer().gamerDamageMult;
         }
 
         public override void GetWeaponKnockback(Player player, ref float knockback)
         {
-            knockback += player.GetModPlayer<GamerPlayer>().gamerKnockback;
+            knockback += player.GamerPlayer().gamerKnockback;
         }
 
         public override void GetWeaponCrit(Player player, ref int crit)
         {
-            crit += player.GetModPlayer<GamerPlayer>().gamerCrit;
+            crit += player.GamerPlayer().gamerCrit;
         }
 
         public override bool CanUseItem(Player player)
         {
-            if (!ConsumeRAM()) return true;
+            if (!ConsumeRAM(player)) return true;
 
-            var modPlayer = player.GetModPlayer<GamerPlayer>();
+            var modPlayer = player.GamerPlayer();
             bool canUseItem = !modPlayer.gamerCooldown;
 
             bool ramConsumed = modPlayer.ConsumeRam(TotalRamUsage, item.useAnimation + 30);
@@ -82,13 +82,13 @@ namespace GamerClass.Items.Weapons
             return canUseItem;
         }
 
-        public virtual bool ConsumeRAM() => true;
+        public virtual bool ConsumeRAM(Player player) => true;
 
         public sealed override void HoldItem(Player player)
         {
             SafeHoldItem(player);
 
-            GamerPlayer modPlayer = player.GetModPlayer<GamerPlayer>();
+            GamerPlayer modPlayer = player.GamerPlayer();
             float ramRadius = (float)modPlayer.usedRam / modPlayer.maxRam2;
 
             modPlayer.ramUsageMult += ramUsageMult - 1f;

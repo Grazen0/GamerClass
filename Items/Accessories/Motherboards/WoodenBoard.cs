@@ -19,7 +19,7 @@ namespace GamerClass.Items.Accessories.Motherboards
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<GamerPlayer>().maxRam2 += 32;
+            player.GamerPlayer().maxRam2 += 32;
         }
 
         public override void AddRecipes()

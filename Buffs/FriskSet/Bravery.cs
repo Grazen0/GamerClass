@@ -15,7 +15,7 @@ namespace GamerClass.Buffs.FriskSet
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<GamerPlayer>().gamerCrit += 5;
+            player.GamerPlayer().gamerCrit += 5;
         }
     }
 }

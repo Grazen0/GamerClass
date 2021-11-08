@@ -53,7 +53,7 @@ namespace GamerClass.Projectiles.MinecraftBow
                 }
             } else
             {
-                player.GetModPlayer<GamerPlayer>().ramRegenTimer = -2;
+                player.GamerPlayer().ramRegenTimer = -2;
 
                 if (charge < MaxCharge) charge++;
                 projectile.timeLeft = 15;

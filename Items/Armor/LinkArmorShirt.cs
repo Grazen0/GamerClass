@@ -24,7 +24,7 @@ namespace GamerClass.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<GamerPlayer>().gamerDamageMult += 0.06f;
+            player.GamerPlayer().gamerDamageMult += 0.06f;
         }
     }
 }

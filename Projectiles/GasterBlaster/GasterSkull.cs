@@ -99,7 +99,7 @@ namespace GamerClass.Projectiles.GasterBlaster
 
                     int screenShake = ModContent.GetInstance<GamerConfig>().GasterBlasterScreenShake;
                     if (screenShake > 0)
-                        Main.LocalPlayer.GetModPlayer<GamerPlayer>().screenShake = screenShake;
+                        Main.LocalPlayer.GamerPlayer().screenShake = screenShake;
 
                     shoot = false;
                 }

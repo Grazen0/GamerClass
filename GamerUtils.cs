@@ -60,6 +60,8 @@ namespace GamerClass
         public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) => 
             projectile.GetGlobalProjectile<GamerGlobalProjectile>();
 
+        public static GamerPlayer GamerPlayer(this Player player) => player.GamerPlayer();
+
         public static void DrawCentered(this ModProjectile modProj, SpriteBatch spriteBatch, Color lightColor, bool flip = true)
         {
             Texture2D texture = Main.projectileTexture[modProj.projectile.type];
@@ -81,7 +83,7 @@ namespace GamerClass
                     modProj.projectile.oldRot[i],
                     origin,
                     modProj.projectile.scale,
-                    SpriteEffects.None,
+                    spriteEffects,
                     0f);
             }
 

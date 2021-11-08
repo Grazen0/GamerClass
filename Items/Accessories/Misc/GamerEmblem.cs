@@ -21,7 +21,7 @@ namespace GamerClass.Items.Accessories.Misc
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<GamerPlayer>().gamerDamageMult += 0.15f;
+            player.GamerPlayer().gamerDamageMult += 0.15f;
         }
 
         public override void AddRecipes()

@@ -26,7 +26,7 @@ namespace GamerClass.Items.Armor.Vanity
         public override void DrawHair(ref bool drawHair, ref bool drawAltHair) => drawHair = true;
 
         public override void UpdateVanity(Player player, EquipType type) =>
-            player.GetModPlayer<GamerPlayer>().glasses3D = true;
+            player.GamerPlayer().glasses3D = true;
 
         public override void AddRecipes()
         {

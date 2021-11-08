@@ -22,7 +22,7 @@ namespace GamerClass.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<GamerPlayer>().gamerCrit += 4;
+            player.GamerPlayer().gamerCrit += 4;
         }
 
         public override void AddRecipes()

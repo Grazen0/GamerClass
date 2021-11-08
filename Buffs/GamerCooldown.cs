@@ -16,7 +16,7 @@ namespace GamerClass.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<GamerPlayer>().gamerCooldown = true;
+            player.GamerPlayer().gamerCooldown = true;
         }
     }
 }

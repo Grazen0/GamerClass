@@ -40,7 +40,7 @@ namespace GamerClass.UI
         {
             base.DrawSelf(spriteBatch);
 
-            var modPlayer = Main.LocalPlayer.GetModPlayer<GamerPlayer>();
+            var modPlayer = Main.LocalPlayer.GamerPlayer();
 
             // For some reason, the spriteBatch uses anti-aliasing by default
             spriteBatch.End();

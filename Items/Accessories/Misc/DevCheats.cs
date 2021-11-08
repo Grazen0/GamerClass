@@ -21,7 +21,7 @@ namespace GamerClass.Items.Accessories.Misc
 
         public override void UpdateEquip(Player player)
         {
-            var modPlayer = player.GetModPlayer<GamerPlayer>();
+            var modPlayer = player.GamerPlayer();
 
             modPlayer.ramUsageMult = 0f;
             modPlayer.maxRam2 += 1000;

@@ -25,7 +25,7 @@ namespace GamerClass.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<GamerPlayer>().gamerCrit += 4;
+            player.GamerPlayer().gamerCrit += 4;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -34,7 +34,7 @@ namespace GamerClass.Items.Armor
                 "Gamer critical strikes will spawn a soul,\n" +
                 "pick souls up to get short-lasting buffs";
 
-            player.GetModPlayer<GamerPlayer>().friskSet = true;
+            player.GamerPlayer().friskSet = true;
         }
 
         public override void AddRecipes()

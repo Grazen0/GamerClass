@@ -71,7 +71,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 
                     if (
                         player.HeldItem.modItem is GamerWeapon modItem
-                        && !player.GetModPlayer<GamerPlayer>().ConsumeRam(modItem.ramUsage / 2, player.HeldItem.useTime)
+                        && !player.GamerPlayer().ConsumeRam(modItem.ramUsage / 2, player.HeldItem.useTime)
                         )
                     {
                         projectile.Kill();
