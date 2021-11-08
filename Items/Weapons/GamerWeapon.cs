@@ -60,6 +60,8 @@ namespace GamerClass.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
+            if (!ConsumeRAM()) return true;
+
             var modPlayer = player.GetModPlayer<GamerPlayer>();
             bool canUseItem = !modPlayer.gamerCooldown;
 
@@ -79,6 +81,8 @@ namespace GamerClass.Items.Weapons
 
             return canUseItem;
         }
+
+        public virtual bool ConsumeRAM() => true;
 
         public sealed override void HoldItem(Player player)
         {
