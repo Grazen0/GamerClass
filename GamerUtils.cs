@@ -60,7 +60,7 @@ namespace GamerClass
         public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) => 
             projectile.GetGlobalProjectile<GamerGlobalProjectile>();
 
-        public static GamerPlayer GamerPlayer(this Player player) => player.GamerPlayer();
+        public static GamerPlayer GamerPlayer(this Player player) => player.GetModPlayer<GamerPlayer>();
 
         public static void DrawCentered(this ModProjectile modProj, SpriteBatch spriteBatch, Color lightColor, bool flip = true)
         {
