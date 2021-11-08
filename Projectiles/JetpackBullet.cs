@@ -8,12 +8,6 @@ namespace GamerClass.Projectiles
 {
     public class JetpackBullet : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-        }
-
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 12;
@@ -56,21 +50,6 @@ namespace GamerClass.Projectiles
 
             Color color = projectile.GetAlpha(lightColor);
             Vector2 origin = new Vector2(texture.Width - projectile.width / 2, texture.Height / 2);
-
-            //int trails = ProjectileID.Sets.TrailCacheLength[projectile.type];
-            //for (int i = 0; i < trails; i++)
-            //{
-            //    spriteBatch.Draw(
-            //        texture,
-            //        projectile.oldPos[i] + projectile.Size / 2f - Main.screenPosition,
-            //        null,
-            //        color * 0.5f * (1f - ((float)i / trails)),
-            //        projectile.oldRot[i],
-            //        origin,
-            //        projectile.scale,
-            //        SpriteEffects.None,
-            //        0f);
-            //}
 
             spriteBatch.Draw(
                 texture,
