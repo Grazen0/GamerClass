@@ -21,9 +21,6 @@ namespace GamerClass.Items.Accessories.Misc
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            GamerPlayer modPlayer = player.GamerPlayer();
-            modPlayer.gamerDamageMult += 0.2f;
-
             player.wingTimeMax = 200;
             player.gravity *= 1.8f;
         }

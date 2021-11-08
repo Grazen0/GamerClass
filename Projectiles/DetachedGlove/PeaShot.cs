@@ -8,7 +8,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 {
     public class PeaShot : ModProjectile
     {
-        private float xScale = 05f;
+        private float xScale = 0.5f;
 
         public override void SetStaticDefaults()
         {
@@ -57,8 +57,7 @@ namespace GamerClass.Projectiles.DetachedGlove
         {
             Main.PlaySound(SoundID.Item10, projectile.Center);
 
-            int lines = 4;
-            for (int l = 0; l < lines; l++)
+            for (int l = 0; l < 4; l++)
             {
 
                 Vector2 direction = Main.rand.NextVector2CircularEdge(1f, 1f);

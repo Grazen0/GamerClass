@@ -14,12 +14,14 @@ namespace GamerClass
     public class GamerPlayer : ModPlayer
     {
         public int screenShake = 0;
+        public int jetpackBulletCooldown = 0;
 
         public bool glasses3D;
         public bool linkArmorBonus;
         public bool friskSet;
 
         public bool gamerCooldown;
+        public bool inked;
 
         public int maxRam;
         public int maxRam2;
@@ -47,12 +49,19 @@ namespace GamerClass
             if (screenShake > 0)
                 screenShake--;
 
+            if (jetpackBulletCooldown > 0)
+                jetpackBulletCooldown--;
+
             glasses3D = false;
-            friskSet = false;
             linkArmorBonus = false;
+            friskSet = false;
+
             gamerCooldown = false;
+            inked = false;
+
             maxRam2 = maxRam;
             ramUsageMult = 1f;
+
             gamerDamageMult = 1f;
             gamerKnockback = 0f;
             gamerUseTimeMult = 1f;
