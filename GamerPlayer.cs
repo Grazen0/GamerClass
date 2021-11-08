@@ -13,6 +13,8 @@ namespace GamerClass
 {
     public class GamerPlayer : ModPlayer
     {
+        public int screenShake = 0;
+
         public bool glasses3D;
         public bool linkArmorBonus;
         public bool friskSet;
@@ -42,6 +44,9 @@ namespace GamerClass
 
         private void ResetVariables()
         {
+            if (screenShake > 0)
+                screenShake--;
+
             glasses3D = false;
             friskSet = false;
             linkArmorBonus = false;
@@ -119,6 +124,12 @@ namespace GamerClass
         {
             if (crit && friskSet && proj.GamerProjectile().gamer)
                 SpawnUndertaleSoul(target.Center);
+        }
+
+        public override void ModifyScreenPosition()
+        {
+            if (screenShake > 0)
+                Main.screenPosition += Main.rand.NextVector2Circular(screenShake, screenShake);
         }
 
         private void SpawnUndertaleSoul(Vector2 position)
