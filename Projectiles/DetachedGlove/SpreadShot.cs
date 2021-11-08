@@ -33,13 +33,9 @@ namespace GamerClass.Projectiles.DetachedGlove
 
         public override void AI()
         {
-            if (init)
+            if (projectile.GamerProjectile().firstTick && LongerLife)
             {
-                if (LongerLife)
-                {
-                    projectile.timeLeft += 6;
-                }
-                init = false;
+                projectile.timeLeft += 6;
             }
 
             projectile.rotation = projectile.velocity.ToRotation();

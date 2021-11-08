@@ -10,7 +10,6 @@ namespace GamerClass.Projectiles.GasterBlaster
     public class GasterBeam : ModProjectile
     {
         private readonly int Segments = 100;
-        private bool init = true;
 
         private float xScale = 0f;
 
@@ -39,10 +38,9 @@ namespace GamerClass.Projectiles.GasterBlaster
 
         public override void AI()
         {
-            if (init)
+            if (projectile.GamerProjectile().firstTick)
             {
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/GasterBlaster"), projectile.Center);
-                init = false;
             }
 
             UpdateMovement();

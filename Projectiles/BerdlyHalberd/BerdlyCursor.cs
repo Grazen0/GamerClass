@@ -9,7 +9,6 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 {
     public class BerdlyCursor : ModProjectile
     {
-        private bool init = true;
         private int timer = 0;
         private float cursorTimer = 0f;
 
@@ -32,7 +31,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 
         public override void AI()
         {
-            if (init)
+            if (projectile.GamerProjectile().firstTick)
             {
                 for (int d = 0; d < 6; d++)
                 {
@@ -42,8 +41,6 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                     dust.noGravity = true;
                     dust.noLight = false;
                 }
-
-                init = false;
             }
 
             int moveDelay = CursorIndex * 3;
