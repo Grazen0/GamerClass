@@ -90,10 +90,6 @@ namespace GamerClass
             }
         }
 
-        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff) { }
-
-        public override void PreUpdate() { }
-
         public override void PostUpdate()
         {
             if (Main.netMode != NetmodeID.Server)
@@ -102,7 +98,7 @@ namespace GamerClass
                 {
                     if (!Filters.Scene["GamerClass:Glasses3D"].IsActive())
                     {
-                        Filters.Scene.Activate("GamerClass:Glasses3D").GetShader().UseOpacity(0.6f).UseProgress(24f);
+                        Filters.Scene.Activate("GamerClass:Glasses3D").GetShader().UseOpacity(0.3f).UseProgress(18f);
                     }
                 }
                 else if (Filters.Scene["GamerClass:Glasses3D"].IsActive())
