@@ -1,5 +1,6 @@
 ﻿using GamerClass.Items.Accessories.Misc;
 using Microsoft.Xna.Framework;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using System.Runtime.CompilerServices;
@@ -39,17 +40,12 @@ namespace GamerClass
             }
 
             // Moon Lord iron pickaxe drop (will be useful later)
-            if (!c.TryGotoNext(MoveType.After,
-                i => i.MatchLdtoken(out _),
-                i => i.MatchCall(typeof(RuntimeHelpers).GetMethod("InitializeArray", new Type[] { typeof(Array), typeof(RuntimeFieldHandle) })),
-                i => i.MatchCall(out _),
-                i => i.MatchStloc(56)))
+            if (!c.TryGotoNext(MoveType.Before, i => i.MatchStloc(56)))
             {
                 Logger.Error("NPC_NPCLoot IL patch could not apply (2)");
             }
             else
             {
-                c.Index--;
                 c.EmitDelegate<Func<int, int>>(itemId =>
                 {
                     return 1;
@@ -75,17 +71,12 @@ namespace GamerClass
 
 
             // Moon Lord iron pickaxe drop (boss bag) (real)
-            if (!c.TryGotoNext(MoveType.After,
-                i => i.MatchLdtoken(out _),
-                i => i.MatchCall(typeof(RuntimeHelpers).GetMethod("InitializeArray", new Type[] { typeof(Array), typeof(RuntimeFieldHandle) })),
-                i => i.MatchCall(out _),
-                i => i.MatchStloc(11)))
+            if (!c.TryGotoNext(MoveType.Before, i => i.MatchStloc(11)))
             {
                 Logger.Error("Player_OpenBossBag IL patch could not apply (2)");
             }
             else
             {
-                c.Index--;
                 c.EmitDelegate<Func<int, int>>(itemId =>
                 {
                     return 1;
@@ -97,29 +88,42 @@ namespace GamerClass
         {
             var c = new ILCursor(il);
 
-            if (!c.TryGotoNext(MoveType.Before,
-                i => i.MatchLdsfld(typeof(SoundID).GetField("Item32")),
+            ILLabel label = c.DefineLabel();
+
+            // Disable Machine Gun Jetpack flap sound
+            if (!c.TryGotoNext(MoveType.After,
                 i => i.MatchLdarg(0),
-                i => i.MatchLdfld(out _),
-                i => i.MatchCall(typeof(Main).GetMethod("PlaySound", new Type[] { typeof(LegacySoundStyle), typeof(Vector2) }))))
+                i => i.MatchLdfld(typeof(Player).GetField("wings")),
+                i => i.MatchLdcI4(33),
+                i => i.MatchBeq(out label)))
             {
-                Logger.Error("Player_Update IL patch could not apply");
-                return;
+                Logger.Error("Player_Update IL patch could not apply (1)");
+            }
+            else
+            {
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Func<Player, bool>>(player => player.wings == ModContent.GetModItem(ModContent.ItemType<MachineGunJetpack>()).item.wingSlot);
+                c.Emit(OpCodes.Brtrue, label);
             }
 
-            c.Index++;
-
-            c.Emit(Mono.Cecil.Cil.OpCodes.Ldarg_0);
-            c.EmitDelegate<Func<LegacySoundStyle, Player, LegacySoundStyle>>((sound, player) =>
+            // Strange Leaf custom flap sound
+            if (!c.TryGotoNext(MoveType.After, i => i.MatchLdsfld(typeof(SoundID).GetField("Item32"))))
             {
-                ModItem raccoonLeaf = ModContent.GetModItem(ModContent.ItemType<RaccoonLeaf>());
-                if (player.wings == raccoonLeaf.item.wingSlot && ModContent.GetInstance<GamerConfig>().RaccoonFlySound)
+                Logger.Error("Player_Update IL patch could not apply (2)");
+            }
+            else
+            {
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Func<LegacySoundStyle, Player, LegacySoundStyle>>((sound, player) =>
                 {
-                    sound = GetLegacySoundSlot(Terraria.ModLoader.SoundType.Item, "Sounds/Item/RaccoonFly");
-                }
+                    if (player.wings == ModContent.GetModItem(ModContent.ItemType<RaccoonLeaf>()).item.wingSlot && ModContent.GetInstance<GamerConfig>().RaccoonFlySound)
+                    {
+                        sound = GetLegacySoundSlot(Terraria.ModLoader.SoundType.Item, "Sounds/Item/RaccoonFly");
+                    }
 
-                return sound;
-            });
+                    return sound;
+                });
+            }
         }
 
         private int ChooseGamerEmblem(int itemId)
