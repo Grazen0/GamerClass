@@ -86,6 +86,23 @@ namespace GamerClass
                     dust.velocity *= 2f;
                 }
             }
+
+            if (inked)
+            {
+                if (Main.rand.NextBool(10))
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.BubbleBlock, newColor: Color.Blue);
+                    dust.noLight = true;
+                    dust.velocity *= 0f;
+                    Main.playerDrawDust.Add(dust.dustIndex);
+                }
+
+                Color newColor = Color.Lerp(new Color(r, g, b, a), Color.Blue, 0.8f);
+                r = newColor.R / 255f;
+                g = newColor.G / 255f;
+                b = newColor.B / 255f;
+                a = newColor.A / 255f;
+            }
         }
 
         public override void PostUpdateMiscEffects()

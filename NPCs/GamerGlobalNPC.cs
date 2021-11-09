@@ -39,16 +39,16 @@ namespace GamerClass.NPCs
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
             if (karma) return new Color(133, 29, 140, npc.alpha);
-            if (inked) return Color.Lerp(drawColor, Color.Blue, 0.7f);
+            if (inked) return Color.Lerp(drawColor, Color.Blue, 0.6f);
 
             return null;
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
-            if (inked && Main.rand.NextBool(3))
+            if (inked && Main.rand.NextBool(8))
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.BlueTorch, Scale: 1.5f);
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.BubbleBlock, newColor: Color.Blue);
                 dust.noLight = true;
                 dust.velocity *= 0f;
             }
