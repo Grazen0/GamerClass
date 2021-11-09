@@ -7,18 +7,19 @@ namespace GamerClass.Items.Weapons
 {
     public class JudgementChains : GamerWeapon
     {
-        public override string Texture => "Terraria/Item_" + ItemID.ChainGuillotines;
-
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chains of Judgement");
+            DisplayName.SetDefault("Glove of Judgement");
             Tooltip.SetDefault("Summons a vertical chain of energy");
         }
 
         public override void SafeSetDefaults()
         {
+            item.width = 48;
+            item.height = 46;
             item.damage = 40;
             item.noMelee = true;
+            item.noUseGraphic = true;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3f;
             item.useTime = item.useAnimation = 25;
