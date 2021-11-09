@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Buffs;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -79,13 +80,13 @@ namespace GamerClass.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Inked>(), 300);
+            target.AddBuff(ModContent.BuffType<Inked>(), 300);
             ModifyDamage();
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Inked>(), 300);
+            target.AddBuff(ModContent.BuffType<Inked>(), 300);
             ModifyDamage();
         }
 
