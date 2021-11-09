@@ -18,10 +18,13 @@ namespace GamerClass.Items.Weapons
         public override void SafeSetDefaults()
         {
             item.damage = 20;
+            item.knockBack = 2f;
             item.noMelee = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Splattershot");
-            item.useTime = item.useAnimation = 18;
+            item.useTime = 6;
+            item.useAnimation = 18;
+            item.reuseDelay = 16;
             item.shoot = ModContent.ProjectileType<Projectiles.InkShot>();
             item.shootSpeed = 5f;
             item.rare = ItemRarityID.Blue;
@@ -37,6 +40,8 @@ namespace GamerClass.Items.Weapons
 
             return true;
         }
+
+        public override bool ConsumeRAM(Player player) => !(player.itemAnimation < item.useAnimation - 2);
 
         public override void AddRecipes()
         {
