@@ -69,13 +69,24 @@ namespace GamerClass.Projectiles
             }
         }
 
+        private void ModifyDamage()
+        {
+            projectile.damage = (int)(projectile.damage * 0.75f);
+
+            if (projectile.damage < 1)
+                projectile.damage = 1;
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Inked>(), 300);
+            ModifyDamage();
+        }
 
-            projectile.damage = (int)(projectile.damage * 0.75f);
-            if (projectile.damage < 1)
-                projectile.damage = 1;
+        public override void OnHitPvp(Player target, int damage, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<Buffs.Inked>(), 300);
+            ModifyDamage();
         }
 
         public override void Kill(int timeLeft)
