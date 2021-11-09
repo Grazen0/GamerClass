@@ -48,7 +48,7 @@ namespace GamerClass.Items.Accessories.Misc
 
                     if (modPlayer.jetpackBulletCooldown <= 0)
                     {
-                        modPlayer.jetpackBulletCooldown = 5;
+                        modPlayer.jetpackBulletCooldown = 3;
 
                         int damage = (int)(20 * player.allDamage * player.allDamageMult * modPlayer.gamerDamageMult);
 
