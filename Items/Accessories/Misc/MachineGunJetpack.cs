@@ -54,7 +54,7 @@ namespace GamerClass.Items.Accessories.Misc
 
                         Projectile.NewProjectile(
                             player.Center + new Vector2(-16f * player.direction, 16f),
-                            Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(25)) * 25f,
+                            Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(20)) * 36f,
                             ModContent.ProjectileType<Projectiles.JetpackBullet>(),
                             (int)MathHelper.Max(1, damage),
                             1.5f,
