@@ -57,7 +57,7 @@ namespace GamerClass.Items.Weapons
 
                     float angle = MathHelper.PiOver4 * shot * separation;
                     Vector2 orangeCharmVelocity = new Vector2(speedX, speedY).RotatedBy(angle * side);
-                    
+
                     Projectile.NewProjectile(position, orangeCharmVelocity, type, damage, knockBack, player.whoAmI);
                 }
             }
@@ -119,12 +119,12 @@ namespace GamerClass.Items.Weapons
                     Vector2 homingShotVelocity = baseDirection.RotatedBy(animationIndex * MathHelper.PiOver4 * 0.42f * side) * item.shootSpeed;
 
                     Projectile.NewProjectile(
-                        shotPosition, 
-                        homingShotVelocity, 
-                        ModContent.ProjectileType<HomingCharm>(), 
-                        damage, 
-                        knockBack, 
-                        player.whoAmI, 
+                        shotPosition,
+                        homingShotVelocity,
+                        ModContent.ProjectileType<HomingCharm>(),
+                        damage,
+                        knockBack,
+                        player.whoAmI,
                         -1f);
                 }
             }

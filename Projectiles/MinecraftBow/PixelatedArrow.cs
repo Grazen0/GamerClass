@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,7 +48,8 @@ namespace GamerClass.Projectiles.MinecraftBow
 
                 if (projectile.direction == -1)
                     projectile.rotation -= MathHelper.PiOver2;
-            } else
+            }
+            else
             {
                 projectile.tileCollide = false;
 
@@ -59,7 +60,8 @@ namespace GamerClass.Projectiles.MinecraftBow
                 if (npc.active)
                 {
                     projectile.Center = npc.Center + stickOffset;
-                } else
+                }
+                else
                 {
                     projectile.Kill();
                 }

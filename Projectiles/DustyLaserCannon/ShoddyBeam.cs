@@ -36,7 +36,8 @@ namespace GamerClass.Projectiles.DustyLaserCannon
                 {
                     blinkTimer = Main.rand.Next(3, 4);
                     extraOpacity = 1f;
-                } else
+                }
+                else
                 {
                     blinkTimer = Main.rand.Next(2, 4);
                     extraOpacity = 0f;

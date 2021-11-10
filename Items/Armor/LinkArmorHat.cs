@@ -34,8 +34,8 @@ namespace GamerClass.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = 
-                "15% increased gamer damage, 10% increased gamer critical strike chance\n" + 
+            player.setBonus =
+                "15% increased gamer damage, 10% increased gamer critical strike chance\n" +
                 "Broken pots drop more loot";
 
             GamerPlayer modPlayer = player.GamerPlayer();

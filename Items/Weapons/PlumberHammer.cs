@@ -38,7 +38,7 @@ namespace GamerClass.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-            
+
             recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(ItemID.Wood, 30);

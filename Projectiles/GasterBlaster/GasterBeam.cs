@@ -51,11 +51,12 @@ namespace GamerClass.Projectiles.GasterBlaster
         private void UpdateMovement()
         {
             Projectile owner = Main.projectile[OwnerProjectile];
-            
+
             if (owner.active)
             {
                 projectile.Center = owner.Center + projectile.velocity;
-            } else
+            }
+            else
             {
                 projectile.Kill();
             }

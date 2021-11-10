@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GamerClass.Items.Weapons;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using GamerClass.Items.Weapons;
 
 namespace GamerClass.Prefixes
 {
@@ -89,7 +89,7 @@ namespace GamerClass.Prefixes
             GamerWeapon gamerWeapon = item.modItem as GamerWeapon;
             if (
                 (damageMult != 1f && item.damage == Math.Round(item.damage * damageMult)) ||
-                (useTimeMult != 1f && item.useTime == Math.Round(item.useTime * useTimeMult)) || 
+                (useTimeMult != 1f && item.useTime == Math.Round(item.useTime * useTimeMult)) ||
                 (ramUsageMult != 1f && gamerWeapon.ramUsage == Math.Round(gamerWeapon.ramUsage * ramUsageMult))
                 )
             {

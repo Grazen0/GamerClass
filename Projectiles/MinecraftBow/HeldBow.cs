@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -51,7 +51,8 @@ namespace GamerClass.Projectiles.MinecraftBow
                     ReleaseArrow();
                     charging = false;
                 }
-            } else
+            }
+            else
             {
                 player.GamerPlayer().ramRegenTimer = -2;
 
@@ -83,7 +84,8 @@ namespace GamerClass.Projectiles.MinecraftBow
             if (!charging)
             {
                 shakeDirection = 0f;
-            } else
+            }
+            else
             {
                 float timerTarget = 25f - (charge / MaxCharge * 20f);
                 if (++shakeTimer > timerTarget)
@@ -105,10 +107,10 @@ namespace GamerClass.Projectiles.MinecraftBow
 
                 Projectile.NewProjectile(
                     Main.player[projectile.owner].Center + projectile.velocity * 8f,
-                    projectile.velocity * (1f + (chargeRadius * 18f)), 
-                    ModContent.ProjectileType<PixelatedArrow>(), 
-                    damage, projectile.knockBack * chargeRadius, 
-                    projectile.owner, 
+                    projectile.velocity * (1f + (chargeRadius * 18f)),
+                    ModContent.ProjectileType<PixelatedArrow>(),
+                    damage, projectile.knockBack * chargeRadius,
+                    projectile.owner,
                     0f, -1f);
 
                 Main.PlaySound(SoundID.Item5);

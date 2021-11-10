@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -71,7 +71,8 @@ namespace GamerClass.Projectiles.BerdlyHalberd
 
                         Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
                         projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
-                    } else
+                    }
+                    else
                     {
                         CurrentTarget = -1;
                     }

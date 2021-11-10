@@ -21,7 +21,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
             projectile.hide = true;
             projectile.scale = 1.5f;
             projectile.ownerHitCheck = true;
-            projectile.tileCollide = false; 
+            projectile.tileCollide = false;
             projectile.hide = true;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;

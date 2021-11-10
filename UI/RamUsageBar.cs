@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.UI;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace GamerClass.UI
 {
@@ -52,7 +52,7 @@ namespace GamerClass.UI
             // Draw frame
             int frameHeight = frameTexture.Height / 10;
             int frameIndex = (int)(ramRadius * 3);
-            if (frameIndex > 2) 
+            if (frameIndex > 2)
                 frameIndex = 2;
 
             if (modPlayer.gamerCooldown)

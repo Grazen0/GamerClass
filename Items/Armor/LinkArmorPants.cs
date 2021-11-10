@@ -22,9 +22,9 @@ namespace GamerClass.Items.Armor
             item.defense = 5;
         }
 
-    public override void UpdateEquip(Player player)
-    {
-        player.GamerPlayer().gamerDamageMult += 0.06f;
+        public override void UpdateEquip(Player player)
+        {
+            player.GamerPlayer().gamerDamageMult += 0.06f;
+        }
     }
-}
 }

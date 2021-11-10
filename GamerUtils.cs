@@ -1,6 +1,6 @@
 ﻿using GamerClass.Projectiles;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -57,7 +57,7 @@ namespace GamerClass
             return dusts;
         }
 
-        public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) => 
+        public static GamerGlobalProjectile GamerProjectile(this Projectile projectile) =>
             projectile.GetGlobalProjectile<GamerGlobalProjectile>();
 
         public static GamerPlayer GamerPlayer(this Player player) => player.GetModPlayer<GamerPlayer>();

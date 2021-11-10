@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,7 +66,7 @@ namespace GamerClass.Projectiles.DetachedGlove
                 List<Dust> dusts = GamerUtils.DustExplosion(8, projectile.Center, DustID.AmberBolt, 2.8f + e * 1.2f, baseRotation, dustPerPoint: 8, dustScale: 1.5f);
                 dusts.ForEach(d => d.fadeIn = 1.1f);
             }
-            
+
             for (int g = 0; g < 5; g++)
             {
                 Gore gore = Gore.NewGoreDirect(projectile.Center, Main.rand.NextVector2Unit(MathHelper.Pi, MathHelper.TwoPi), Main.rand.Next(61, 64));

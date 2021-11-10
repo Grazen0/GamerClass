@@ -1,6 +1,6 @@
-﻿using Terraria;
+﻿using GamerClass.NPCs;
+using Terraria;
 using Terraria.ModLoader;
-using GamerClass.NPCs;
 
 namespace GamerClass.Buffs
 {

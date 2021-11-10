@@ -50,7 +50,8 @@ namespace GamerClass.Projectiles.DetachedGlove
                     float inertia = 12f;
                     Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
                     projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
-                } else
+                }
+                else
                 {
                     CurrentTarget = -1;
                 }
@@ -75,7 +76,7 @@ namespace GamerClass.Projectiles.DetachedGlove
 
             projectile.rotation = projectile.velocity.ToRotation();
         }
-        
+
         private void SpawnDusts()
         {
             for (int d = 0; d < 3; d++)

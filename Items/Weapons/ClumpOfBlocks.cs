@@ -1,9 +1,9 @@
 ﻿using GamerClass.Projectiles.ClumpOfBlocks;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Utilities;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace GamerClass.Items.Weapons
 {

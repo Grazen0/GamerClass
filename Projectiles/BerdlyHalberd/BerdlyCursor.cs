@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -106,7 +106,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                             projectile.damage,
                             projectile.knockBack,
                             projectile.owner,
-                            projectile.rotation + MathHelper.PiOver2 * side, 
+                            projectile.rotation + MathHelper.PiOver2 * side,
                             -1f);
                     }
                 }

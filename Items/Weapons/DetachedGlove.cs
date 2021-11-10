@@ -192,7 +192,7 @@ namespace GamerClass.Items.Weapons
 
                     direction = direction.RotatedBy(separation);
                 }
-                
+
                 for (int d = 0; d < 8; d++)
                 {
                     Dust dust = Dust.NewDustPerfect(position, dustType, Scale: 1.5f);
@@ -254,7 +254,7 @@ namespace GamerClass.Items.Weapons
                             Vector2 shotVelocity = new Vector2(speedX, speedY).RotatedBy(i * spread) * 0.9f;
 
                             int abs = Math.Abs(i);
-                            if (abs == 1) 
+                            if (abs == 1)
                                 shotVelocity *= 0.65f;
 
                             Projectile.NewProjectile(position, shotVelocity, type, damage, knockBack, player.whoAmI, abs);
@@ -302,7 +302,7 @@ namespace GamerClass.Items.Weapons
                         break;
                 }
 
-                if (dustType != -1) 
+                if (dustType != -1)
                     GamerUtils.DustExplosion(7, dustPosition, dustType, explosionSize, dustScale: dustScale, color: dustColor);
 
                 return shoot;
