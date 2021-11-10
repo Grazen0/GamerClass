@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 
-namespace GamerClass.Items.Accessories.Misc
+namespace GamerClass.Items.Accessories.Wings
 {
     [AutoloadEquip(EquipType.Wings)]
     public class RaccoonLeaf : ModItem

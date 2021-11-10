@@ -1,4 +1,5 @@
-﻿using GamerClass.Items.Accessories.Misc;
+﻿using GamerClass.Items.Accessories.Wings;
+using GamerClass.Items.Accessories.Misc;
 using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
