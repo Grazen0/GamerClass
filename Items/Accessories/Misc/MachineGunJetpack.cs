@@ -28,6 +28,8 @@ namespace GamerClass.Items.Accessories.Misc
 
         public override void SetDefaults()
         {
+            item.rare = ItemRarityID.Pink;
+            item.value = Item.sellPrice(gold: 8);
             item.accessory = true;
         }
 
@@ -48,13 +50,13 @@ namespace GamerClass.Items.Accessories.Misc
 
                     if (modPlayer.jetpackBulletCooldown <= 0)
                     {
-                        modPlayer.jetpackBulletCooldown = 3;
+                        modPlayer.jetpackBulletCooldown = 4;
 
                         int damage = (int)(20 * player.allDamage * player.allDamageMult * modPlayer.gamerDamageMult);
 
                         Projectile.NewProjectile(
                             player.Center + new Vector2(-16f * player.direction, 16f),
-                            Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(20)) * 36f,
+                            Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(20)) * 32f,
                             ModContent.ProjectileType<Projectiles.JetpackBullet>(),
                             (int)MathHelper.Max(1, damage),
                             1.5f,
