@@ -4,6 +4,7 @@ using GamerClass.Items.Weapons;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,6 +18,8 @@ namespace GamerClass
         public int jetpackBulletCooldown = 0;
 
         public bool glasses3D;
+        public bool swearing;
+
         public bool linkArmorBonus;
         public bool friskSet;
 
@@ -53,6 +56,8 @@ namespace GamerClass
                 jetpackBulletCooldown--;
 
             glasses3D = false;
+            if (!player.dead) swearing = false;
+
             linkArmorBonus = false;
             friskSet = false;
 

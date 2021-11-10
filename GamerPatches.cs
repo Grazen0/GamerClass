@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace GamerClass
 {
@@ -18,6 +18,8 @@ namespace GamerClass
             IL.Terraria.NPC.NPCLoot += NPC_NPCLoot;
             IL.Terraria.Player.OpenBossBag += Player_OpenBossBag;
             IL.Terraria.Player.Update += Player_Update;
+            IL.Terraria.Player.Hurt += Player_Hurt;
+            IL.Terraria.Main.DrawInterface_35_YouDied += Main_DrawInterface_35_YouDied;
         }
 
         private void NPC_NPCLoot(ILContext il)
@@ -124,6 +126,75 @@ namespace GamerClass
                     return sound;
                 });
             }
+        }
+
+        private void Player_Hurt(ILContext il)
+        {
+            var c = new ILCursor(il);
+
+            // Offensive headphones damage text
+            if (!c.TryGotoNext(MoveType.After, i => i.MatchLdloc(8)))
+            {
+                Logger.Error("Player_Hurt IL patch could not apply (1)");
+                return;
+            }
+
+            ILLabel swearLabel = c.DefineLabel();
+
+            c.Emit(OpCodes.Ldarg_0);
+            c.EmitDelegate<Func<Player, bool>>(player => player.GamerPlayer().swearing);
+            c.Emit(OpCodes.Brtrue, swearLabel);
+
+            if (!c.TryGotoNext(MoveType.After, i => i.MatchCall(typeof(CombatText).GetMethod("NewText", new Type[] { typeof(Rectangle), typeof(Color), typeof(int), typeof(bool), typeof(bool) }))))
+            {
+                Logger.Error("Player_Hurt IL patch could not apply (2)");
+                return;
+            }
+
+            ILLabel popLabel = c.DefineLabel();
+
+            c.Emit(OpCodes.Br_S, popLabel);
+
+            c.MarkLabel(swearLabel);
+
+            c.EmitDelegate<Func<string>>(() =>
+            {
+                var swear = new WeightedRandom<string>();
+
+                swear.Add("F$(K!!1");
+                swear.Add("H0LY $?%!");
+                swear.Add("D4M%1T!");
+                swear.Add("$%?#$!!1!");
+                swear.Add("?#@$&%!");
+                swear.Add("&@%!!#$");
+
+                return swear;
+            }); // text
+            c.Emit(OpCodes.Ldc_I4_0); // dramatic
+            c.Emit(OpCodes.Ldc_I4_0); // dot
+            c.Emit(OpCodes.Call, typeof(CombatText).GetMethod("NewText", new Type[] { typeof(Rectangle), typeof(Color), typeof(string), typeof(bool), typeof(bool) }));
+
+            c.MarkLabel(popLabel);
+        }
+
+        private void Main_DrawInterface_35_YouDied(ILContext il)
+        {
+            var c = new ILCursor(il);
+
+            // Offensive headphones death text
+            if (!c.TryGotoNext(MoveType.Before, i => i.MatchStloc(0)))
+            {
+                Logger.Error("Main_DrawInterface_35_YouDied IL patch could not apply");
+                return;
+            }
+
+            c.EmitDelegate<Func<string, string>>(deathMessage =>
+            {
+                if (Main.player[Main.myPlayer].GamerPlayer().swearing)
+                    return "FFFFFFFFFUUUUUUUUUUUUUUUUU-";
+
+                return deathMessage;
+            });
         }
 
         private int ChooseGamerEmblem(int itemId)
