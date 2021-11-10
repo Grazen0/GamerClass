@@ -98,5 +98,24 @@ namespace GamerClass
                 spriteEffects,
                 0f);
         }
+
+        public static void AreaDamage(int damage, float knockBack, Vector2 damageSource, Rectangle hitbox, Func<NPC, bool> predicate = null)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (
+                    npc.active
+                    && !npc.dontTakeDamage
+                    && (predicate == null || predicate(npc))
+                    && Collision.CanHitLine(damageSource, 0, 0, npc.Center, 0, 0)
+                    && npc.Hitbox.Intersects(hitbox)
+                    )
+                {
+                    int hitDirection = Math.Sign(npc.Center.X - damageSource.X);
+                    npc.StrikeNPC(damage / 2, knockBack * 0.5f, hitDirection);
+                }
+            }
+        }
     }
 }

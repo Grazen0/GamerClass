@@ -55,21 +55,7 @@ namespace GamerClass.Projectiles
 
             int size = 144;
             Rectangle hitbox = new Rectangle((int)projectile.Center.X - size / 2, (int)projectile.Center.Y - size / 2, size, size);
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC npc = Main.npc[i];
-                if (
-                    npc.active
-                    && !npc.dontTakeDamage
-                    && npc.immune[projectile.owner] <= 0
-                    && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0)
-                    && npc.Hitbox.Intersects(hitbox)
-                    )
-                {
-                    int hitDirection = Math.Sign(npc.Center.X - projectile.Center.X);
-                    npc.StrikeNPC(projectile.damage / 2, projectile.knockBack * 0.5f, hitDirection);
-                }
-            }
+            GamerUtils.AreaDamage(projectile.damage / 2, projectile.knockBack / 2, projectile.Center, hitbox, npc => npc.immune[projectile.owner] <= 0);
 
             // Pog rocket jump
             float range = 150f;

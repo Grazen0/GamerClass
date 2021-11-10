@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Buffs;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,23 +23,33 @@ namespace GamerClass.NPCs
         {
             if (karma)
             {
-                if (npc.lifeRegen > 0)
+                const int damageOverTime = 6;
+
+                if (npc.life - damageOverTime <= 1)
                 {
-                    npc.lifeRegen = 0;
+                    int buffIndex = npc.FindBuffIndex(ModContent.BuffType<Karma>());
+                    if (buffIndex != -1)
+                        npc.DelBuff(buffIndex);
+
+                    npc.life = 1;
+                }
+                else
+                {
+                    if (npc.lifeRegen > 0)
+                        npc.lifeRegen = 0;
+
+                    npc.lifeRegen -= damageOverTime * 8;
+
+                    if (damage < damageOverTime)
+                        damage = damageOverTime;
                 }
 
-                npc.lifeRegen -= 48;
-
-                if (damage < 6)
-                {
-                    damage = 6;
-                }
             }
         }
 
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
-            if (karma) return new Color(133, 29, 140, npc.alpha);
+            if (karma) return new Color(133, 29, 140);
             if (inked) return Color.Lerp(drawColor, Color.Blue, 0.6f);
 
             return null;

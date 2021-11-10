@@ -78,22 +78,7 @@ namespace GamerClass.Projectiles
 
             int range = 64;
             Rectangle hitbox = new Rectangle((int)projectile.Center.X - range, (int)projectile.Center.Y - 16, range * 2, 32);
-
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC npc = Main.npc[i];
-                if (
-                    npc.active
-                    && !npc.dontTakeDamage
-                    && npc.immune[projectile.owner] <= 0
-                    && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0)
-                    && npc.Hitbox.Intersects(hitbox)
-                    )
-                {
-                    int hitDirection = Math.Sign(npc.Center.X - projectile.Center.X);
-                    npc.StrikeNPC(projectile.damage / 2, projectile.knockBack * 0.5f, hitDirection);
-                }
-            }
+            GamerUtils.AreaDamage(projectile.damage / 2, projectile.knockBack / 2, projectile.Center, hitbox, npc => npc.immune[projectile.owner] <= 0);
 
             hitbox.X += 8;
             hitbox.Width -= 16;

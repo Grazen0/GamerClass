@@ -52,6 +52,14 @@ namespace GamerClass.Projectiles.DetachedGlove
         {
             Main.PlaySound(SoundID.Item14, projectile.Center);
 
+            Rectangle hitbox = projectile.Hitbox;
+            hitbox.X -= 32;
+            hitbox.Width += 64;
+            hitbox.Y -= 32;
+            hitbox.Height += 64;
+
+            GamerUtils.AreaDamage(projectile.damage / 2, projectile.knockBack / 2, projectile.Center, hitbox, npc => npc.immune[projectile.owner] <= 0);
+
             float baseRotation = Main.rand.NextFloat(MathHelper.Pi);
             for (int e = 0; e < 2; e++)
             {

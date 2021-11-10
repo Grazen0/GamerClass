@@ -83,7 +83,7 @@ namespace GamerClass.Projectiles.ClumpOfBlocks
                         projectile.Center - Vector2.UnitY * projectile.height / 4,
                         -Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(30f)) * Main.rand.NextFloat(16f, 25f),
                         ModContent.ProjectileType<TetrisFragment>(),
-                        projectile.damage / 4,
+                        projectile.damage / 2,
                         projectile.knockBack / 4,
                         projectile.owner,
                         FragmentType);

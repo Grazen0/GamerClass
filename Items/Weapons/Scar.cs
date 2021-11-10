@@ -23,7 +23,7 @@ namespace GamerClass.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Scar");
-            Tooltip.SetDefault("Requires magazines, right click to reload\n'Ten kills on the board right now'");
+            Tooltip.SetDefault("Right click to reload\n'Ten kills on the board right now'");
         }
 
         public override void SafeSetDefaults()
