@@ -13,10 +13,8 @@ namespace GamerClass.Projectiles.DustyLaserCannon
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 8;
-            projectile.hostile = false;
             projectile.friendly = true;
             projectile.alpha = 255;
-            projectile.timeLeft = 600;
             projectile.GamerProjectile().gamer = true;
         }
 

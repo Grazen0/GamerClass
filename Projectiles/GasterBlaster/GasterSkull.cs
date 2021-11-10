@@ -24,7 +24,6 @@ namespace GamerClass.Projectiles.GasterBlaster
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 36;
-            projectile.hostile = false;
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
