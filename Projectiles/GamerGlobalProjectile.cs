@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using GamerClass.Items.Weapons;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace GamerClass.Projectiles
@@ -30,6 +31,9 @@ namespace GamerClass.Projectiles
         private void ModifyGamerCrit(Projectile projectile, ref bool crit)
         {
             Player player = Main.player[projectile.owner];
+
+            if (!(player.HeldItem?.modItem is GamerWeapon)) return;
+
             int critChance = player.HeldItem.crit;
 
             ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
