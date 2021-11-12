@@ -1,6 +1,8 @@
-﻿using GamerClass.Projectiles.GasterBlaster;
+﻿using System;
+using GamerClass.Projectiles.GasterBlaster;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -54,11 +56,69 @@ namespace GamerClass.Items.Weapons
 
         public override void SafeHoldItem(Player player)
         {
-            Vector2 eyePosition = new Vector2(1.5f * player.direction, -10f);
+            // Totally not adapted from Yoraiz0r's Spell
+            int headgearOffset = player.bodyFrame.Y / 56;
+            if (headgearOffset >= Main.OffsetsPlayerHeadgear.Length)
+                headgearOffset = 0;
 
-            Dust dust = Dust.NewDustPerfect(player.Center + eyePosition, DustID.Clentaminator_Cyan, Scale: 0.8f);
-            dust.noGravity = true;
-            dust.velocity *= 0f;
+            Vector2 eyeOffset = new Vector2(3f * player.direction - (player.direction == 1 ? 1 : 0), -11.5f * player.gravDir + player.gfxOffY)
+                + player.Size / 2 + Main.OffsetsPlayerHeadgear[headgearOffset];
+
+            Vector2 shadowEyeOffset = new Vector2(3f * player.shadowDirection[1] - (player.direction == 1 ? 1 : 0), -11.5f * player.gravDir)
+                + player.Size / 2 + Main.OffsetsPlayerHeadgear[headgearOffset];
+
+            if (player.fullRotation != 0f)
+            {
+                eyeOffset = eyeOffset.RotatedBy(player.fullRotation, player.fullRotationOrigin);
+                shadowEyeOffset = shadowEyeOffset.RotatedBy(player.fullRotation, player.fullRotationOrigin);
+            }
+
+            Vector2 end = player.position + eyeOffset;
+            Vector2 start = player.oldPosition + shadowEyeOffset;
+
+            if (player.mount.Active)
+            {
+                if (player.mount.Cart)
+                {
+                    int dir = Math.Sign(player.velocity.X);
+                    if (dir == 0)
+                        dir = player.direction;
+
+                    Vector2 offset = new Vector2(
+                        MathHelper.Lerp(0f, -8f, player.fullRotation / MathHelper.PiOver4),
+                        MathHelper.Lerp(0f, 2f, Math.Abs(player.fullRotation / MathHelper.PiOver4))).RotatedBy(player.fullRotation);
+
+                    if (dir == Math.Sign(player.fullRotation))
+                    {
+                        offset *= MathHelper.Lerp(1f, 0.6f, Math.Abs(player.fullRotation / MathHelper.PiOver4));
+                    }
+
+                    start += offset;
+                    end += offset;
+                }
+
+                start.Y -= player.mount.PlayerOffset / 2;
+                end.Y -= player.mount.PlayerOffset / 2;
+            }
+
+            int distance = (int)Vector2.Distance(end, start);
+            int dusts = distance + 1;
+
+            for (float i = 1f; i <= dusts; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(player.Center, DustID.Clentaminator_Cyan);
+                dust.position = Vector2.Lerp(start, end, i / dusts);
+                dust.noGravity = true;
+                dust.velocity *= 0f;
+                dust.scale = 0.6f;
+            }
+
+            // Cast lights
+            DelegateMethods.v3_1 = Color.Cyan.ToVector3() * 0.4f;
+            if (player.velocity != Vector2.Zero)
+                Utils.PlotTileLine(player.Center, player.Center + player.velocity * 2f, 4f, DelegateMethods.CastLightOpen);
+            else
+                Utils.PlotTileLine(player.Left, player.Right, 4f, DelegateMethods.CastLightOpen);
         }
     }
 }
