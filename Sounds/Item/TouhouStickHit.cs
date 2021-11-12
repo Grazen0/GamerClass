@@ -9,10 +9,10 @@ namespace GamerClass.Sounds.Item
         {
             if (soundInstance.State == SoundState.Playing)
                 soundInstance.Stop();
-            
+
             soundInstance = sound.CreateInstance();
             soundInstance.Volume = 0.2f;
-            soundInstance.Pitch = -0.2f;
+            soundInstance.Pan = pan;
             
             return soundInstance;
         }
