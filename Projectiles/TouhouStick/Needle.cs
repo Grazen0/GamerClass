@@ -8,58 +8,80 @@ namespace GamerClass.Projectiles.TouhouStick
 {
     public class Needle : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 2;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-        }
-
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 6;
             projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ignoreWater = true;
             projectile.penetrate = 3;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;
-            projectile.scale = 0.8f;
             projectile.alpha = 255;
-            projectile.extraUpdates = 1;
-            projectile.timeLeft = 360 * projectile.extraUpdates;
             projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
-            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 50, 50);
+            projectile.rotation = projectile.velocity.ToRotation();
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 60, 50);
 
-            if (Main.rand.NextBool(10))
+            if (Main.rand.NextBool(30))
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.WhiteTorch);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.OrangeTorch);
                 dust.velocity = Vector2.Normalize(projectile.velocity) * dust.velocity.Length() * 0.5f;
-                dust.fadeIn = 1.3f;
+                dust.fadeIn = 0.5f;
                 dust.noGravity = true;
             }
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStickHit"), projectile.Center);
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit)
+        {
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStickHit"), projectile.Center);
+        }
+
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item10, projectile.Center);
-
             for (int d = 0; d < 2; d++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.WhiteTorch);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.OrangeTorch);
                 dust.velocity *= 3f;
-                dust.fadeIn = 1.2f;
+                dust.fadeIn = 1f;
                 dust.noGravity = true;
             }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            this.DrawCentered(spriteBatch, lightColor, flip: false);
+            Texture2D texture = Main.projectileTexture[projectile.type];
+
+            Color color = projectile.GetAlpha(lightColor);
+            Vector2 origin = new Vector2(texture.Width - 10f, texture.Height / 2);
+
+            int trails = 6;
+            for (int i = trails; i > 0; i--)
+            {
+                Vector2 offset = projectile.velocity * i * 0.3f;
+                Color trailColor = color * (0.4f - i * 0.04f);
+                float trailScale = projectile.scale - i * 0.03f;
+
+                spriteBatch.Draw(
+                    texture,
+                    projectile.Center - offset - Main.screenPosition,
+                    null,
+                    trailColor,
+                    projectile.rotation,
+                    origin,
+                    trailScale,
+                    SpriteEffects.None,
+                    0f);
+            }
+
+            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, color, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
+
             return false;
         }
     }

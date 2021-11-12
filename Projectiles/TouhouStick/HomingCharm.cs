@@ -10,26 +10,13 @@ namespace GamerClass.Projectiles.TouhouStick
     public class HomingCharm : ModProjectile
     {
         private readonly float RangeSQ = (float)Math.Pow(1000, 2);
-        private const float rotationSpeed = MathHelper.TwoPi / 180f;
-
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-        }
 
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 32;
+            projectile.width = projectile.height = 16;
             projectile.friendly = true;
-            projectile.hostile = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 420;
-            projectile.scale = 0.8f;
-            projectile.alpha = 255;
-            projectile.extraUpdates = 1;
-            projectile.timeLeft = 360 * projectile.extraUpdates;
+            projectile.alpha = 200;
             projectile.GamerProjectile().gamer = true;
         }
 
@@ -41,26 +28,33 @@ namespace GamerClass.Projectiles.TouhouStick
 
         public override void AI()
         {
-            projectile.rotation += rotationSpeed;
-            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 40, 50);
+            projectile.rotation = projectile.velocity.ToRotation();
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 80, 50);
 
-            FindTarget();
-
-            if (CurrentTarget != -1 && Main.npc[CurrentTarget].active)
+            if (CurrentTarget == -1)
+            {
+                FindTarget();
+            }
+            else
             {
                 NPC target = Main.npc[CurrentTarget];
 
-                float speed = 12f;
-                float inertia = 20f;
-                Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
-                projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
+                if (target.active)
+                {
+                    Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
+                    projectile.velocity = Vector2.Lerp(projectile.velocity, direction * 28f, 0.1f);
+                }
+                else
+                {
+                    CurrentTarget = -1;
+                }
             }
 
-            if (Main.rand.NextBool(16))
+            if (Main.rand.NextBool(30))
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PurificationPowder);
                 dust.velocity = Vector2.Normalize(projectile.velocity) * dust.velocity.Length() * 0.5f;
-                dust.fadeIn *= 0.2f;
+                dust.fadeIn = 0.2f;
             }
         }
 
@@ -68,7 +62,6 @@ namespace GamerClass.Projectiles.TouhouStick
         {
             if (CurrentTarget > -1) return;
 
-            int currentNPC = -1;
             float currentDistanceSQ = -1f;
 
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -76,30 +69,36 @@ namespace GamerClass.Projectiles.TouhouStick
                 NPC npc = Main.npc[i];
                 if (!npc.CanBeChasedBy()) continue;
 
-                float distanceSQ = (npc.Center - projectile.Center).LengthSquared();
-                if (distanceSQ > RangeSQ) continue;
+                float distanceSQ = Vector2.DistanceSquared(projectile.Center, npc.Center);
 
-                if (currentDistanceSQ != -1 && distanceSQ > currentDistanceSQ) continue;
-
+                bool inRange = distanceSQ <= RangeSQ;
+                bool closest = currentDistanceSQ == -1f || distanceSQ < currentDistanceSQ;
                 bool inSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-                if (!inSight) continue;
 
-                currentNPC = i;
-                currentDistanceSQ = distanceSQ;
 
+                if (inRange && closest && inSight)
+                {
+                    CurrentTarget = i;
+                    currentDistanceSQ = distanceSQ;
+                }
             }
+        }
 
-            CurrentTarget = currentNPC;
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStickHit"), projectile.Center);
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit)
+        {
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStickHit"), projectile.Center);
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item10, projectile.Center);
-
             for (int d = 0; d < 5; d++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PurificationPowder);
-                dust.velocity *= 2f;
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.PurificationPowder);
             }
         }
 

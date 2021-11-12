@@ -10,8 +10,8 @@ namespace GamerClass.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Reimu's Gohei");
-            Tooltip.SetDefault("Left click for Reimu A, right click for Reimu B");
+            DisplayName.SetDefault("Strange Gohei");
+            Tooltip.SetDefault("Shoots a barrage of paper charms\nRight click to shoot needles");
         }
 
         public override void SafeSetDefaults()
@@ -19,124 +19,84 @@ namespace GamerClass.Items.Weapons
             item.width = 38;
             item.height = 40;
             item.noMelee = true;
-            item.damage = 10;
+            item.damage = 16;
             item.knockBack = 0.5f;
             item.useStyle = ItemUseStyleID.SwingThrow;
+            item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStick");
             item.rare = ItemRarityID.LightRed;
             item.autoReuse = true;
-            item.useAnimation = 24;
-            item.useTime = 6;
+            item.useAnimation = 20;
+            item.useTime = 5;
             item.shoot = ModContent.ProjectileType<OrangeCharm>();
-            item.shootSpeed = 15f;
+            item.shootSpeed = 50f;
 
-            ramUsage = 0;
+            ramUsage = 2;
         }
 
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             Vector2 velocity = new Vector2(speedX, speedY);
-            Vector2 frontDirection = Vector2.Normalize(velocity);
 
             // Main shot
             for (int side = -1; side <= 1; side += 2)
             {
-                for (int shot = 1; shot <= 2; shot++)
-                {
-                    float separation;
-                    if (player.altFunctionUse == 2)
-                    {
-                        // ReimuB style
-                        separation = 0.16f;
-                    }
-                    else
-                    {
-                        // ReimuA style
-                        separation = shot == 1 ? 0.03f : 0.09f;
-                    }
-
-                    float angle = MathHelper.PiOver4 * shot * separation;
-                    Vector2 orangeCharmVelocity = new Vector2(speedX, speedY).RotatedBy(angle * side);
-
-                    Projectile.NewProjectile(position, orangeCharmVelocity, type, damage, knockBack, player.whoAmI);
-                }
+                Vector2 offset = Vector2.Normalize(velocity).RotatedBy(MathHelper.PiOver2) * side * 20f;
+                Projectile.NewProjectile(position + offset, velocity, type, damage, knockBack, player.whoAmI);
             }
 
             // Special shot
-            if (player.altFunctionUse == 2)
+            float velocityLength = velocity.Length();
+
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
-                // ReimuB needles
-                float needlesPerSide = 3;
-                float needleSpacing = 12f;
+                Projectile orb = Main.projectile[i];
+                if (!orb.active || orb.owner != player.whoAmI || orb.type != ModContent.ProjectileType<YinYangOrb>()) continue;
 
-                Vector2 perpendicular = frontDirection.RotatedBy(MathHelper.PiOver2);
-
-                for (int side = -1; side <= 1; side += 2)
+                if (player.altFunctionUse == 2)
                 {
-                    Vector2 basePosition = player.Center + perpendicular * side * 10f;
-                    if (side == -1)
+                    Vector2 offset = orb.velocity.RotatedBy(MathHelper.PiOver2) * 16f;
+
+                    for (int side = -1; side <= 1; side += 2)
                     {
-                        basePosition -= perpendicular * needleSpacing * needlesPerSide;
-                    }
-
-                    for (int needle = 0; needle < needlesPerSide; needle++)
-                    {
-                        int animationIndex = (item.useAnimation - player.itemAnimation - 1) / item.useTime;
-
-                        if (needle == 1 && animationIndex > 0) continue;
-                        if (needle == 2 && animationIndex % 2 != 0) continue;
-
-
-                        Vector2 needlePosition = basePosition + (perpendicular * needleSpacing * needle);
-                        Vector2 needleVelocity = frontDirection * item.shootSpeed * Main.rand.NextFloat(1.4f, 1.6f);
-
-                        Vector2 offset = frontDirection * Main.rand.NextFloat(64f);
-                        if (Collision.CanHit(needlePosition, 0, 0, needlePosition + offset, 0, 0))
-                        {
-                            needlePosition += offset;
-                        }
-
                         Projectile.NewProjectile(
-                            needlePosition,
-                            needleVelocity,
+                            orb.Center + offset * side,
+                            orb.velocity * velocityLength * 1.2f,
                             ModContent.ProjectileType<Needle>(),
-                            (int)(damage * 1.2f),
-                            knockBack, player.whoAmI);
+                            (int)(damage * 0.75f),
+                            knockBack,
+                            player.whoAmI);
                     }
                 }
-            }
-            else
-            {
-                // ReimuA homing shots
-                for (int side = -1; side <= 1; side += 2)
+                else
                 {
-                    Vector2 perpendicular = frontDirection.RotatedBy(MathHelper.PiOver2 * side);
-                    Vector2 shotPosition = player.Center + perpendicular * 20f;
-
-                    int animationIndex = (item.useAnimation - player.itemAnimation - 1) / item.useTime;
-
-                    Vector2 baseDirection = frontDirection.RotatedBy(MathHelper.PiOver2 * -side * 0.9f);
-                    Vector2 homingShotVelocity = baseDirection.RotatedBy(animationIndex * MathHelper.PiOver4 * 0.42f * side) * item.shootSpeed;
-
                     Projectile.NewProjectile(
-                        shotPosition,
-                        homingShotVelocity,
+                        orb.Center,
+                        orb.velocity.RotatedBy(MathHelper.ToRadians(12) * orb.ai[0]) * velocityLength * 0.75f,
                         ModContent.ProjectileType<HomingCharm>(),
-                        damage,
+                        damage / 2,
                         knockBack,
-                        player.whoAmI,
-                        -1f);
+                        player.whoAmI, 
+                        -1);
                 }
             }
 
-            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStick"));
-
-            return player.altFunctionUse == 2;
+            return false;
         }
 
-        public override bool AltFunctionUse(Player player)
+        public override void SafeHoldItem(Player player)
         {
-            return true;
+            int yinYangOrb = ModContent.ProjectileType<YinYangOrb>();
+            if (Main.myPlayer != player.whoAmI || player.ownedProjectileCounts[yinYangOrb] >= 2) return;
+
+            Vector2 direction = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
+
+            for (int side = -1; side <= 1; side += 2)
+            {
+                Projectile.NewProjectile(player.Center, direction, yinYangOrb, item.damage, item.knockBack, player.whoAmI, side);
+            }
         }
+
+        public override bool AltFunctionUse(Player player) => true;
     }
 }

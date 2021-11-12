@@ -8,57 +8,77 @@ namespace GamerClass.Projectiles.TouhouStick
 {
     public class OrangeCharm : ModProjectile
     {
-        private const float rotationSpeed = MathHelper.TwoPi / 180f;
-
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
-        }
-
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 32;
+            projectile.width = projectile.height = 16;
             projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ignoreWater = true;
-            projectile.scale = 0.8f;
-            projectile.alpha = 255;
-            projectile.extraUpdates = 1;
-            projectile.timeLeft = 360 * projectile.extraUpdates;
+            projectile.alpha = 250;
             projectile.GamerProjectile().gamer = true;
         }
 
         public override void AI()
         {
-            projectile.rotation += rotationSpeed;
-            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 40, 50);
+            projectile.rotation = projectile.velocity.ToRotation();
+            projectile.alpha = (int)MathHelper.Max(projectile.alpha - 80, 50);
 
             if (Main.rand.NextBool(20))
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.OrangeTorch);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.RedTorch, Scale: 1.5f);
                 dust.velocity = Vector2.Normalize(projectile.velocity) * dust.velocity.Length() * 0.5f;
-                dust.fadeIn = 1.2f;
+                dust.fadeIn = 0.5f;
                 dust.noGravity = true;
             }
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStickHit"), projectile.Center);
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit)
+        {
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TouhouStickHit"), projectile.Center);
+        }
+
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item10, projectile.Center);
-
-            for (int d = 0; d < 4; d++)
+            for (int d = 0; d < 8; d++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.OrangeTorch);
-                dust.fadeIn = 1.1f;
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.RedTorch, Scale: 1.5f);
+                dust.fadeIn = 0.8f;
                 dust.noGravity = true;
-                dust.velocity *= 2f;
+                dust.velocity *= 5f;
             }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
+            Texture2D texture = Main.projectileTexture[projectile.type];
+
+            Color color = projectile.GetAlpha(lightColor);
+            Vector2 origin = texture.Size() / 2;
+
+            int trails = 8;
+            for (int i = trails; i > 0; i--)
+            {
+                Vector2 offset = projectile.velocity * i * 0.2f;
+                Color trailColor = color * (0.4f - i * 0.04f);
+                float trailScale = projectile.scale - i * 0.05f;
+
+                spriteBatch.Draw(
+                    texture,
+                    projectile.Center - offset - Main.screenPosition,
+                    null,
+                    trailColor,
+                    projectile.rotation,
+                    origin,
+                    trailScale,
+                    SpriteEffects.None,
+                    0f);
+            }
+
             this.DrawCentered(spriteBatch, lightColor, flip: false);
+
             return false;
         }
     }
