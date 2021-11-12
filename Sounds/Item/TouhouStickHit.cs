@@ -11,7 +11,7 @@ namespace GamerClass.Sounds.Item
                 soundInstance.Stop();
 
             soundInstance = sound.CreateInstance();
-            soundInstance.Volume = 0.2f;
+            soundInstance.Volume = volume * 0.2f;
             soundInstance.Pan = pan;
             
             return soundInstance;
