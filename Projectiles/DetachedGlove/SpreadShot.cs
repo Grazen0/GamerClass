@@ -10,8 +10,6 @@ namespace GamerClass.Projectiles.DetachedGlove
     {
         private readonly Color dustColor = new Color(1f, 0.2f, 0.2f);
 
-        private bool init = true;
-
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 7;

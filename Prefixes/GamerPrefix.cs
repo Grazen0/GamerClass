@@ -86,12 +86,10 @@ namespace GamerClass.Prefixes
 
         public override void ValidateItem(Item item, ref bool invalid)
         {
-            GamerWeapon gamerWeapon = item.modItem as GamerWeapon;
-            if (
+            if (!(item.modItem is GamerWeapon gamerWeapon) ||
                 (damageMult != 1f && item.damage == Math.Round(item.damage * damageMult)) ||
                 (useTimeMult != 1f && item.useTime == Math.Round(item.useTime * useTimeMult)) ||
-                (ramUsageMult != 1f && gamerWeapon.ramUsage == Math.Round(gamerWeapon.ramUsage * ramUsageMult))
-                )
+                (ramUsageMult != 1f && gamerWeapon.ramUsage == Math.Round(gamerWeapon.ramUsage * ramUsageMult)))
             {
                 invalid = true;
             }
