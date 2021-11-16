@@ -69,8 +69,8 @@ namespace GamerClass.Projectiles.TouhouStick
         {
             if (projectile.owner == Main.myPlayer)
             {
-                float rotation = (projectile.velocity.ToRotation());
-                float targetRotation = ((Main.MouseWorld - player.MountedCenter).ToRotation());
+                float rotation = projectile.velocity.ToRotation();
+                float targetRotation = (Main.MouseWorld - player.MountedCenter).ToRotation();
 
                 if (targetRotation > rotation + MathHelper.Pi)
                     targetRotation -= MathHelper.TwoPi;
