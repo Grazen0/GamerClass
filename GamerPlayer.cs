@@ -4,8 +4,9 @@ using GamerClass.Items.Weapons;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -22,9 +23,12 @@ namespace GamerClass
 
         public bool linkArmorBonus;
         public bool friskSet;
+        public bool masterChiefSet;
 
         public bool gamerCooldown;
         public bool inked;
+        public bool haloShieldCooldown;
+        public bool haloShield;
 
         public int maxRam;
         public int maxRam2;
@@ -60,9 +64,12 @@ namespace GamerClass
 
             linkArmorBonus = false;
             friskSet = false;
+            masterChiefSet = false;
 
             gamerCooldown = false;
             inked = false;
+            haloShieldCooldown = false;
+            haloShield = false;
 
             maxRam2 = maxRam;
             ramUsageMult = 1f;
@@ -126,6 +133,21 @@ namespace GamerClass
             }
         }
 
+        public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo)
+        {
+            if (haloShield)
+            {
+                int shieldShader = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<HaloShieldDye>());
+                drawInfo.bodyArmorShader = shieldShader;
+                drawInfo.headArmorShader = shieldShader;
+                drawInfo.legArmorShader = shieldShader;
+                drawInfo.wingShader = shieldShader;
+                drawInfo.handOnShader = shieldShader;
+                drawInfo.handOffShader = shieldShader;
+                drawInfo.shoeShader = shieldShader;
+            }
+        }
+
         public override void PostUpdate()
         {
             if (Main.netMode != NetmodeID.Server)
@@ -157,10 +179,24 @@ namespace GamerClass
                 SpawnUndertaleSoul(target.Center);
         }
 
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (masterChiefSet && GamerClass.HaloShieldHotKey.JustPressed && !haloShieldCooldown)
+            {
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/HaloShield"));
+
+                player.AddBuff(ModContent.BuffType<HaloShield>(), 300);
+                player.AddBuff(ModContent.BuffType<HaloShieldCooldown>(), 2700);
+            }
+        }
+
         public override void ModifyScreenPosition()
         {
             if (screenShake > 0)
-                Main.screenPosition += Main.rand.NextVector2Circular(screenShake, screenShake);
+            {
+                Main.screenPosition.X += Main.rand.NextFloat(-screenShake, screenShake);
+                Main.screenPosition.Y += Main.rand.NextFloat(-screenShake, screenShake);
+            }
         }
 
         private void SpawnUndertaleSoul(Vector2 position)

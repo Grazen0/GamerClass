@@ -15,12 +15,16 @@ namespace GamerClass
 {
     public partial class GamerClass : Mod
     {
+        public static ModHotKey HaloShieldHotKey;
+
         internal RamUsageBar RamUsageBar;
         internal UserInterface RamInterface;
 
         public override void Load()
         {
             ApplyPatches();
+
+            HaloShieldHotKey = RegisterHotKey("Military Space Armor Shield", "F");
 
             if (!Main.dedServ)
             {
@@ -29,7 +33,11 @@ namespace GamerClass
                 RamInterface.SetState(RamUsageBar);
 
                 Ref<Effect> glasses3dRef = new Ref<Effect>(GetEffect("Effects/Glasses3D"));
+                Ref<Effect> haloShieldRef = new Ref<Effect>(GetEffect("Effects/HaloShield"));
+
                 Filters.Scene["GamerClass:Glasses3D"] = new Filter(new ScreenShaderData(glasses3dRef, "Main"), EffectPriority.Low);
+
+                GameShaders.Armor.BindShader(ModContent.ItemType<Items.HaloShieldDye>(), new ArmorShaderData(haloShieldRef, "Main")).UseColor(new Color(255, 200, 48));
 
                 AddMusicBox(
                     GetSoundSlot(SoundType.Music, "Sounds/Music/Megalovania"),
@@ -53,6 +61,8 @@ namespace GamerClass
                 RamUsageBar.Unload();
                 RamUsageBar = null;
             }
+
+            HaloShieldHotKey = null;
         }
 
         public override void AddRecipes()
