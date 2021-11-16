@@ -86,7 +86,7 @@ namespace GamerClass
                     spriteEffects,
                     0f);
             }
-
+            
             spriteBatch.Draw(
                 texture,
                 modProj.projectile.Center - Main.screenPosition,
@@ -116,6 +116,20 @@ namespace GamerClass
                     npc.StrikeNPC(damage / 2, knockBack * 0.5f, hitDirection);
                 }
             }
+        }
+
+        public static bool CheckAABBvCircleCollision(Vector2 objectPosition, Vector2 objectDimensions, Vector2 circleCenter, float radius)
+        {
+            Vector2 rectCenter = objectPosition + objectDimensions / 2;
+            Vector2 circleDistance = new Vector2(Math.Abs(circleCenter.X - rectCenter.X), Math.Abs(circleCenter.Y - rectCenter.Y));
+            
+            if (circleDistance.X > (objectDimensions.X / 2) + radius) return false;
+            if (circleDistance.Y > (objectDimensions.Y / 2) + radius) return false;
+
+            if (circleDistance.X <= (objectDimensions.X / 2)) return true;
+            if (circleDistance.Y <= (objectDimensions.Y / 2)) return true;
+
+            return Vector2.DistanceSquared(circleDistance, objectDimensions / 2) <= Math.Pow(radius, 2);
         }
     }
 }
