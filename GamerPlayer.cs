@@ -25,6 +25,7 @@ namespace GamerClass
         public bool friskSet;
         public bool masterChiefSet;
 
+        public bool yuyufumo;
         public bool gamerCooldown;
         public bool inked;
         public bool haloShieldCooldown;
@@ -66,6 +67,7 @@ namespace GamerClass
             friskSet = false;
             masterChiefSet = false;
 
+            yuyufumo = false;
             gamerCooldown = false;
             inked = false;
             haloShieldCooldown = false;
