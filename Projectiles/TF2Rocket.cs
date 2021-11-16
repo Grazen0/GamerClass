@@ -66,7 +66,7 @@ namespace GamerClass.Projectiles
                 if (distance <= range)
                 {
                     float force = (1f - (distance / range)) * 30f;
-                    player.velocity = Vector2.Normalize(toPlayer) * force;
+                    player.velocity = toPlayer.SafeNormalize(-Vector2.UnitY) * force;
                 }
             }
 

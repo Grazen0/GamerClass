@@ -48,7 +48,7 @@ namespace GamerClass.Projectiles.DetachedGlove
                 {
                     float speed = 12f;
                     float inertia = 12f;
-                    Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
+                    Vector2 direction = (target.Center - projectile.Center).SafeNormalize(Vector2.Zero);
                     projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
                 }
                 else

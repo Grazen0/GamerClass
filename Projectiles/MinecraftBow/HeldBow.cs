@@ -66,7 +66,7 @@ namespace GamerClass.Projectiles.MinecraftBow
         {
             if (charging && Main.myPlayer == projectile.owner)
             {
-                Vector2 toCursor = Vector2.Normalize(Main.MouseWorld - player.Center);
+                Vector2 toCursor = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.UnitX);
                 projectile.velocity = toCursor;
                 projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
 

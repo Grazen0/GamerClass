@@ -69,7 +69,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
                         float speed = 20f;
                         float inertia = 15f;
 
-                        Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
+                        Vector2 direction = (target.Center - projectile.Center).SafeNormalize(Vector2.Zero);
                         projectile.velocity = (projectile.velocity * (inertia - 1) + direction * speed) / inertia;
                     }
                     else
@@ -113,7 +113,7 @@ namespace GamerClass.Projectiles.BerdlyHalberd
         {
             Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 10, 0.5f);
 
-            Vector2 baseDirection = -Vector2.Normalize(projectile.velocity);
+            Vector2 baseDirection = -projectile.velocity.SafeNormalize(Vector2.Zero);
 
             for (int d = 0; d < 10; d++)
             {

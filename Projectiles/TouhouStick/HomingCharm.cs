@@ -41,7 +41,7 @@ namespace GamerClass.Projectiles.TouhouStick
 
                 if (target.active)
                 {
-                    Vector2 direction = Vector2.Normalize(target.Center - projectile.Center);
+                    Vector2 direction = (target.Center - projectile.Center).SafeNormalize(Vector2.Zero);
                     projectile.velocity = Vector2.Lerp(projectile.velocity, direction * 28f, 0.1f);
                 }
                 else

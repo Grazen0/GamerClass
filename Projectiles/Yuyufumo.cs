@@ -57,14 +57,23 @@ namespace GamerClass.Projectiles
             Vector2 targetPosition = player.Center - new Vector2(player.direction * 64f, 48f);
             targetPosition += -Vector2.UnitY.RotatedBy(RotatePosition) * 16f;
 
+            Vector2 velocity;
+
             if (Vector2.DistanceSquared(projectile.Center, targetPosition) > Range)
+            {
+                velocity = Vector2.Zero;
                 projectile.Center = targetPosition;
+            }
             else
-                projectile.Center = Vector2.Lerp(projectile.Center, targetPosition, 0.08f);
+            {
+                velocity = Vector2.Lerp(projectile.Center, targetPosition, 0.08f) - projectile.Center;
+            }
+            
+            projectile.Center += velocity;
 
             // Other visuals
             projectile.spriteDirection = -player.direction;
-            projectile.rotation = projectile.velocity.X * 0.2f;
+            projectile.rotation = velocity.X * 0.03f;
             projectile.scale = MathHelper.Min(projectile.scale + 0.15f, 1f);
 
             RotatePosition += MathHelper.TwoPi / 120f;

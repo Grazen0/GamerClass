@@ -89,7 +89,7 @@ namespace GamerClass.Items.Weapons
             int yinYangOrb = ModContent.ProjectileType<YinYangOrb>();
             if (Main.myPlayer != player.whoAmI || player.ownedProjectileCounts[yinYangOrb] >= 2) return;
 
-            Vector2 direction = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
+            Vector2 direction = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.UnitX);
 
             for (int side = -1; side <= 1; side += 2)
             {

@@ -46,7 +46,7 @@ namespace GamerClass.Projectiles.DetachedGlove
         {
             if (projectile.owner == Main.myPlayer)
             {
-                projectile.velocity = Vector2.Normalize(Main.MouseWorld - player.Center);
+                projectile.velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.UnitX);
                 projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
                 projectile.netUpdate = true;
             }
