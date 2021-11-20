@@ -1,4 +1,4 @@
-﻿using GamerClass.Projectiles.DetachedGlove;
+﻿using GamerClass.Projectiles.Weapons.DetachedGlove;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

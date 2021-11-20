@@ -1,4 +1,4 @@
-﻿using GamerClass.Projectiles.CaduceusStaff;
+﻿using GamerClass.Projectiles.Weapons.CaduceusStaff;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

@@ -20,7 +20,7 @@ namespace GamerClass.Items.Weapons
             item.noUseGraphic = true;
             item.UseSound = SoundID.Item1;
             item.useTime = item.useAnimation = 35;
-            item.shoot = ModContent.ProjectileType<Projectiles.FlyingBackpack>();
+            item.shoot = ModContent.ProjectileType<Projectiles.Weapons.FlyingBackpack>();
             item.shootSpeed = 15f;
             item.value = Item.sellPrice(silver: 5);
             item.rare = ItemRarityID.Blue;

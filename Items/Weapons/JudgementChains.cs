@@ -23,7 +23,7 @@ namespace GamerClass.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3f;
             item.useTime = item.useAnimation = 25;
-            item.shoot = ModContent.ProjectileType<Projectiles.JudgementChain>();
+            item.shoot = ModContent.ProjectileType<Projectiles.Weapons.JudgementChain>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

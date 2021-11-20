@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Projectiles.Weapons.DustyLaserCannon;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace GamerClass.Items.Weapons
             item.useTime = item.useAnimation = 40;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SpaceInvadersCannon");
-            item.shoot = ModContent.ProjectileType<Projectiles.DustyLaserCannon.ShoddyBeam>();
+            item.shoot = ModContent.ProjectileType<ShoddyBeam>();
             item.shootSpeed = 20;
 
             ramUsage = 2;

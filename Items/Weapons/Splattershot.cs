@@ -25,7 +25,7 @@ namespace GamerClass.Items.Weapons
             item.useTime = 6;
             item.useAnimation = 18;
             item.reuseDelay = 16;
-            item.shoot = ModContent.ProjectileType<Projectiles.InkShot>();
+            item.shoot = ModContent.ProjectileType<Projectiles.Weapons.InkShot>();
             item.shootSpeed = 5f;
             item.rare = ItemRarityID.Blue;
             item.value = Item.sellPrice(silver: 60);

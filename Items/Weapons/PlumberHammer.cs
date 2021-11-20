@@ -21,7 +21,7 @@ namespace GamerClass.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.noUseGraphic = true;
             item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/PlumberHammer");
-            item.shoot = ModContent.ProjectileType<Projectiles.FlyingHammer>();
+            item.shoot = ModContent.ProjectileType<Projectiles.Weapons.FlyingHammer>();
             item.shootSpeed = 15;
 
             ramUsage = 3;

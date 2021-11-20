@@ -57,7 +57,7 @@ namespace GamerClass.Items.Accessories.Wings
                         Projectile.NewProjectile(
                             player.Center + new Vector2(-16f * player.direction, 16f),
                             Vector2.UnitY.RotatedByRandom(MathHelper.ToRadians(20)) * 32f,
-                            ModContent.ProjectileType<Projectiles.JetpackBullet>(),
+                            ModContent.ProjectileType<Projectiles.Weapons.JetpackBullet>(),
                             (int)MathHelper.Max(1, damage),
                             1.5f,
                             player.whoAmI);

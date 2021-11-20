@@ -19,7 +19,7 @@ namespace GamerClass.Items.Weapons
             item.knockBack = 3f;
             item.channel = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ModContent.ProjectileType<Projectiles.MinecraftBow.HeldBow>();
+            item.shoot = ModContent.ProjectileType<Projectiles.Weapons.MinecraftBow.HeldBow>();
             item.shootSpeed = 14f;
             item.value = Item.sellPrice(copper: 50);
             item.useTime = item.useAnimation = 10;

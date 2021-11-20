@@ -1,4 +1,4 @@
-﻿using GamerClass.Projectiles.TouhouStick;
+﻿using GamerClass.Projectiles.Weapons.TouhouStick;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

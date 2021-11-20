@@ -1,4 +1,4 @@
-﻿using GamerClass.Projectiles.ClumpOfBlocks;
+﻿using GamerClass.Projectiles.Weapons.ClumpOfBlocks;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

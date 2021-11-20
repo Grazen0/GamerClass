@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GamerClass.Projectiles.Weapons.BerdlyHalberd;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace GamerClass.Items.Weapons
             item.noMelee = true;
             item.damage = 110;
             item.useAnimation = item.useTime = 45;
-            item.shoot = ModContent.ProjectileType<Projectiles.BerdlyHalberd.HalberdSpear>();
+            item.shoot = ModContent.ProjectileType<HalberdSpear>();
             item.shootSpeed = 18f;
             item.knockBack = 6f;
             item.noUseGraphic = true;
