@@ -15,6 +15,7 @@ namespace GamerClass
 {
     public partial class GamerClass : Mod
     {
+        public static Effect TrailEffect;
         public static ModHotKey HaloShieldHotKey;
 
         internal RamUsageBar RamUsageBar;
@@ -39,6 +40,8 @@ namespace GamerClass
 
                 GameShaders.Armor.BindShader(ModContent.ItemType<Items.HaloShieldDye>(), new ArmorShaderData(haloShieldRef, "Main")).UseColor(new Color(255, 200, 48));
 
+                TrailEffect = GetEffect("Effects/TrailShader");
+
                 AddMusicBox(
                     GetSoundSlot(SoundType.Music, "Sounds/Music/Megalovania"),
                     ModContent.ItemType<SansMusicBox>(),
@@ -56,9 +59,11 @@ namespace GamerClass
 
         public override void Unload()
         {
-            if (!Main.dedServ && RamUsageBar != null)
+            if (!Main.dedServ)
             {
-                RamUsageBar.Unload();
+                TrailEffect = null;
+
+                RamUsageBar?.Unload();
                 RamUsageBar = null;
             }
 
