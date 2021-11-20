@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace GamerClass.Items
+namespace GamerClass.Items.Dyes
 {
     public class HaloShieldDye : ModItem
     {

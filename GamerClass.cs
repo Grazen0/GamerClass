@@ -1,4 +1,5 @@
 using GamerClass.Items.Accessories.Misc;
+using GamerClass.Items.Dyes;
 using GamerClass.Items.Placeable;
 using GamerClass.UI;
 using Microsoft.Xna.Framework;
@@ -38,7 +39,7 @@ namespace GamerClass
 
                 Filters.Scene["GamerClass:Glasses3D"] = new Filter(new ScreenShaderData(glasses3dRef, "Main"), EffectPriority.Low);
 
-                GameShaders.Armor.BindShader(ModContent.ItemType<Items.HaloShieldDye>(), new ArmorShaderData(haloShieldRef, "Main")).UseColor(new Color(255, 200, 48));
+                GameShaders.Armor.BindShader(ModContent.ItemType<HaloShieldDye>(), new ArmorShaderData(haloShieldRef, "Main")).UseColor(new Color(255, 200, 48));
 
                 TrailEffect = GetEffect("Effects/TrailShader");
 
