@@ -9,11 +9,11 @@ namespace GamerClass.Projectiles
         public override bool InstancePerEntity => true;
 
         public bool gamer;
-        public bool firstTick { get; private set; } = true;
+        public bool FirstTick { get; private set; } = true;
 
         public override void PostAI(Projectile projectile)
         {
-            if (firstTick) firstTick = false;
+            if (FirstTick) FirstTick = false;
         }
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

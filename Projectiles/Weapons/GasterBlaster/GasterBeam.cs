@@ -37,7 +37,7 @@ namespace GamerClass.Projectiles.Weapons.GasterBlaster
 
         public override void AI()
         {
-            if (projectile.GamerProjectile().firstTick)
+            if (projectile.GamerProjectile().FirstTick)
             {
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/GasterBlaster"), projectile.Center);
             }

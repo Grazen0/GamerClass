@@ -24,7 +24,7 @@ namespace GamerClass.Projectiles.Weapons.ClumpOfBlocks
 
         public override void AI()
         {
-            if (projectile.GamerProjectile().firstTick)
+            if (projectile.GamerProjectile().FirstTick)
             {
                 if (Rotation % 2 == 1)
                 {

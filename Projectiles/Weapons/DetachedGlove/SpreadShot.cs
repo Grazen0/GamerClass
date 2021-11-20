@@ -31,7 +31,7 @@ namespace GamerClass.Projectiles.Weapons.DetachedGlove
 
         public override void AI()
         {
-            if (projectile.GamerProjectile().firstTick && LongerLife)
+            if (projectile.GamerProjectile().FirstTick && LongerLife)
             {
                 projectile.timeLeft += 6;
             }

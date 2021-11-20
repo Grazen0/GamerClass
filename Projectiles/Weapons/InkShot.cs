@@ -31,7 +31,7 @@ namespace GamerClass.Projectiles.Weapons
 
         public override void AI()
         {
-            if (projectile.GamerProjectile().firstTick)
+            if (projectile.GamerProjectile().FirstTick)
             {
                 for (int d = 0; d < 5; d++)
                 {
