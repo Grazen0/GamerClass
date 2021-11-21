@@ -17,13 +17,13 @@ namespace GamerClass
         [DefaultValue(true)]
         public bool ScarGores;
 
-        [Increment(2)]
-        [Label("Gaster Blaster Screen Shake")]
-        [Tooltip("(Set to 0 to disable)")]
-        [DefaultValue(16)]
+        [Label("Screen Shake Intensity")]
+        [Tooltip("Set the intensity for screen shake effects")]
+        [DefaultValue(100)]
         [Slider]
-        [Range(0, 32)]
-        public int GasterBlasterScreenShake;
+        [Increment(4)]
+        [Range(0, 400)]
+        public int ScreenShakeIntensity;
 
         [Label("Ink-Black Sepia Dye Screen Effect")]
         [Tooltip("Use an old movie screen effect when equipping Ink-Black Sepia Dye")]

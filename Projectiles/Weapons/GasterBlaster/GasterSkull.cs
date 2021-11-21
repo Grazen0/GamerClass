@@ -96,9 +96,7 @@ namespace GamerClass.Projectiles.Weapons.GasterBlaster
                         projectile.owner,
                         projectile.whoAmI);
 
-                    int screenShake = ModContent.GetInstance<GamerConfig>().GasterBlasterScreenShake;
-                    if (screenShake > 0)
-                        Main.LocalPlayer.GamerPlayer().screenShake = screenShake;
+                    Main.LocalPlayer.GamerPlayer().ScreenShake = 16;
 
                     shoot = false;
                 }

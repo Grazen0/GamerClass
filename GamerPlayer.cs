@@ -16,7 +16,13 @@ namespace GamerClass
 {
     public class GamerPlayer : ModPlayer
     {
-        public int screenShake = 0;
+        private int screenShake;
+        public int ScreenShake
+        {
+            get => screenShake;
+            set => screenShake = (int)(value * (ModContent.GetInstance<GamerConfig>().ScreenShakeIntensity / 100f));
+        }
+
         public int jetpackBulletCooldown = 0;
 
         public bool glasses3D;
