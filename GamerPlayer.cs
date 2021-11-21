@@ -1,5 +1,6 @@
 ﻿using GamerClass.Buffs;
 using GamerClass.Items;
+using GamerClass.Items.Dyes;
 using GamerClass.Items.Weapons;
 using Microsoft.Xna.Framework;
 using System;
@@ -131,6 +132,37 @@ namespace GamerClass
                 else
                 {
                     ramRegenRate *= 0.997f;
+                }
+            }
+
+            if (Main.netMode != NetmodeID.Server)
+            {
+                if (player.dye[0].type == ModContent.ItemType<BendyDye>() 
+                    && player.dye[1].type == player.dye[0].type 
+                    && player.dye[2].type == player.dye[1].type 
+                    && ModContent.GetInstance<GamerConfig>().OldMovieEffect)
+                {
+                    GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<BendyDye>()).UseOpacity(0f);
+
+                    if (!Filters.Scene["GamerClass:OldMovie"].IsActive())
+                    {
+                        Filters.Scene.Activate("GamerClass:OldMovie").GetShader()
+                            .UseOpacity(1f)
+                            .UseProgress(6f)
+                            .UseIntensity(4f)
+                            .UseColor(new Color(240, 160, 100))
+                            .UseImage(mod.GetTexture("Textures/Scratches"));
+                    }
+                }
+                else 
+                {
+                    GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<BendyDye>()).UseOpacity(1f);
+
+                    if (Filters.Scene["GamerClass:OldMovie"].IsActive())
+                    {
+                        Filters.Scene["GamerClass:OldMovie"].GetShader().UseOpacity(0f);
+                        Filters.Scene.Deactivate("GamerClass:OldMovie");
+                    }
                 }
             }
         }

@@ -24,5 +24,10 @@ namespace GamerClass
         [Slider]
         [Range(0, 32)]
         public int GasterBlasterScreenShake;
+
+        [Label("Ink-Black Sepia Dye Screen Effect")]
+        [Tooltip("Use an old movie screen effect when equipping Ink-Black Sepia Dye")]
+        [DefaultValue(true)]
+        public bool OldMovieEffect;
     }
 }
