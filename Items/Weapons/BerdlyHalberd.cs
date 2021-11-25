@@ -16,6 +16,7 @@ namespace GamerClass.Items.Weapons
 
         public override void SafeSetDefaults()
         {
+            // TODO: rarity and value
             item.width = 42;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.height = 34;

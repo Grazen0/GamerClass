@@ -9,8 +9,6 @@ namespace GamerClass.Items.Weapons
 {
     public class ClumpOfBlocks : GamerWeapon
     {
-        public override string Texture => "Terraria/Item_" + ItemID.ActiveStoneBlock;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Clump of Blocks");

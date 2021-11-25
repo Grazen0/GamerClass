@@ -16,6 +16,7 @@ namespace GamerClass.Items.Weapons
 
         public override void SafeSetDefaults()
         {
+            // TODO: balance
             item.width = 38;
             item.height = 40;
             item.noMelee = true;

@@ -16,6 +16,7 @@ namespace GamerClass.Items.Weapons
 
         public override void SafeSetDefaults()
         {
+            // TODO: rarity and value
             item.noMelee = true;
             item.damage = 25;
             item.knockBack = 2f;
