@@ -26,6 +26,7 @@ namespace GamerClass
         public int jetpackBulletCooldown = 0;
 
         public bool glasses3D;
+        public bool gameBoyVisor;
         public bool swearing;
 
         public bool linkArmorBonus;
@@ -68,6 +69,7 @@ namespace GamerClass
                 jetpackBulletCooldown--;
 
             glasses3D = false;
+            gameBoyVisor = false;
             if (!player.dead) swearing = false;
 
             linkArmorBonus = false;
@@ -143,9 +145,9 @@ namespace GamerClass
 
             if (Main.netMode != NetmodeID.Server)
             {
-                if (player.dye[0].type == ModContent.ItemType<BendyDye>() 
-                    && player.dye[1].type == player.dye[0].type 
-                    && player.dye[2].type == player.dye[1].type 
+                if (player.dye[0].type == ModContent.ItemType<BendyDye>()
+                    && player.dye[1].type == player.dye[0].type
+                    && player.dye[2].type == player.dye[1].type
                     && ModContent.GetInstance<GamerConfig>().OldMovieEffect)
                 {
                     GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<BendyDye>()).UseOpacity(0f);
@@ -160,7 +162,7 @@ namespace GamerClass
                             .UseImage(mod.GetTexture("Textures/Scratches"));
                     }
                 }
-                else 
+                else
                 {
                     GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<BendyDye>()).UseOpacity(1f);
 
@@ -203,6 +205,19 @@ namespace GamerClass
                 {
                     Filters.Scene["GamerClass:Glasses3D"].GetShader().UseProgress(0f);
                     Filters.Scene.Deactivate("GamerClass:Glasses3D");
+                }
+
+                if (gameBoyVisor)
+                {
+                    if (!Filters.Scene["GamerClass:GameBoyVisor"].IsActive())
+                    {
+                        Filters.Scene.Activate("GamerClass:GameBoyVisor").GetShader().UseProgress(1f);
+                    }
+                }
+                else if (Filters.Scene["GamerClass:GameBoyVisor"].IsActive())
+                {
+                    Filters.Scene["GamerClass:GameBoyVisor"].GetShader().UseProgress(0f);
+                    Filters.Scene.Deactivate("GamerClass:GameBoyVisor");
                 }
             }
         }

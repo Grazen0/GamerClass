@@ -35,11 +35,13 @@ namespace GamerClass
                 RamInterface.SetState(RamUsageBar);
 
                 Ref<Effect> glasses3dRef = new Ref<Effect>(GetEffect("Effects/Glasses3D"));
+                Ref<Effect> gameBoyVisorRef = new Ref<Effect>(GetEffect("Effects/GameBoyVisor"));
                 Ref<Effect> oldMovieRef = new Ref<Effect>(GetEffect("Effects/OldMovie"));
                 Ref<Effect> haloShieldRef = new Ref<Effect>(GetEffect("Effects/HaloShield"));
                 Ref<Effect> inkDyeRef = new Ref<Effect>(GetEffect("Effects/InkDye"));
 
                 Filters.Scene["GamerClass:Glasses3D"] = new Filter(new ScreenShaderData(glasses3dRef, "Main"), EffectPriority.Low);
+                Filters.Scene["GamerClass:GameBoyVisor"] = new Filter(new ScreenShaderData(gameBoyVisorRef, "Main"), EffectPriority.Low);
                 Filters.Scene["GamerClass:OldMovie"] = new Filter(new ScreenShaderData(oldMovieRef, "Main"), EffectPriority.Medium);
 
                 GameShaders.Armor.BindShader(ModContent.ItemType<HaloShieldDye>(), new ArmorShaderData(haloShieldRef, "Main")).UseColor(new Color(255, 200, 48));
